@@ -29,7 +29,7 @@ void MainWindow::startRender(){
     tracer = new RayTracer(imgwidth, imgheight);
     QObject::connect(tracer, SIGNAL(returnImage(QImage*)), this, SLOT(updateRender(QImage*)));
 
-    tracer->raytrace();
+    tracer->render();
 }
 
 void MainWindow::updateRender(QImage *render){

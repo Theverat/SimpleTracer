@@ -12,6 +12,7 @@
 #include "sphere.h"
 #include "camera.h"
 #include "object.h"
+#include "world.h"
 
 class RayTracer : public QThread
 {
@@ -19,8 +20,9 @@ class RayTracer : public QThread
 public:
     RayTracer(int x, int y);
 
-    void raytrace();
+    void render();
     QColor getColorForPixel(int x, int y);
+    QVector3D raytrace(Ray ray);
 
 signals:
     void returnImage(QImage*);
@@ -28,15 +30,16 @@ signals:
 private:
     QSharedPointer<QImage> renderImage;
 
-    //testobjects:
-    Object *object; //remove later
-    Object *plane; //remove later
+    //testobjects (now in world.cpp)
+    //Object *object; //remove later
+    //Object *plane; //remove later
 
+    World *world;
     Camera *camera;
 
     //render functions (like Render_DiffuseShading, Render_GlossyShading etc.)
-    QColor Render_Normal(Geometry::IntersectionInfo Info, Ray ray);
-    QColor Render_DiffuseColor();
+    QVector3D Render_Normal(double distance, Ray ray, Object *obj);
+    QVector3D Render_DiffuseColor(Object *obj);
 };
 
 #endif // RAYTRACER_H

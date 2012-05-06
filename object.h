@@ -9,17 +9,14 @@
 class Object
 {
 public:
-    Object(Sphere *newSphere, Material *newMat);
-    Object(Plane *newPlane, Material *newMat);
+    Object(Geometry *newMesh, Material *newMat);
 
-    Sphere* getSphere();
-    Plane* getPlane();
+    Geometry* getMesh();
     Material* getMat();
 
 private:
     Material *Mat;
-    Plane *Shape_Plane;
-    Sphere *Shape_Sphere;
+    Geometry *Mesh;
 };
 
 #endif // OBJECT_H

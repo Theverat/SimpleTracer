@@ -1,23 +1,13 @@
 #include "object.h"
 
-Object::Object(Sphere *newSphere, Material *newMat)
+Object::Object(Geometry *newMesh, Material *newMat)
 {
-    Shape_Sphere = newSphere;
+    Mesh = newMesh;
     Mat = newMat;
 }
 
-Object::Object(Plane *newPlane, Material *newMat)
-{
-    Shape_Plane = newPlane;
-    Mat = newMat;
-}
-
-Sphere* Object::getSphere(){
-    return Shape_Sphere;
-}
-
-Plane* Object::getPlane(){
-    return Shape_Plane;
+Geometry* Object::getMesh(){
+    return Mesh;
 }
 
 Material* Object::getMat(){

@@ -17,7 +17,7 @@ public:
 
     virtual IntersectionInfo getIntersectionInfo(Ray ray){}
 
-    virtual QVector3D getNormal(){}
+    virtual QVector3D getNormal(QVector3D PointOnSurface){}
 };
 
 #endif // GEOMETRY_H

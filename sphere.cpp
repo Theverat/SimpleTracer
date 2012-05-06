@@ -26,7 +26,7 @@ Geometry::IntersectionInfo Sphere::getIntersectionInfo(Ray ray){
     double B = 2*(ray.getDirection().x() * (ray.getOrigin().x() - Midpoint.x()) + ray.getDirection().y() * (ray.getOrigin().y() - Midpoint.y())  + ray.getDirection().z() * (ray.getOrigin().z() - Midpoint.z()));
     double C = pow(ray.getOrigin().x() - Midpoint.x(),2) + pow(ray.getOrigin().y() - Midpoint.y(),2) + pow(ray.getOrigin().z() - Midpoint.z(),2) - pow(Radius,2);
     double disc = pow(B,2) - 4*C;
-    if(disc>0)
+    if(disc > 0)
     {
         results.hit = true;
         double t1 = (-B - sqrt(disc))/2;
@@ -35,15 +35,12 @@ Geometry::IntersectionInfo Sphere::getIntersectionInfo(Ray ray){
         if(results.distance<0)
         {
             results.distance = max(t1, t2);
-            if(results.distance<0)
-            {
-                results.hit = false;
-            }
         }
     }
 
     return results;
 }
+
 
 QVector3D Sphere::getNormal(QVector3D PointOnSurface){
     return QVector3D(PointOnSurface - Midpoint);
