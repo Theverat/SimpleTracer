@@ -16,7 +16,8 @@ World::World(Camera* newCamera)
     Object* sphere = new Object(new Sphere(QVector3D(0, 0, 6), 4), new Material(QColor(250, 10, 10)));
     objects.append(sphere);
 
-    Object* sphere2 = new Object(new Sphere(QVector3D(1, 1, 5), ))
+    Object* sphere2 = new Object(new Sphere(QVector3D(1, 1, 4), 3), new Material(QColor(200, 10, 10)));
+    objects.append(sphere2);
 }
 
 Camera* World::getCamera(){
