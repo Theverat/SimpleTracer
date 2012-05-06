@@ -20,7 +20,8 @@ SOURCES += main.cpp\
     triangle.cpp \
     plane.cpp \
     world.cpp \
-    abs.cpp
+    abs.cpp \
+    light.cpp
 
 HEADERS  += mainwindow.h \
     ray.h \
@@ -32,6 +33,7 @@ HEADERS  += mainwindow.h \
     material.h \
     triangle.h \
     plane.h \
-    world.h
+    world.h \
+    light.h
 
 FORMS    += mainwindow.ui

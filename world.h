@@ -6,9 +6,10 @@
 
 #include "camera.h"
 #include "object.h"
+#include "light.h"
 
 class Object;
-//class Light;
+class Light;
 
 class World
 {
@@ -19,13 +20,13 @@ public:
     void setCamera(Camera* newCam);
 
     QVector<Object*>& getObjects();
-    //QVector<Light*>& getLights();
+    QVector<Light*>& getLights();
 
 private:
     QColor BgColor;
 
     QVector<Object*> objects;
-    //QVector<Light*> lights;
+    QVector<Light*> lights;
 
     Camera* cam;
 };

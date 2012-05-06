@@ -39,7 +39,7 @@ private:
 
     //render functions (like Render_DiffuseShading, Render_GlossyShading etc.)
     QVector3D Render_Normal(double distance, Ray ray, Object *obj);
-    QVector3D Render_DiffuseColor(Object *obj);
+    QVector3D Render_DiffuseColor(double distance, Ray ray, Object *obj);
 };
 
 #endif // RAYTRACER_H

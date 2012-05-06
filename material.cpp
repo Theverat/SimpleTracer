@@ -3,13 +3,13 @@
 Material::Material()
 {
     //initialise all variables with default values
-    Color_Diffuse = QColor(100, 0, 0);
+    Color_Diffuse = QVector3D(100, 0, 0);
 }
 
-Material::Material(QColor newColor_Diffuse){
+Material::Material(QVector3D newColor_Diffuse){
     Color_Diffuse = newColor_Diffuse;
 }
 
-QColor Material::getDiffuseColor(){
+QVector3D Material::getDiffuseColor(){
     return Color_Diffuse;
 }

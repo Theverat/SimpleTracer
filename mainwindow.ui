@@ -23,6 +23,21 @@
       <height>611</height>
      </rect>
     </property>
+    <property name="verticalScrollBarPolicy">
+     <enum>Qt::ScrollBarAsNeeded</enum>
+    </property>
+    <property name="horizontalScrollBarPolicy">
+     <enum>Qt::ScrollBarAsNeeded</enum>
+    </property>
+    <property name="backgroundBrush">
+     <brush brushstyle="SolidPattern">
+      <color alpha="255">
+       <red>0</red>
+       <green>0</green>
+       <blue>50</blue>
+      </color>
+     </brush>
+    </property>
     <property name="sceneRect">
      <rectf>
       <x>0.000000000000000</x>
@@ -30,6 +45,15 @@
       <width>800.000000000000000</width>
       <height>600.000000000000000</height>
      </rectf>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+    </property>
+    <property name="dragMode">
+     <enum>QGraphicsView::NoDrag</enum>
+    </property>
+    <property name="viewportUpdateMode">
+     <enum>QGraphicsView::MinimalViewportUpdate</enum>
     </property>
    </widget>
    <widget class="QPushButton" name="pushButton">

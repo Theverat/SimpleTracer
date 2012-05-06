@@ -17,8 +17,6 @@ void RayTracer::render(){
     for(int y = 0; y < camera->getImgHeigth(); y++){
         for(int x = 0; x < camera->getImgWidth(); x++){
             renderImage->setPixel(x, y, getColorForPixel(x, y).rgba());
-            //std::cout << "for-schleife: y == " << y << std::endl
-            //          << "for-schleife: x == " << x << std::endl;
         }
     }
     std::cout << "render finished" << std::endl;
@@ -31,6 +29,7 @@ QColor RayTracer::getColorForPixel(int x, int y){
 
     QVector3D ColorAtPixel = raytrace(ray);
 
+    //clamping
     int r = ColorAtPixel.x();
     int g = ColorAtPixel.y();
     int b = ColorAtPixel.z();
@@ -58,9 +57,9 @@ QVector3D RayTracer::raytrace(Ray ray){
     // - diffuse and specular shading etc. (will also get own functions with names like Render_DiffuseShading etc.)
 
     double nearestDist = 9999999999999;
-    Object* nearestObj = new Object(new Sphere(QVector3D(0, 0, 6), 4), new Material(QColor(250, 10, 10)));
+    Object* nearestObj = new Object(new Sphere(QVector3D(0, 0, 6), 4), new Material(QVector3D(250, 10, 10)));
 
-    //find closest intersection (can be accelerated extremely!)
+    //find closest intersection (can be accelerated extremely lateron!)
     for(int i = 0; i < world->getObjects().size(); i++){
         Object* obj = world->getObjects().at(i);
         Geometry::IntersectionInfo IntersectInfo = obj->getMesh()->getIntersectionInfo(ray);
@@ -70,42 +69,51 @@ QVector3D RayTracer::raytrace(Ray ray){
             if(IntersectInfo.distance < nearestDist){
                 nearestDist = IntersectInfo.distance;
                 nearestObj = new Object(obj->getMesh(), obj->getMat());
-                //std::cout << "nearestObj zugewiesen, i == " << i << std::endl;
             }
         }
     }
-    //std::cout << "for-schleife beendet" << std::endl;
-    return Render_Normal(nearestDist, ray, nearestObj);
-
-    return QVector3D(0, 0, 0); //maybe replace with world->backgroundcolor later
+    //return Render_Normal(nearestDist, ray, nearestObj);
+    return Render_DiffuseColor(nearestDist, ray, nearestObj);
 }
-
-/*QColor RayTracer::Render_Normal(Geometry::IntersectionInfo Info, Ray ray){
-
-    QVector3D PointOnSphereSurface = QVector3D(ray.getDirection().x(), ray.getDirection().y(), Info.distance);
-    //QVector3D normal = object->getSphere()->getNormal(PointOnSphereSurface);
-    QVector3D normal = plane->getPlane()->getNormal();
-
-    //This part isn't finished... I had no idea what I was doing here =) (just wanted to see some colors depending on the angle between normal and ray)
-    //Formula: Val = 255 * angle(ray, normal);
-    int ColorValue = 255 * (acos(QVector3D::dotProduct(ray.getDirection(), normal)/(ray.getDirection().length()*normal.length()))/3);
-    //std::cout << "ColorValue == " << ColorValue << std::endl; //only for debugging
-
-    return QColor(ColorValue, ColorValue, ColorValue);
-}*/
 
 QVector3D RayTracer::Render_Normal(double distance, Ray ray, Object *obj){
 
     QVector3D PointOnSphereSurface = QVector3D(ray.getDirection().x(), ray.getDirection().y(), distance);
     QVector3D normal = obj->getMesh()->getNormal(PointOnSphereSurface);
 
-    double diff = (QVector3D::dotProduct(ray.getDirection(), normal) * obj->getMat()->getDiffuseColor().rgb())/100000000;
+    QVector3D diff = (QVector3D::dotProduct(ray.getDirection(), normal) * obj->getMat()->getDiffuseColor())/100000000;
     //std::cout << "diff == " << diff << std::endl; //only for debugging
 
-    return QVector3D(diff, diff, diff);
+    return diff;
 }
 
-QVector3D RayTracer::Render_DiffuseColor(Object *obj){
-    //has to be extended (maybe with oren-nayar implementation?)
-    return QVector3D(obj->getMat()->getDiffuseColor().red(), obj->getMat()->getDiffuseColor().green(), obj->getMat()->getDiffuseColor().blue());
+QVector3D RayTracer::Render_DiffuseColor(double distance, Ray ray, Object *obj){
+    //not physically correct, has to be extended or replaced later (maybe with oren-nayar implementation?)
+    //return QVector3D(obj->getMat()->getDiffuseColor().red(), obj->getMat()->getDiffuseColor().green(), obj->getMat()->getDiffuseColor().blue());
+
+    if(distance == 9999999999999)
+        return QVector3D(0, 60, 0); //background color
+
+    //hitpoint on the object's surface
+    QVector3D hitpoint = ray.getOrigin() + ray.getDirection() * distance;
+
+    //trace lights
+    for(int l = 0; l < world->getLights().size(); l++){
+        Light* light = world->getLights().at(l);
+
+        //calculate diffuse shading
+        //vector from hitpoint to light, normalized
+        QVector3D lightray = (light->getPosition() - hitpoint).normalized();
+        QVector3D normal = (obj->getMesh()->getNormal(hitpoint)).normalized();
+
+        //dotproduct of lightray and surface normal
+        double dot = QVector3D::dotProduct(lightray, normal);
+
+        if(dot > 0){
+            //get the color the surface has at the hitpoint
+            QVector3D diffuseCol = dot * obj->getMat()->getDiffuseColor();
+            //return diffuse color, should be added to the ray color in the main raytrace loop
+            return diffuseCol;
+        }
+    }
 }

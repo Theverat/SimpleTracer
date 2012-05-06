@@ -1,19 +1,19 @@
 #ifndef MATERIAL_H
 #define MATERIAL_H
 
-#include <QColor>
+#include <QVector3D>
 
 class Material
 {
 public:
     //overloaded constructor
     Material();
-    Material(QColor newColor_Diffuse);
+    Material(QVector3D newColor_Diffuse);
 
-    QColor getDiffuseColor();
+    QVector3D getDiffuseColor();
 
 private:
-    QColor Color_Diffuse;
+    QVector3D Color_Diffuse;
 };
 
 #endif // MATERIAL_H
