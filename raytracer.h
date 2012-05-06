@@ -28,7 +28,10 @@ signals:
 private:
     QSharedPointer<QImage> renderImage;
 
+    //testobjects:
     Object *object; //remove later
+    Object *plane; //remove later
+
     Camera *camera;
 
     //render functions (like Render_DiffuseShading, Render_GlossyShading etc.)

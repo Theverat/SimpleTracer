@@ -4,18 +4,22 @@
 #include "geometry.h"
 #include "sphere.h"
 #include "material.h"
+#include "plane.h"
 
 class Object
 {
 public:
-    Object(Sphere *newShape, Material *newMat);
+    Object(Sphere *newSphere, Material *newMat);
+    Object(Plane *newPlane, Material *newMat);
 
-    Sphere* getShape();
+    Sphere* getSphere();
+    Plane* getPlane();
     Material* getMat();
 
 private:
-    Sphere *Shape;
     Material *Mat;
+    Plane *Shape_Plane;
+    Sphere *Shape_Sphere;
 };
 
 #endif // OBJECT_H

@@ -16,7 +16,9 @@ SOURCES += main.cpp\
     sphere.cpp \
     raytracer.cpp \
     object.cpp \
-    material.cpp
+    material.cpp \
+    triangle.cpp \
+    plane.cpp
 
 HEADERS  += mainwindow.h \
     ray.h \
@@ -25,6 +27,8 @@ HEADERS  += mainwindow.h \
     geometry.h \
     raytracer.h \
     object.h \
-    material.h
+    material.h \
+    triangle.h \
+    plane.h
 
 FORMS    += mainwindow.ui

@@ -19,6 +19,7 @@ Geometry::IntersectionInfo Sphere::getIntersectionInfo(Ray ray){
 */
 
 Geometry::IntersectionInfo Sphere::getIntersectionInfo(Ray ray){
+
     Geometry::IntersectionInfo results;
 
     //A=1, so no need to calculate
