@@ -11,6 +11,7 @@
 
 #include "sphere.h"
 #include "camera.h"
+#include "object.h"
 
 class RayTracer : public QThread
 {
@@ -27,8 +28,12 @@ signals:
 private:
     QSharedPointer<QImage> renderImage;
 
-    Sphere *sphere;
+    Object *object; //remove later
     Camera *camera;
+
+    //render functions (like Render_DiffuseShading, Render_GlossyShading etc.)
+    QColor Render_Normal(Geometry::IntersectionInfo Info, Ray ray);
+    QColor Render_DiffuseColor();
 };
 
 #endif // RAYTRACER_H

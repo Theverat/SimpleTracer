@@ -14,13 +14,17 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     camera.cpp \
     sphere.cpp \
-    raytracer.cpp
+    raytracer.cpp \
+    object.cpp \
+    material.cpp
 
 HEADERS  += mainwindow.h \
     ray.h \
     camera.h \
     sphere.h \
     geometry.h \
-    raytracer.h
+    raytracer.h \
+    object.h \
+    material.h
 
 FORMS    += mainwindow.ui
