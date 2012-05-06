@@ -19,7 +19,8 @@ SOURCES += main.cpp\
     material.cpp \
     triangle.cpp \
     plane.cpp \
-    world.cpp
+    world.cpp \
+    abs.cpp
 
 HEADERS  += mainwindow.h \
     ray.h \

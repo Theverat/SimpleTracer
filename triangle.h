@@ -6,7 +6,7 @@
 class Triangle// : public Plane
 {
 public:
-    Triangle(QVector3D A, QVector3D B, QVector3D C);
+    Triangle(QVector3D newA, QVector3D newB, QVector3D newC);
 
     Geometry::IntersectionInfo getIntersectionInfo(Ray ray);
 
