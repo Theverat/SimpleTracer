@@ -3,7 +3,7 @@
 
 #include "plane.h"
 
-class Triangle// : public Plane
+class Triangle// : private Plane
 {
 public:
     Triangle(QVector3D newA, QVector3D newB, QVector3D newC);

@@ -12,10 +12,10 @@ Ray Camera::shootRay(int x, int y){
     double HitOfRay_X = (-(double)imgwidth / 200) + ((double)x/100);
     double HitOfRay_Y = ((double)imgheigth / 200) - ((double)y/100);
 
-    QVector3D pos = QVector3D(HitOfRay_X, HitOfRay_Y, 5);
-    pos.normalize();
+    QVector3D dir = QVector3D(HitOfRay_X, HitOfRay_Y, 5);
+    dir.normalize();
 
-    return Ray(Origin, pos);
+    return Ray(Origin, dir);
 }
 
 int Camera::getImgWidth(){

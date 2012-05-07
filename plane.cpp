@@ -1,5 +1,7 @@
 #include "plane.h"
 
+//######## Something is screwed here!! ###########//
+
 Plane::Plane(QVector3D newOrigin, QVector3D newVector1, QVector3D newVector2)
 {
     Origin = newOrigin;

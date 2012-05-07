@@ -3,19 +3,13 @@
 RayTracer::RayTracer(int x, int y):
     renderImage(new QImage(x, y, QImage::Format_ARGB32))
 {
-    camera = new Camera(QVector3D(0, 0, -5), x, y);
-
-    world = new World(camera);
-
-    //now in world.cpp:
-    //object = new Object(new Sphere(QVector3D(0, 0, 6), 4), new Material(QColor(250, 10, 10)));
-    //plane = new Object(new Plane(QVector3D(0, 0, 8), QVector3D(1, 0, 0), QVector3D(0.1, 0.1, 1)), new Material(QColor(0, 30, 200)));
+    world = new World(new Camera(QVector3D(0, 0, -5), x, y));
 }
 
 void RayTracer::render(){
 
-    for(int y = 0; y < camera->getImgHeigth(); y++){
-        for(int x = 0; x < camera->getImgWidth(); x++){
+    for(int y = 0; y < world->getCamera()->getImgHeigth(); y++){
+        for(int x = 0; x < world->getCamera()->getImgWidth(); x++){
             renderImage->setPixel(x, y, getColorForPixel(x, y).rgba());
         }
     }
@@ -25,7 +19,7 @@ void RayTracer::render(){
 
 QColor RayTracer::getColorForPixel(int x, int y){
 
-    Ray ray = camera->shootRay(x, y);
+    Ray ray = world->getCamera()->shootRay(x, y);
 
     QVector3D ColorAtPixel = raytrace(ray);
 
@@ -72,24 +66,8 @@ QVector3D RayTracer::raytrace(Ray ray){
             }
         }
     }
-    //return Render_Normal(nearestDist, ray, nearestObj);
-    return Render_DiffuseColor(nearestDist, ray, nearestObj);
-}
 
-QVector3D RayTracer::Render_Normal(double distance, Ray ray, Object *obj){
-
-    QVector3D PointOnSphereSurface = QVector3D(ray.getDirection().x(), ray.getDirection().y(), distance);
-    QVector3D normal = obj->getMesh()->getNormal(PointOnSphereSurface);
-
-    QVector3D diff = (QVector3D::dotProduct(ray.getDirection(), normal) * obj->getMat()->getDiffuseColor())/100000000;
-    //std::cout << "diff == " << diff << std::endl; //only for debugging
-
-    return diff;
-}
-
-QVector3D RayTracer::Render_DiffuseColor(double distance, Ray ray, Object *obj){
     //not physically correct, has to be extended or replaced later (maybe with oren-nayar implementation?)
-    //return QVector3D(obj->getMat()->getDiffuseColor().red(), obj->getMat()->getDiffuseColor().green(), obj->getMat()->getDiffuseColor().blue());
 
     if(distance == 9999999999999)
         return QVector3D(0, 60, 0); //background color
@@ -101,19 +79,44 @@ QVector3D RayTracer::Render_DiffuseColor(double distance, Ray ray, Object *obj){
     for(int l = 0; l < world->getLights().size(); l++){
         Light* light = world->getLights().at(l);
 
-        //calculate diffuse shading
+
         //vector from hitpoint to light, normalized
         QVector3D lightray = (light->getPosition() - hitpoint).normalized();
+        double shade = 1; //amount of shadowing at the hitpoint
         QVector3D normal = (obj->getMesh()->getNormal(hitpoint)).normalized();
 
+        //check if there's at least one object occluding the lightsource from the hitpoint
+        QVector3D shadowray = light->getPosition() - hitpoint;
+        double tdist = shadowray.length();
+        shadowray = shadowray * (1.0f / tdist);
+
+        for(int o = 0; o < world->getObjects().size(); o++){
+            Object* obstacle = world->getObjects().at(o);
+            if(obstacle->getMesh()->getIntersectionInfo(Ray(hitpoint + shadowray * EPSILON, shadowray)).hit == true){
+                shade = 0;
+                break;
+            }
+        }
+
+        //calculate diffuse shading
         //dotproduct of lightray and surface normal
         double dot = QVector3D::dotProduct(lightray, normal);
 
         if(dot > 0){
             //get the color the surface has at the hitpoint
-            QVector3D diffuseCol = dot * obj->getMat()->getDiffuseColor();
+            QVector3D diffuseCol = dot * obj->getMat()->getDiffuseColor() * shade;
             //return diffuse color, should be added to the ray color in the main raytrace loop
             return diffuseCol;
         }
     }
+}
+
+QVector3D RayTracer::Render_Normal(double distance, Ray ray, Object *obj){
+
+    QVector3D PointOnSphereSurface = QVector3D(ray.getDirection().x(), ray.getDirection().y(), distance);
+    QVector3D normal = obj->getMesh()->getNormal(PointOnSphereSurface);
+
+    QVector3D diff = (QVector3D::dotProduct(ray.getDirection(), normal) * obj->getMat()->getDiffuseColor())/100000000;
+
+    return diff;
 }

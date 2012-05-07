@@ -9,6 +9,8 @@
 #include <QObject>
 #include <QThread>
 
+#include "predefs.h"
+
 #include "sphere.h"
 #include "camera.h"
 #include "object.h"
@@ -30,16 +32,9 @@ signals:
 private:
     QSharedPointer<QImage> renderImage;
 
-    //testobjects (now in world.cpp)
-    //Object *object; //remove later
-    //Object *plane; //remove later
-
     World *world;
-    Camera *camera;
 
-    //render functions (like Render_DiffuseShading, Render_GlossyShading etc.)
     QVector3D Render_Normal(double distance, Ray ray, Object *obj);
-    QVector3D Render_DiffuseColor(double distance, Ray ray, Object *obj);
 };
 
 #endif // RAYTRACER_H

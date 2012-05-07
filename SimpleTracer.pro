@@ -34,6 +34,7 @@ HEADERS  += mainwindow.h \
     triangle.h \
     plane.h \
     world.h \
-    light.h
+    light.h \
+    predefs.h
 
 FORMS    += mainwindow.ui
