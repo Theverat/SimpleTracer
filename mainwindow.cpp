@@ -28,9 +28,15 @@ void MainWindow::startRender(){
 
     tracer = new RayTracer(imgwidth, imgheight);
     QObject::connect(tracer, SIGNAL(returnImage(QImage*)), this, SLOT(updateRender(QImage*)));
+    //QObject::connect(tracer, SIGNAL(returnLine(QImage*)), this, SLOT(updateLine(QImage*)));
 
     tracer->render();
 }
+
+//void MainWindow::updateLine(QImage* line){
+//    ui->graphicsView->scene()->clear();
+//    ui->graphicsView->scene()->addPixmap(QPixmap::fromImage(*line));
+//}
 
 void MainWindow::updateRender(QImage *render){
     ui->graphicsView->scene()->clear();

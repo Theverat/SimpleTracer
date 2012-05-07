@@ -1,6 +1,8 @@
 #include "camera.h"
 
-Camera::Camera(QVector3D newOrig,  int W, int H){
+Camera::Camera(QVector3D newOrig,  int W, int H):
+    far_clipping(9999999999999)
+{
     Origin = newOrig;
     imgwidth = W;
     imgheigth = H;
@@ -24,4 +26,8 @@ int Camera::getImgWidth(){
 
 int Camera::getImgHeigth(){
     return imgheigth;
+}
+
+double Camera::getFarClip(){
+    return far_clipping;
 }

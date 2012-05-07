@@ -13,12 +13,15 @@ public:
 
     int getImgWidth();
     int getImgHeigth();
+    double getFarClip();
 
 private:
     QVector3D Origin;
 
     int imgwidth;
     int imgheigth;
+
+    double far_clipping;
 };
 
 #endif // CAMERA_H

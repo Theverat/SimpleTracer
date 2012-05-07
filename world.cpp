@@ -12,15 +12,27 @@ World::World(Camera* newCamera)
 
 
     //------------- testsphere --------------
-    Object* sphere1 = new Object(new Sphere(QVector3D(0, 0, 0), 1), new Material(QVector3D(250, 10, 10)));//
+    Object* sphere1 = new Object(new Sphere(QVector3D(0, 0, 0), 1), new Material());//
     objects.append(sphere1);
 
-    Object* sphere2 = new Object(new Sphere(QVector3D(-1.8, 0, 1), 1), new Material(QVector3D(200, 100, 100)));
+    Object* sphere2 = new Object(new Sphere(QVector3D(0, -2, 0), 1), new Material());
     objects.append(sphere2);
 
+    Object* sphere3 = new Object(new Sphere(QVector3D(-2, 0.5, 0), 1), new Material());
+    objects.append(sphere3);
+
+    Object* sphere4 = new Object(new Sphere(QVector3D(-2, -1.5, 0), 1), new Material());
+    objects.append(sphere4);
+
     //------------- testlight ---------------
-    Light* light = new Light(QVector3D(4, 3, -1.5), QVector3D(250, 250, 250), 1);
+    Light* light = new Light(QVector3D(1, 1, -2.2), QVector3D(250, 250, 250), 1);
     lights.append(light);
+
+    Object* sphere5 = new Object(new Sphere(QVector3D(1, 1, -1.5), 0.1), new Material());
+    objects.append(sphere5);
+
+    //Light* light2 = new Light(QVector3D(-3, -1, -3), QVector3D(30, 250, 20), 1);
+    //lights.append(light2);
 }
 
 Camera* World::getCamera(){

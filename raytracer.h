@@ -27,6 +27,7 @@ public:
     QVector3D raytrace(Ray ray);
 
 signals:
+    //void returnLine(QImage*);
     void returnImage(QImage*);
 
 private:

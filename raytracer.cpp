@@ -12,6 +12,7 @@ void RayTracer::render(){
         for(int x = 0; x < world->getCamera()->getImgWidth(); x++){
             renderImage->setPixel(x, y, getColorForPixel(x, y).rgba());
         }
+        //emit returnLine(renderImage.data());
     }
     std::cout << "render finished" << std::endl;
     emit returnImage(renderImage.data());
@@ -46,12 +47,13 @@ QColor RayTracer::getColorForPixel(int x, int y){
 }
 
 QVector3D RayTracer::raytrace(Ray ray){
-    //missing code in this function:
-    // - multiple objects support (will get own function) with test which object is the nearest to the camera
-    // - diffuse and specular shading etc. (will also get own functions with names like Render_DiffuseShading etc.)
 
-    double nearestDist = 9999999999999;
-    Object* nearestObj = new Object(new Sphere(QVector3D(0, 0, 6), 4), new Material(QVector3D(250, 10, 10)));
+    double nearestDist = world->getCamera()->getFarClip(); //far clipping border of the scene
+    Object* nearestObj = new Object(new Sphere(QVector3D(0, 0, 0), 1), new Material());
+    double shade = 1; //amount of shadowing at the hitpoint
+
+    QVector3D Accumulated_Color = QVector3D(0, 0, 0);   //the color of the pixel, stored in a QVector3D
+                                                        //gets accumulated in the following process
 
     //find closest intersection (can be accelerated extremely lateron!)
     for(int i = 0; i < world->getObjects().size(); i++){
@@ -69,48 +71,66 @@ QVector3D RayTracer::raytrace(Ray ray){
 
     //not physically correct, has to be extended or replaced later (maybe with oren-nayar implementation?)
 
-    if(distance == 9999999999999)
+    if(nearestDist == world->getCamera()->getFarClip())
         return QVector3D(0, 60, 0); //background color
 
     //hitpoint on the object's surface
-    QVector3D hitpoint = ray.getOrigin() + ray.getDirection() * distance;
+    QVector3D hitpoint = ray.getOrigin() + ray.getDirection() * nearestDist;
 
     //trace lights
     for(int l = 0; l < world->getLights().size(); l++){
         Light* light = world->getLights().at(l);
 
-
         //vector from hitpoint to light, normalized
         QVector3D lightray = (light->getPosition() - hitpoint).normalized();
-        double shade = 1; //amount of shadowing at the hitpoint
-        QVector3D normal = (obj->getMesh()->getNormal(hitpoint)).normalized();
 
+        QVector3D normal = (nearestObj->getMesh()->getNormal(hitpoint)).normalized();
+
+        /* Something's wrong here...
+          ----------------------------------------------------------------------------------
         //check if there's at least one object occluding the lightsource from the hitpoint
         QVector3D shadowray = light->getPosition() - hitpoint;
         double tdist = shadowray.length();
-        shadowray = shadowray * (1.0f / tdist);
 
         for(int o = 0; o < world->getObjects().size(); o++){
             Object* obstacle = world->getObjects().at(o);
-            if(obstacle->getMesh()->getIntersectionInfo(Ray(hitpoint + shadowray * EPSILON, shadowray)).hit == true){
+            Geometry::IntersectionInfo ShadowInfo = obstacle->getMesh()->getIntersectionInfo(Ray(hitpoint + shadowray * EPSILON, shadowray));
+
+            if(ShadowInfo.hit == true && ShadowInfo.distance <= tdist && ShadowInfo.distance > 0){
                 shade = 0;
                 break;
             }
         }
+          ----------------------------------------------------------------------------------
+        */
 
         //calculate diffuse shading
         //dotproduct of lightray and surface normal
-        double dot = QVector3D::dotProduct(lightray, normal);
+        double dotLN = QVector3D::dotProduct(lightray, normal);
 
-        if(dot > 0){
-            //get the color the surface has at the hitpoint
-            QVector3D diffuseCol = dot * obj->getMat()->getDiffuseColor() * shade;
-            //return diffuse color, should be added to the ray color in the main raytrace loop
-            return diffuseCol;
+        if(dotLN > 0){
+            //get the color the surface has at the hitpoint and multiply it with the shadowing factor
+            QVector3D diffuseCol = dotLN * nearestObj->getMat()->getDiffuseColor() * shade;
+            //add the diffuse color to the ray's color
+            Accumulated_Color += (diffuseCol * light->getColor() * light->getIntensity())/100;
+        }
+
+        //calculate specular shading
+        QVector3D Incoming_Vector = ray.getDirection();
+        QVector3D Reflected_Vector = lightray - 2 * QVector3D::dotProduct(lightray, normal) * normal;
+        double dotIR = QVector3D::dotProduct(Incoming_Vector, Reflected_Vector);
+
+        if(dotIR > 0){
+            double specularAmount = powf(dotIR, 20) * nearestObj->getMat()->getSpecularColor().length()/100;
+            //add the specular color to the ray's color
+            Accumulated_Color += (specularAmount * light->getColor() * light->getIntensity());
         }
     }
+
+    return Accumulated_Color;
 }
 
+//obsolete function that was only used for testing purposes
 QVector3D RayTracer::Render_Normal(double distance, Ray ray, Object *obj){
 
     QVector3D PointOnSphereSurface = QVector3D(ray.getDirection().x(), ray.getDirection().y(), distance);
