@@ -35,6 +35,10 @@ Geometry::IntersectionInfo Sphere::getIntersectionInfo(Ray ray){
         if(results.distance<0)
         {
             results.distance = max(t1, t2);
+            if(results.distance<0)
+            {
+                results.hit = false;
+            }
         }
     }
 

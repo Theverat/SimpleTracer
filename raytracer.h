@@ -20,11 +20,11 @@ class RayTracer : public QThread
 {
     Q_OBJECT
 public:
-    RayTracer(int x, int y);
+    RayTracer(int x, int y, uint newDepth);
 
     void render();
     QColor getColorForPixel(int x, int y);
-    QVector3D raytrace(Ray ray);
+    QVector3D raytrace(Ray ray, uint current_depth);
 
 signals:
     //void returnLine(QImage*);
@@ -32,8 +32,8 @@ signals:
 
 private:
     QSharedPointer<QImage> renderImage;
-
     World *world;
+    uint depth;
 
     QVector3D Render_Normal(double distance, Ray ray, Object *obj);
 };

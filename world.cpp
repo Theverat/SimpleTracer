@@ -12,16 +12,16 @@ World::World(Camera* newCamera)
 
 
     //------------- testsphere --------------
-    Object* sphere1 = new Object(new Sphere(QVector3D(0, 0, 0), 1), new Material());//
+    Object* sphere1 = new Object(new Sphere(QVector3D(0, 0.8, 0), 1), new Material());//
     objects.append(sphere1);
 
-    Object* sphere2 = new Object(new Sphere(QVector3D(0, -2, 0), 1), new Material());
+    Object* sphere2 = new Object(new Sphere(QVector3D(0.3, -1.3, 0), 1), new Material(QVector3D(30, 30, 30), QVector3D(50, 50, 50), 100, 0.8));
     objects.append(sphere2);
 
     Object* sphere3 = new Object(new Sphere(QVector3D(-2, 0.5, 0), 1), new Material());
     objects.append(sphere3);
 
-    Object* sphere4 = new Object(new Sphere(QVector3D(-2, -1.5, 0), 1), new Material());
+    Object* sphere4 = new Object(new Sphere(QVector3D(-2, -1.5, 0), 1), new Material(QVector3D(50, 50, 150), QVector3D(50, 50, 50), 100, 0.5));
     objects.append(sphere4);
 
     //------------- testlight ---------------
