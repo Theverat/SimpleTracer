@@ -2,15 +2,16 @@
 #define TRIANGLE_H
 
 #include "plane.h"
+#include <QVector3D>
 
-class Triangle// : private Plane
+class Triangle : public Plane
 {
 public:
     Triangle(QVector3D newA, QVector3D newB, QVector3D newC);
 
     Geometry::IntersectionInfo getIntersectionInfo(Ray ray);
 
-    QVector3D getNormal(QVector3D PointOnSurface);
+    QVector3D getNormal(QVector3D PointOnSurface){}
 
 private:
     QVector3D A;

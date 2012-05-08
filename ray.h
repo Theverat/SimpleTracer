@@ -13,9 +13,9 @@ public:
 
     void setDirection(QVector3D newDir){Direction = newDir;}
     void setOrigin(QVector3D newOrig){Origin = newOrig;}
+    QVector3D Direction;
 
 private:
-    QVector3D Direction;
     QVector3D Origin;
 };
 

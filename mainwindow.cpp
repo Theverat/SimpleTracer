@@ -26,7 +26,7 @@ void MainWindow::startRender(){
 
     ui->graphicsView->scene()->setSceneRect(0, 0, imgwidth, imgheight);
 
-    tracer = new RayTracer(imgwidth, imgheight, 5);
+    tracer = new RayTracer(imgwidth, imgheight, 8);
     QObject::connect(tracer, SIGNAL(returnImage(QImage*)), this, SLOT(updateRender(QImage*)));
     //QObject::connect(tracer, SIGNAL(returnLine(QImage*)), this, SLOT(updateLine(QImage*)));
 

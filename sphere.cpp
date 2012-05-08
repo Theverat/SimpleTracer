@@ -47,7 +47,7 @@ Geometry::IntersectionInfo Sphere::getIntersectionInfo(Ray ray){
 
 
 QVector3D Sphere::getNormal(QVector3D PointOnSurface){
-    return QVector3D(PointOnSurface - Midpoint);
+    return QVector3D(PointOnSurface - Midpoint).normalized();
 }
 
 double Sphere::max(double a, double b){

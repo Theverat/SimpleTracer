@@ -18,12 +18,15 @@ public:
 
     Camera* getCamera();
     void setCamera(Camera* newCam);
+    QVector3D getBgColor();
+    double getIoR();
 
     QVector<Object*>& getObjects();
     QVector<Light*>& getLights();
 
 private:
-    QColor BgColor;
+    QVector3D BgColor;
+    double IoR;
 
     QVector<Object*> objects;
     QVector<Light*> lights;
