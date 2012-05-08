@@ -9,8 +9,8 @@ World::World(Camera* newCamera)
     //future object importer code will live here
 
     //------------- testplane ---------------
-    //Object* plane = new Object(new Plane(QVector3D(0, -2, 0), QVector3D(0, 1, 0), QVector3D(0, 0, 1)), new Material());
-    //objects.append(plane);
+    Object* plane = new Object(new Plane(QVector3D(0, -2, 0), QVector3D(0, 1, 0), QVector3D(0, 0, 1)), new Material());
+    objects.append(plane);
 
 
     //------------- testsphere --------------

@@ -10,7 +10,7 @@ public:
 
     Geometry::IntersectionInfo getIntersectionInfo(Ray ray);
 
-    QVector3D getNormal();
+    QVector3D getNormal(QVector3D PointOnSurface);
 
 private:
     QVector3D Origin;

@@ -46,13 +46,14 @@ Geometry::IntersectionInfo Plane::getIntersectionInfo(Ray ray){
 
                 //calculate the intersection point of ray and plane
                 QVector3D hitpoint = ray.getOrigin() + lambda * ray.getDirection();
-                results.distance = (hitpoint - ray.getOrigin()).length();
+                //results.distance = (hitpoint - ray.getOrigin()).length();
+                results.distance = lambda;
     }
 
     return results;
 }
 
-QVector3D Plane::getNormal(){
+QVector3D Plane::getNormal(QVector3D PointOnSurface){
     return normal;
 }
 #endif
