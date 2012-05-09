@@ -9,7 +9,7 @@ World::World(Camera* newCamera)
     //future object importer code will live here
 
     //------------- testplane ---------------
-    Object* plane = new Object(new Plane(QVector3D(0, -1.8, 0), QVector3D(1, 3, 20), QVector3D(0, 0, 1)), new Material(QVector3D(80, 37, 20), QVector3D(10, 10, 10), 500, 0.2, false, 1));
+    Object* plane = new Object(new Plane(QVector3D(0, -1.8, 0), QVector3D(-0.3, 0, 0), QVector3D(0, 0, 1000)), new Material(QVector3D(200, 200, 200), QVector3D(10, 10, 10), 100, 0, false, 1));
     objects.append(plane);
 
     //------------- testsphere --------------
@@ -39,16 +39,19 @@ World::World(Camera* newCamera)
     //objects.append(sphere8);
     */
     //------------- testlight ---------------
-    Light* light = new Light(QVector3D(3, 3, -2), QVector3D(93, 156, 220), 4);
+    //"testsun" light from the left
+    Light* light2 = new Light(QVector3D(-3, 2, -3), QVector3D(250, 250, 220), 9);
+    lights.append(light2);
+
+    //"testsky" light from the right
+    Light* light = new Light(QVector3D(3, 3, -2), QVector3D(93, 156, 220), 6);
     lights.append(light);
 
     //Object* sphere5 = new Object(new Sphere(QVector3D(3, 1, -0.6), 0.5), new Material(QVector3D(150, 150, 150), QVector3D(50, 50, 50), 1000, 0.3));
     //objects.append(sphere5);
 
-    //Snowman
-    Light* light2 = new Light(QVector3D(-3, 2, -3), QVector3D(250, 250, 220), 9);
-    lights.append(light2);
-
+    /*****************************************************************************************************************/
+    //Snowman scene
     Object* body1 = new Object(new Sphere(QVector3D(0, -1.5, 0), 1), new Material(QVector3D(200, 200, 200), QVector3D(1, 1, 1), 30, 0, false, 1));
     objects.append(body1);
 
@@ -75,6 +78,7 @@ World::World(Camera* newCamera)
 
     Object* nose = new Object(new Sphere(QVector3D(0, 0.9, -1), 0.05), new Material(QVector3D(180, 50, 20), QVector3D(10, 10, 10), 100, 0.17, false, 1));
     objects.append(nose);
+    /*****************************************************************************************************************/
 }
 
 Camera* World::getCamera(){

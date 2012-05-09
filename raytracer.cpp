@@ -52,7 +52,6 @@ QVector3D RayTracer::raytrace(Ray ray, uint current_depth){
     /*****************************************************************************************************************/
     double nearestDist = world->getCamera()->getFarClip(); //far clipping border of the scene
     Object* nearestObj = new Object(new Sphere(QVector3D(0, 0, 0), 1), new Material());
-    double shade = 1; //amount of shadowing at the hitpoint
 
     QVector3D Accumulated_Color = QVector3D(0, 0, 0);   //the color of the pixel, stored in a QVector3D
                                                         //gets accumulated in the following process
@@ -83,6 +82,7 @@ QVector3D RayTracer::raytrace(Ray ray, uint current_depth){
     //trace lights
     for(int l = 0; l < world->getLights().size(); l++){
         Light* light = world->getLights().at(l);
+        //LOG("l == " << l)
 
         //vector from hitpoint to light, normalized
         QVector3D lightray = (light->getPosition() - hitpoint).normalized();
@@ -92,13 +92,14 @@ QVector3D RayTracer::raytrace(Ray ray, uint current_depth){
 
         /*****************************************************************************************************************/
         //calculate shadows
-        /*
-        //Something's wrong here...
+        double shade = 1; //amount of shadowing at the hitpoint
         //check if there's at least one object occluding the lightsource from the hitpoint
         QVector3D shadowray = light->getPosition() - hitpoint;
         double tdist = shadowray.length();
+        //LOG("shadowray.length() == " << tdist)
 
         for(int o = 0; o < world->getObjects().size(); o++){
+            //LOG("o == " << o)
             Object* obstacle = world->getObjects().at(o);
             Geometry::IntersectionInfo ShadowInfo = obstacle->getMesh()->getIntersectionInfo(Ray(hitpoint + shadowray * EPSILON, shadowray));
 
@@ -118,7 +119,7 @@ QVector3D RayTracer::raytrace(Ray ray, uint current_depth){
                 //get the color the surface has at the hitpoint and multiply it with the shadowing factor
                 QVector3D diffuseCol = dotLN * nearestObj->getMat()->getDiffuseColor() * shade;
                 //add the diffuse color to the ray's color
-                Accumulated_Color += (diffuseCol * (light->getColor() * light->getIntensity())/pow((lightrayLength + EPSILON), 2))/100; //first implementation, only direct lighting
+                Accumulated_Color += (diffuseCol * ((light->getColor() * light->getIntensity())/pow((lightrayLength + EPSILON), 2)))/100; //first implementation, only direct lighting
             }
         }
 
