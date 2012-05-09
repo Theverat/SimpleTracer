@@ -6,7 +6,7 @@
 class Ray
 {
 public:
-    Ray(QVector3D newOrig, QVector3D newDir){Direction = newDir; Origin = newOrig;}
+    Ray(QVector3D newOrig, QVector3D newDir){Direction = newDir.normalized(); Origin = newOrig;}
 
     QVector3D getDirection(){return Direction;}
     QVector3D getOrigin(){return Origin;}

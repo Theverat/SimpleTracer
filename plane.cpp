@@ -35,19 +35,23 @@ Geometry::IntersectionInfo Plane::getIntersectionInfo(Ray ray){
     if(QVector3D::dotProduct(ray.getDirection(), normal) != 0){
         results.hit = true;
 
-        double lambda = -(ray.getOrigin().x() * normal.x() +
-                                 ray.getOrigin().y() * normal.y() +
-                                 ray.getOrigin().z() * normal.z() +
+        double lambda = (ray.getOrigin().x() * normal.x() -
+                                 ray.getOrigin().y() * normal.y() -
+                                 ray.getOrigin().z() * normal.z() -
                                  n0)
                                 /
                                 (ray.getDirection().x() * normal.x() +
                                 ray.getDirection().y() * normal.y() +
                                 ray.getDirection().z() * normal.z());
 
-                //calculate the intersection point of ray and plane
-                QVector3D hitpoint = ray.getOrigin() + lambda * ray.getDirection();
-                //results.distance = (hitpoint - ray.getOrigin()).length();
-                results.distance = lambda;
+        //calculate the intersection point of ray and plane
+        //QVector3D hitpoint = ray.getOrigin() + lambda * ray.getDirection();
+        //results.distance = (hitpoint - ray.getOrigin()).length();
+
+        if(lambda < 0)
+            results.hit = false;
+
+        results.distance = lambda;
     }
 
     return results;

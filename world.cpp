@@ -3,15 +3,14 @@
 World::World(Camera* newCamera)
 {
     cam = newCamera;
-    BgColor = QVector3D(0, 60, 0);
+    BgColor = QVector3D(93, 156, 220);
     IoR = 1;
 
     //future object importer code will live here
 
     //------------- testplane ---------------
-    Object* plane = new Object(new Plane(QVector3D(0, -2, 0), QVector3D(0, 1, 0), QVector3D(0, 0, 1)), new Material());
+    Object* plane = new Object(new Plane(QVector3D(0, -1.8, 0), QVector3D(1, 3, 20), QVector3D(0, 0, 1)), new Material(QVector3D(80, 37, 20), QVector3D(10, 10, 10), 500, 0.2, false, 1));
     objects.append(plane);
-
 
     //------------- testsphere --------------
     /*
@@ -40,14 +39,14 @@ World::World(Camera* newCamera)
     //objects.append(sphere8);
     */
     //------------- testlight ---------------
-    Light* light = new Light(QVector3D(3, 3, -2), QVector3D(250, 230, 230), 3);
+    Light* light = new Light(QVector3D(3, 3, -2), QVector3D(93, 156, 220), 4);
     lights.append(light);
 
     //Object* sphere5 = new Object(new Sphere(QVector3D(3, 1, -0.6), 0.5), new Material(QVector3D(150, 150, 150), QVector3D(50, 50, 50), 1000, 0.3));
     //objects.append(sphere5);
 
     //Snowman
-    Light* light2 = new Light(QVector3D(-3, 2, -3), QVector3D(250, 250, 200), 8);
+    Light* light2 = new Light(QVector3D(-3, 2, -3), QVector3D(250, 250, 220), 9);
     lights.append(light2);
 
     Object* body1 = new Object(new Sphere(QVector3D(0, -1.5, 0), 1), new Material(QVector3D(200, 200, 200), QVector3D(1, 1, 1), 30, 0, false, 1));
