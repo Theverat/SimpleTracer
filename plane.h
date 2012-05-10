@@ -17,8 +17,10 @@ private:
     QVector3D Vector1;
     QVector3D Vector2;
 
-    QVector3D normal; //surface normal, gets computed at constructor call
     double n0;
+
+protected:
+    QVector3D normal; //surface normal, gets computed at constructor call
 };
 
 #endif // PLANE_H

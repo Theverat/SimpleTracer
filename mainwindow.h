@@ -25,6 +25,7 @@ private:
 
     int imgwidth;
     int imgheight;
+    int depth;
 
     RayTracer* tracer;
 
@@ -32,6 +33,8 @@ private slots:
     void startRender();
     //void updateLine(QImage*); //slows down the render
     void updateRender(QImage*);
+
+    void DepthChanged(int);
 };
 
 #endif // MAINWINDOW_H

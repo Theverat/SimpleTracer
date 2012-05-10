@@ -3,7 +3,7 @@
 Material::Material()
 {
     //initialise all variables with default values
-    Color_Diffuse = QVector3D(50, 50, 50);
+    Color_Diffuse = QVector3D(180, 180, 180);
     Color_Specular = QVector3D(50, 50, 50);
     exponent = 20;
     reflectionAmount = 0;

@@ -77,6 +77,7 @@ QVector3D RayTracer::raytrace(Ray ray, uint current_depth){
 
     //hitpoint on the object's surface
     QVector3D hitpoint = ray.getOrigin() + ray.getDirection() * nearestDist;
+    QVector3D normal = (nearestObj->getMesh()->getNormal(hitpoint)).normalized();
 
     /*****************************************************************************************************************/
     //trace lights
@@ -88,18 +89,14 @@ QVector3D RayTracer::raytrace(Ray ray, uint current_depth){
         QVector3D lightray = (light->getPosition() - hitpoint).normalized();
         double lightrayLength = (light->getPosition() - hitpoint).length();
 
-        QVector3D normal = (nearestObj->getMesh()->getNormal(hitpoint)).normalized();
-
         /*****************************************************************************************************************/
         //calculate shadows
         double shade = 1; //amount of shadowing at the hitpoint
         //check if there's at least one object occluding the lightsource from the hitpoint
         QVector3D shadowray = light->getPosition() - hitpoint;
         double tdist = shadowray.length();
-        //LOG("shadowray.length() == " << tdist)
 
         for(int o = 0; o < world->getObjects().size(); o++){
-            //LOG("o == " << o)
             Object* obstacle = world->getObjects().at(o);
             Geometry::IntersectionInfo ShadowInfo = obstacle->getMesh()->getIntersectionInfo(Ray(hitpoint + shadowray * EPSILON, shadowray));
 
@@ -113,13 +110,16 @@ QVector3D RayTracer::raytrace(Ray ray, uint current_depth){
         //calculate diffuse shading
         //dotproduct of lightray and surface normal
         if(nearestObj->getMat()->getDiffuseColor().length() > 0.0f){
-            double dotLN = QVector3D::dotProduct(lightray, normal);
+            double dotLN = fabs(QVector3D::dotProduct(lightray, normal));
 
             if(dotLN > 0){
                 //get the color the surface has at the hitpoint and multiply it with the shadowing factor
                 QVector3D diffuseCol = dotLN * nearestObj->getMat()->getDiffuseColor() * shade;
                 //add the diffuse color to the ray's color
-                Accumulated_Color += (diffuseCol * ((light->getColor() * light->getIntensity())/pow((lightrayLength + EPSILON), 2)))/100; //first implementation, only direct lighting
+                //square light falloff
+                //Accumulated_Color += (diffuseCol * ((light->getColor() * light->getIntensity())/pow((lightrayLength + EPSILON), 2)))/100; //first implementation, only direct lighting
+                //linear light falloff
+                Accumulated_Color += (diffuseCol * ((light->getColor() * light->getIntensity())/(lightrayLength + EPSILON)))/100;
             }
         }
 
@@ -161,6 +161,8 @@ QVector3D RayTracer::raytrace(Ray ray, uint current_depth){
             }
         }
     }
+
+    delete nearestObj;
 
     return Accumulated_Color;
 }

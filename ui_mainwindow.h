@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Tue May 8 08:42:25 2012
+** Created: Wed May 9 22:00:25 2012
 **      by: Qt User Interface Compiler version 4.8.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -15,10 +15,15 @@
 #include <QtGui/QAction>
 #include <QtGui/QApplication>
 #include <QtGui/QButtonGroup>
+#include <QtGui/QFrame>
 #include <QtGui/QGraphicsView>
+#include <QtGui/QHBoxLayout>
 #include <QtGui/QHeaderView>
+#include <QtGui/QLabel>
 #include <QtGui/QMainWindow>
 #include <QtGui/QPushButton>
+#include <QtGui/QSpacerItem>
+#include <QtGui/QSpinBox>
 #include <QtGui/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -28,7 +33,13 @@ class Ui_MainWindow
 public:
     QWidget *centralWidget;
     QGraphicsView *graphicsView;
+    QWidget *horizontalLayoutWidget;
+    QHBoxLayout *horizontalLayout;
     QPushButton *pushButton;
+    QFrame *line;
+    QLabel *label;
+    QSpinBox *DepthBox;
+    QSpacerItem *horizontalSpacer;
 
     void setupUi(QMainWindow *MainWindow)
     {
@@ -36,6 +47,9 @@ public:
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
         MainWindow->setWindowModality(Qt::NonModal);
         MainWindow->resize(831, 680);
+        QIcon icon;
+        icon.addFile(QString::fromUtf8("Icon/SimpleTracer-Icon.png"), QSize(), QIcon::Normal, QIcon::Off);
+        MainWindow->setWindowIcon(icon);
         MainWindow->setLocale(QLocale(QLocale::English, QLocale::UnitedStates));
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
@@ -51,9 +65,42 @@ public:
         graphicsView->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop);
         graphicsView->setDragMode(QGraphicsView::NoDrag);
         graphicsView->setViewportUpdateMode(QGraphicsView::MinimalViewportUpdate);
-        pushButton = new QPushButton(centralWidget);
+        horizontalLayoutWidget = new QWidget(centralWidget);
+        horizontalLayoutWidget->setObjectName(QString::fromUtf8("horizontalLayoutWidget"));
+        horizontalLayoutWidget->setGeometry(QRect(10, 630, 811, 41));
+        horizontalLayout = new QHBoxLayout(horizontalLayoutWidget);
+        horizontalLayout->setSpacing(6);
+        horizontalLayout->setContentsMargins(11, 11, 11, 11);
+        horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
+        horizontalLayout->setContentsMargins(0, 0, 0, 0);
+        pushButton = new QPushButton(horizontalLayoutWidget);
         pushButton->setObjectName(QString::fromUtf8("pushButton"));
-        pushButton->setGeometry(QRect(10, 640, 101, 31));
+
+        horizontalLayout->addWidget(pushButton);
+
+        line = new QFrame(horizontalLayoutWidget);
+        line->setObjectName(QString::fromUtf8("line"));
+        line->setFrameShape(QFrame::VLine);
+        line->setFrameShadow(QFrame::Sunken);
+
+        horizontalLayout->addWidget(line);
+
+        label = new QLabel(horizontalLayoutWidget);
+        label->setObjectName(QString::fromUtf8("label"));
+
+        horizontalLayout->addWidget(label);
+
+        DepthBox = new QSpinBox(horizontalLayoutWidget);
+        DepthBox->setObjectName(QString::fromUtf8("DepthBox"));
+        DepthBox->setMaximum(512);
+        DepthBox->setValue(8);
+
+        horizontalLayout->addWidget(DepthBox);
+
+        horizontalSpacer = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+        horizontalLayout->addItem(horizontalSpacer);
+
         MainWindow->setCentralWidget(centralWidget);
 
         retranslateUi(MainWindow);
@@ -65,6 +112,7 @@ public:
     {
         MainWindow->setWindowTitle(QApplication::translate("MainWindow", "SimpleTracer", 0, QApplication::UnicodeUTF8));
         pushButton->setText(QApplication::translate("MainWindow", "Start Render", 0, QApplication::UnicodeUTF8));
+        label->setText(QApplication::translate("MainWindow", "Depth: ", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 
 };

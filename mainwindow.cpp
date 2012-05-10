@@ -6,11 +6,13 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow),
     imgwidth(800),
     imgheight(600),
+    depth(8),
     tracer(0)
 {
     ui->setupUi(this);
 
     connect(ui->pushButton, SIGNAL(clicked()), this, SLOT(startRender()));
+    connect(ui->DepthBox, SIGNAL(valueChanged(int)), this, SLOT(DepthChanged(int)));
 
     QGraphicsScene* scene = new QGraphicsScene(this);
     ui->graphicsView->setScene(scene);
@@ -26,7 +28,7 @@ void MainWindow::startRender(){
 
     ui->graphicsView->scene()->setSceneRect(0, 0, imgwidth, imgheight);
 
-    tracer = new RayTracer(imgwidth, imgheight, 8);
+    tracer = new RayTracer(imgwidth, imgheight, depth);
     QObject::connect(tracer, SIGNAL(returnImage(QImage*)), this, SLOT(updateRender(QImage*)));
     //QObject::connect(tracer, SIGNAL(returnLine(QImage*)), this, SLOT(updateLine(QImage*)));
 
@@ -41,4 +43,8 @@ void MainWindow::startRender(){
 void MainWindow::updateRender(QImage *render){
     ui->graphicsView->scene()->clear();
     ui->graphicsView->scene()->addPixmap(QPixmap::fromImage(*render));
+}
+
+void MainWindow::DepthChanged(int newDepth){
+    depth = newDepth;
 }
