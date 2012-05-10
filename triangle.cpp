@@ -8,7 +8,7 @@ Triangle::Triangle(QVector3D newA, QVector3D newB, QVector3D newC) : Plane(newA,
     A = newA;
     B = newB;
     C = newC;
-    normal = QVector3D::crossProduct((B - A), (C - A)).normalized();
+    //normal = QVector3D::crossProduct((B - A), (C - A)).normalized();
 }
 
 /*

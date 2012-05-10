@@ -35,7 +35,7 @@ Geometry::IntersectionInfo Plane::getIntersectionInfo(Ray ray){
     if(QVector3D::dotProduct(ray.getDirection(), normal) != 0){
         results.hit = true;
 
-        double lambda = (ray.getOrigin().x() * normal.x() -
+        double lambda = (-ray.getOrigin().x() * normal.x() -
                                  ray.getOrigin().y() * normal.y() -
                                  ray.getOrigin().z() * normal.z() -
                                  n0)
