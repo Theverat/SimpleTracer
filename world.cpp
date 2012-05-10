@@ -3,7 +3,8 @@
 World::World(Camera* newCamera)
 {
     cam = newCamera;
-    BgColor = QVector3D(93, 156, 220);
+    //BgColor = QVector3D(93, 156, 220); //blue sky
+    BgColor = QVector3D(0, 0, 0);
     IoR = 1;
 
     //future object importer code will live here
@@ -114,27 +115,28 @@ World::World(Camera* newCamera)
     lights.append(light2);
 
     //materials
-    Material* white_wall = new Material(QVector3D(200, 200, 200), QVector3D(10, 10, 10), 30, 0, false, 1);
-    Material* green_wall = new Material();
-    Material* red_wall = new Material();
-    Material* sphere = new Material();
+    Material* white_wall = new Material(QVector3D(200, 200, 200), QVector3D(10, 10, 10), 150, 0, false, 1);
+    Material* green_wall = new Material(QVector3D(20, 200, 20), QVector3D(10, 10, 10), 30, 0, false, 1);
+    Material* red_wall = new Material(QVector3D(200, 20, 20), QVector3D(10, 10, 10), 30, 0, false, 1);
+    Material* sphere = new Material(QVector3D(80, 80, 190), QVector3D(40, 40, 40), 200, 0.2, false, 1);
     Material* cube = new Material();
+    Material* mirror = new Material(QVector3D(150, 150, 150), QVector3D(40, 40, 40), 800, 0.5, false, 1);
 
     //triangle borders
     //left wall
-    Object* leftwall_top = new Object(new Triangle(QVector3D(-2, 2, 0), QVector3D(-2, -2, 0), QVector3D(-2, 2, 4)), white_wall);
+    Object* leftwall_top = new Object(new Triangle(QVector3D(-2, 2, 0), QVector3D(-2, -2, 0), QVector3D(-2, 2, 4)), red_wall);
     objects.append(leftwall_top);
-    Object* leftwall_bottom = new Object(new Triangle(QVector3D(-2, -2, 0), QVector3D(-2, -2, 4), QVector3D(-2, 2, 4)), white_wall);
+    Object* leftwall_bottom = new Object(new Triangle(QVector3D(-2, -2, 0), QVector3D(-2, -2, 4), QVector3D(-2, 2, 4)), red_wall);
     objects.append(leftwall_bottom);
     //right wall
-    Object* rightwall_top = new Object(new Triangle(QVector3D(2, 2, 0), QVector3D(2, -2, 0), QVector3D(2, 2, 4)), white_wall);
+    Object* rightwall_top = new Object(new Triangle(QVector3D(2, 2, 0), QVector3D(2, -2, 0), QVector3D(2, 2, 4)), green_wall);
     objects.append(rightwall_top);
-    Object* rightwall_bottom = new Object(new Triangle(QVector3D(2, -2, 0), QVector3D(2, -2, 4), QVector3D(2, 2, 4)), white_wall);
+    Object* rightwall_bottom = new Object(new Triangle(QVector3D(2, -2, 0), QVector3D(2, -2, 4), QVector3D(2, 2, 4)), green_wall);
     objects.append(rightwall_bottom);
     //bottom
-    Object* bottom_1 = new Object(new Triangle(QVector3D(-2, -2, 0), QVector3D(2, -2, 0), QVector3D(-2, -2, 4)), white_wall);
+    Object* bottom_1 = new Object(new Triangle(QVector3D(-2, -2, 0), QVector3D(2, -2, 0), QVector3D(-2, -2, 4)), mirror);
     objects.append(bottom_1);
-    Object* bottom_2 = new Object(new Triangle(QVector3D(2, -2, 0), QVector3D(2, -2, 4), QVector3D(-2, -2, 4)), white_wall);
+    Object* bottom_2 = new Object(new Triangle(QVector3D(2, -2, 0), QVector3D(2, -2, 4), QVector3D(-2, -2, 4)), mirror);
     objects.append(bottom_2);
     //top
     Object* top_1 = new Object(new Triangle(QVector3D(-2, 2, 0), QVector3D(2, 2, 0), QVector3D(-2, 2, 4)), white_wall);
@@ -149,8 +151,10 @@ World::World(Camera* newCamera)
 
     //objects in the box
     //sphere
-    Object* sphere1 = new Object(new Sphere(QVector3D(1, -1.5, 1), 0.5), new Material());
+    Object* sphere1 = new Object(new Sphere(QVector3D(1, -1.5, 1), 0.5), sphere);
     objects.append(sphere1);
+    Object* sphere2 = new Object(new Sphere(QVector3D(-0.9, -1, 2.5), 1), sphere);
+    objects.append(sphere2);
 }
 
 Camera* World::getCamera(){
