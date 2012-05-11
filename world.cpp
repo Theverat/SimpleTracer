@@ -4,7 +4,7 @@ World::World(Camera* newCamera)
 {
     cam = newCamera;
     //BgColor = QVector3D(93, 156, 220); //blue sky
-    BgColor = QVector3D(0, 0, 0);
+    BgColor = QVector3D(40, 30, 0);
     IoR = 1;
 
     //future object importer code will live here
@@ -109,7 +109,7 @@ World::World(Camera* newCamera)
     LOG("objArray built")
 
     /*****************************************************************************************************************/
-    //Cornell Box
+    //Cornell Box Scene
     //light
     Light* light2 = new Light(QVector3D(0.8, 1, 1), QVector3D(250, 250, 220), 1);
     lights.append(light2);
@@ -118,7 +118,8 @@ World::World(Camera* newCamera)
     Material* white_wall = new Material(QVector3D(200, 200, 200), QVector3D(10, 10, 10), 150, 0, false, 1);
     Material* green_wall = new Material(QVector3D(20, 200, 20), QVector3D(10, 10, 10), 30, 0, false, 1);
     Material* red_wall = new Material(QVector3D(200, 20, 20), QVector3D(10, 10, 10), 30, 0, false, 1);
-    Material* sphere = new Material(QVector3D(80, 80, 190), QVector3D(40, 40, 40), 200, 0.2, false, 1);
+    Material* sphere_glossy_mat = new Material(QVector3D(80, 80, 190), QVector3D(40, 40, 40), 200, 0.2, false, 1);
+    Material* sphere_glass_mat = new Material(QVector3D(190, 80, 80), QVector3D(40, 40, 40), 500, 0, true, 1.51);
     Material* cube = new Material();
     Material* mirror = new Material(QVector3D(150, 150, 150), QVector3D(40, 40, 40), 800, 0.5, false, 1);
 
@@ -151,9 +152,9 @@ World::World(Camera* newCamera)
 
     //objects in the box
     //sphere
-    Object* sphere1 = new Object(new Sphere(QVector3D(1, -1.5, 1), 0.5), sphere);
+    Object* sphere1 = new Object(new Sphere(QVector3D(1, -1.5, 1), 0.5), sphere_glass_mat);
     objects.append(sphere1);
-    Object* sphere2 = new Object(new Sphere(QVector3D(-0.9, -1, 2.5), 1), sphere);
+    Object* sphere2 = new Object(new Sphere(QVector3D(-0.9, -1, 2.5), 1), sphere_glossy_mat);
     objects.append(sphere2);
 }
 

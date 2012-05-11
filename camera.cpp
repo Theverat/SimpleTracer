@@ -1,23 +1,26 @@
 #include "camera.h"
 
-Camera::Camera(QVector3D newOrig,  int W, int H):
+Camera::Camera(QVector3D newOrig,  QVector3D newDir, int W, int H, float newFocal_Length):
     far_clipping(9999999999999)
 {
     Origin = newOrig;
+    Direction = newDir.normalized();
     imgwidth = W;
     imgheigth = H;
+    Focal_Length = newFocal_Length * 10.0;
 }
 
 
 Ray Camera::shootRay(int x, int y){
 
-    double HitOfRay_X = (-(double)imgwidth / 200) + ((double)x/100);
-    double HitOfRay_Y = ((double)imgheigth / 200) - ((double)y/100);
+    //Original, static
+    double HitOfRay_X = (-(double)imgwidth)/2 + ((double)x);
+    double HitOfRay_Y = ((double)imgheigth)/2 - ((double)y);
 
-    QVector3D dir = QVector3D(HitOfRay_X, HitOfRay_Y, 5);
-    dir.normalize();
+    QVector3D rayDir = QVector3D(HitOfRay_X, HitOfRay_Y, Focal_Length);
+    rayDir.normalize();
 
-    return Ray(Origin, dir);
+    return Ray(Origin, rayDir);
 }
 
 int Camera::getImgWidth(){
@@ -28,6 +31,6 @@ int Camera::getImgHeigth(){
     return imgheigth;
 }
 
-double Camera::getFarClip(){
+float Camera::getFarClip(){
     return far_clipping;
 }

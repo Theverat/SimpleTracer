@@ -7,21 +7,23 @@
 class Camera
 {
 public:
-    Camera(QVector3D newOrig, int W, int H);
+    Camera(QVector3D newOrig, QVector3D newDir, int W, int H, float newFocal_Length);
 
     Ray shootRay(int x, int y);
 
     int getImgWidth();
     int getImgHeigth();
-    double getFarClip();
+    float getFarClip();
 
 private:
     QVector3D Origin;
+    QVector3D Direction;
 
     int imgwidth;
     int imgheigth;
 
-    double far_clipping;
+    float Focal_Length;
+    float far_clipping;
 };
 
 #endif // CAMERA_H
