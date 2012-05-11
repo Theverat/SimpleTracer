@@ -11,3 +11,5 @@ https://github.com/Theverat/SimpleTracer/blob/master/scrn-SimpleTracer-Screensho
 https://github.com/Theverat/SimpleTracer/blob/master/scrn-mirror.png
 https://github.com/Theverat/SimpleTracer/blob/master/scrn-plane_mirror_2.png
 https://github.com/Theverat/SimpleTracer/blob/master/scrn-shadows.png
+
+![Cornell Box Render](https://github.com/Theverat/SimpleTracer/raw/master/scrn-cornell-box-1.png)
