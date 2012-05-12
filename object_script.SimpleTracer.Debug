@@ -1,0 +1,16 @@
+INPUT(
+./debug\main.o
+./debug\mainwindow.o
+./debug\camera.o
+./debug\sphere.o
+./debug\raytracer.o
+./debug\object.o
+./debug\material.o
+./debug\triangle.o
+./debug\plane.o
+./debug\world.o
+./debug\light.o
+./debug\rgbiimage.o
+./debug\moc_mainwindow.o
+./debug\moc_raytracer.o
+);

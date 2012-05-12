@@ -1,0 +1,16 @@
+INPUT(
+./release\main.o
+./release\mainwindow.o
+./release\camera.o
+./release\sphere.o
+./release\raytracer.o
+./release\object.o
+./release\material.o
+./release\triangle.o
+./release\plane.o
+./release\world.o
+./release\light.o
+./release\rgbiimage.o
+./release\moc_mainwindow.o
+./release\moc_raytracer.o
+);
