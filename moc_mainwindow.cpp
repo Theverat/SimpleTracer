@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'mainwindow.h'
 **
-** Created: Fri May 11 15:27:16 2012
+** Created: Sat May 12 18:14:38 2012
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.1)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,7 +23,7 @@ static const uint qt_meta_data_MainWindow[] = {
        6,       // revision
        0,       // classname
        0,    0, // classinfo
-       3,   14, // methods
+       5,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -34,6 +34,8 @@ static const uint qt_meta_data_MainWindow[] = {
       12,   11,   11,   11, 0x08,
       26,   11,   11,   11, 0x08,
       48,   11,   11,   11, 0x08,
+      66,   11,   11,   11, 0x08,
+      82,   11,   11,   11, 0x08,
 
        0        // eod
 };
@@ -41,6 +43,7 @@ static const uint qt_meta_data_MainWindow[] = {
 static const char qt_meta_stringdata_MainWindow[] = {
     "MainWindow\0\0startRender()\0"
     "updateRender(QImage*)\0DepthChanged(int)\0"
+    "openSceneFile()\0saveImageFile()\0"
 };
 
 void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
@@ -52,6 +55,8 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 0: _t->startRender(); break;
         case 1: _t->updateRender((*reinterpret_cast< QImage*(*)>(_a[1]))); break;
         case 2: _t->DepthChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 3: _t->openSceneFile(); break;
+        case 4: _t->saveImageFile(); break;
         default: ;
         }
     }
@@ -89,9 +94,9 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 3)
+        if (_id < 5)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 3;
+        _id -= 5;
     }
     return _id;
 }

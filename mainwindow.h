@@ -5,6 +5,9 @@
 #include <iostream>
 #include <QGraphicsScene>
 #include <QObject>
+#include <QFileDialog>
+#include <QFile>
+#include <QTextStream>
 
 #include "raytracer.h"
 
@@ -29,12 +32,17 @@ private:
 
     RayTracer* tracer;
 
+    bool loadSceneFile(const QString &fileName);
+
 private slots:
     void startRender();
     //void updateLine(QImage*); //slows down the render
     void updateRender(QImage*);
 
     void DepthChanged(int);
+
+    void openSceneFile();
+    void saveImageFile();
 };
 
 #endif // MAINWINDOW_H

@@ -2,6 +2,7 @@
 #define PREDEFS_H
 
 #include "math.h"
+#include <QDebug>
 
 #define EPSILON	0.0001f
 #define LOG(MESSAGE) std::cout << MESSAGE << std::endl;

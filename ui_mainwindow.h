@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Thu May 10 20:32:29 2012
+** Created: Sat May 12 17:14:18 2012
 **      by: Qt User Interface Compiler version 4.8.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -21,9 +21,13 @@
 #include <QtGui/QHeaderView>
 #include <QtGui/QLabel>
 #include <QtGui/QMainWindow>
+#include <QtGui/QMenu>
+#include <QtGui/QMenuBar>
 #include <QtGui/QPushButton>
 #include <QtGui/QSpacerItem>
 #include <QtGui/QSpinBox>
+#include <QtGui/QTabWidget>
+#include <QtGui/QTextBrowser>
 #include <QtGui/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -31,7 +35,11 @@ QT_BEGIN_NAMESPACE
 class Ui_MainWindow
 {
 public:
+    QAction *actionOpen_Scene_File;
+    QAction *actionSave_rendered_Image;
     QWidget *centralWidget;
+    QTabWidget *tabWidget;
+    QWidget *RenderTab;
     QGraphicsView *graphicsView;
     QWidget *horizontalLayoutWidget;
     QHBoxLayout *horizontalLayout;
@@ -40,20 +48,39 @@ public:
     QLabel *label;
     QSpinBox *DepthBox;
     QSpacerItem *horizontalSpacer;
+    QWidget *SceneFileTab;
+    QTextBrowser *SceneFileTextBrowser;
+    QWidget *LogTab;
+    QTextBrowser *LogTextBrowser;
+    QMenuBar *menuBar;
+    QMenu *menuFile;
 
     void setupUi(QMainWindow *MainWindow)
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
         MainWindow->setWindowModality(Qt::NonModal);
-        MainWindow->resize(831, 680);
+        MainWindow->resize(860, 755);
         QIcon icon;
         icon.addFile(QString::fromUtf8("Icon/SimpleTracer-Icon.png"), QSize(), QIcon::Normal, QIcon::Off);
         MainWindow->setWindowIcon(icon);
         MainWindow->setLocale(QLocale(QLocale::English, QLocale::UnitedStates));
+        actionOpen_Scene_File = new QAction(MainWindow);
+        actionOpen_Scene_File->setObjectName(QString::fromUtf8("actionOpen_Scene_File"));
+        actionSave_rendered_Image = new QAction(MainWindow);
+        actionSave_rendered_Image->setObjectName(QString::fromUtf8("actionSave_rendered_Image"));
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
-        graphicsView = new QGraphicsView(centralWidget);
+        tabWidget = new QTabWidget(centralWidget);
+        tabWidget->setObjectName(QString::fromUtf8("tabWidget"));
+        tabWidget->setGeometry(QRect(10, 10, 841, 711));
+        tabWidget->setElideMode(Qt::ElideNone);
+        tabWidget->setUsesScrollButtons(false);
+        tabWidget->setTabsClosable(false);
+        tabWidget->setMovable(false);
+        RenderTab = new QWidget();
+        RenderTab->setObjectName(QString::fromUtf8("RenderTab"));
+        graphicsView = new QGraphicsView(RenderTab);
         graphicsView->setObjectName(QString::fromUtf8("graphicsView"));
         graphicsView->setGeometry(QRect(10, 10, 811, 611));
         graphicsView->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
@@ -65,7 +92,7 @@ public:
         graphicsView->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop);
         graphicsView->setDragMode(QGraphicsView::NoDrag);
         graphicsView->setViewportUpdateMode(QGraphicsView::MinimalViewportUpdate);
-        horizontalLayoutWidget = new QWidget(centralWidget);
+        horizontalLayoutWidget = new QWidget(RenderTab);
         horizontalLayoutWidget->setObjectName(QString::fromUtf8("horizontalLayoutWidget"));
         horizontalLayoutWidget->setGeometry(QRect(10, 630, 811, 41));
         horizontalLayout = new QHBoxLayout(horizontalLayoutWidget);
@@ -101,9 +128,35 @@ public:
 
         horizontalLayout->addItem(horizontalSpacer);
 
+        tabWidget->addTab(RenderTab, QString());
+        SceneFileTab = new QWidget();
+        SceneFileTab->setObjectName(QString::fromUtf8("SceneFileTab"));
+        SceneFileTextBrowser = new QTextBrowser(SceneFileTab);
+        SceneFileTextBrowser->setObjectName(QString::fromUtf8("SceneFileTextBrowser"));
+        SceneFileTextBrowser->setGeometry(QRect(10, 10, 821, 661));
+        tabWidget->addTab(SceneFileTab, QString());
+        LogTab = new QWidget();
+        LogTab->setObjectName(QString::fromUtf8("LogTab"));
+        LogTextBrowser = new QTextBrowser(LogTab);
+        LogTextBrowser->setObjectName(QString::fromUtf8("LogTextBrowser"));
+        LogTextBrowser->setGeometry(QRect(10, 10, 821, 661));
+        tabWidget->addTab(LogTab, QString());
         MainWindow->setCentralWidget(centralWidget);
+        menuBar = new QMenuBar(MainWindow);
+        menuBar->setObjectName(QString::fromUtf8("menuBar"));
+        menuBar->setGeometry(QRect(0, 0, 860, 25));
+        menuFile = new QMenu(menuBar);
+        menuFile->setObjectName(QString::fromUtf8("menuFile"));
+        MainWindow->setMenuBar(menuBar);
+
+        menuBar->addAction(menuFile->menuAction());
+        menuFile->addAction(actionOpen_Scene_File);
+        menuFile->addAction(actionSave_rendered_Image);
 
         retranslateUi(MainWindow);
+
+        tabWidget->setCurrentIndex(0);
+
 
         QMetaObject::connectSlotsByName(MainWindow);
     } // setupUi
@@ -111,8 +164,14 @@ public:
     void retranslateUi(QMainWindow *MainWindow)
     {
         MainWindow->setWindowTitle(QApplication::translate("MainWindow", "SimpleTracer", 0, QApplication::UnicodeUTF8));
+        actionOpen_Scene_File->setText(QApplication::translate("MainWindow", "Open Scene File", 0, QApplication::UnicodeUTF8));
+        actionSave_rendered_Image->setText(QApplication::translate("MainWindow", "Save rendered Image", 0, QApplication::UnicodeUTF8));
         pushButton->setText(QApplication::translate("MainWindow", "Start Render", 0, QApplication::UnicodeUTF8));
         label->setText(QApplication::translate("MainWindow", "Depth: ", 0, QApplication::UnicodeUTF8));
+        tabWidget->setTabText(tabWidget->indexOf(RenderTab), QApplication::translate("MainWindow", "Render", 0, QApplication::UnicodeUTF8));
+        tabWidget->setTabText(tabWidget->indexOf(SceneFileTab), QApplication::translate("MainWindow", "Scene File", 0, QApplication::UnicodeUTF8));
+        tabWidget->setTabText(tabWidget->indexOf(LogTab), QApplication::translate("MainWindow", "Log", 0, QApplication::UnicodeUTF8));
+        menuFile->setTitle(QApplication::translate("MainWindow", "File", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 
 };

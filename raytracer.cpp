@@ -8,6 +8,7 @@ RayTracer::RayTracer(int x, int y, uint newDepth):
 }
 
 void RayTracer::render(){
+    std::cout << "rendering process started" << std::endl;
 
     for(int y = 0; y < world->getCamera()->getImgHeigth(); y++){
         for(int x = 0; x < world->getCamera()->getImgWidth(); x++){
@@ -15,7 +16,7 @@ void RayTracer::render(){
         }
         //emit returnLine(renderImage.data());
     }
-    std::cout << "render finished" << std::endl;
+    std::cout << "rendering process finished" << std::endl;
     emit returnImage(renderImage.data());
 }
 
