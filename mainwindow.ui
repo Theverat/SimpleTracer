@@ -107,13 +107,6 @@
        <item>
         <widget class="QPushButton" name="pushButton">
          <property name="text">
-          <string>Render</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="pushButton_2">
-         <property name="text">
           <string>Start Render</string>
          </property>
         </widget>
@@ -196,7 +189,7 @@
      <x>0</x>
      <y>0</y>
      <width>860</width>
-     <height>31</height>
+     <height>25</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">

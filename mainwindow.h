@@ -33,10 +33,12 @@ private:
 
     RayTracer* tracer;
 
+    void Render();
+    void startRender();
     bool loadSceneFile(const QString &fileName);
 
 private slots:
-    void startRender();
+    void StartStopRender();
     //void updateLine(QImage*); //slows down the render
     void updateRender(QImage*);
 
@@ -44,7 +46,6 @@ private slots:
 
     void openSceneFile();
     void saveImageFile();
-    void on_pushButton_2_clicked();
 };
 
 #endif // MAINWINDOW_H
