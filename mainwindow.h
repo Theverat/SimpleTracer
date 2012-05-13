@@ -29,6 +29,7 @@ private:
     int imgwidth;
     int imgheight;
     int depth;
+    bool render;
 
     RayTracer* tracer;
 
@@ -43,6 +44,7 @@ private slots:
 
     void openSceneFile();
     void saveImageFile();
+    void on_pushButton_2_clicked();
 };
 
 #endif // MAINWINDOW_H

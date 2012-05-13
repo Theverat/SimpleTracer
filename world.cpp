@@ -111,50 +111,58 @@ World::World(Camera* newCamera)
     /*****************************************************************************************************************/
     //Cornell Box Scene
     //light
+
     Light* light2 = new Light(QVector3D(0.8, 1, 1), QVector3D(250, 250, 220), 1);
     lights.append(light2);
 
     //materials
-    Material* white_emit = new Material(QVector3D(200, 200, 200), QVector3D(10, 10, 10), 150, 0, false, 1,1.0);
-    Material* green_wall = new Material(QVector3D(20, 200, 20), QVector3D(10, 10, 10), 30, 0, false, 1,0.0);
-    Material* red_wall = new Material(QVector3D(200, 20, 20), QVector3D(10, 10, 10), 30, 0, false, 1,0.0);
+    Material* white_emit = new Material(QVector3D(200, 200, 200), QVector3D(10, 10, 10), 150, 0, false, 1,0.9);
+
+    Material* green_wall = new Material(QVector3D(0.1, 0.9, 0.1), QVector3D(10, 10, 10), 30, 0, false, 1,0.0);
+    Material* red_wall = new Material(QVector3D(0.9, 20, 20), QVector3D(10, 10, 10), 30, 0, false, 1,0.0);
     Material* sphere_glossy_mat = new Material(QVector3D(80, 80, 190), QVector3D(40, 40, 40), 200, 0.2, false, 1,0.0);
     Material* sphere_glass_mat = new Material(QVector3D(190, 80, 80), QVector3D(40, 40, 40), 500, 0, true, 1.51,0.0);
     Material* cube = new Material();
-    Material* mirror = new Material(QVector3D(0, 0, 0), QVector3D(0, 0, 0), 100, 1, false, 1,0.0);
+
+
+    Material* diffusewhite = new Material(QVector3D(0.9, 0.9, 0.9), QVector3D(255, 0, 0), 100, 0.9, false, 1,0.0);
+    Material* diffusegreen = new Material(QVector3D(0.1, 0.9, 0.1), QVector3D(255, 0, 0), 100, 0.9, false, 1,0.0);
+    Material* diffusered = new Material(QVector3D(0.9, 0.1, 0.1), QVector3D(255, 0, 0), 100, 0.9, false, 1,0.0);
+
+    Material* mirror = new Material(QVector3D(1, 1, 1), QVector3D(1, 1, 1), 100, 0.9, true, 1,0.0);
 
     //triangle borders
     //left wall
-    Object* leftwall_top = new Object(new Triangle(QVector3D(-2, 2, 0), QVector3D(-2, -2, 0), QVector3D(-2, 2, 4)), mirror);
+    Object* leftwall_top = new Object(new Triangle(QVector3D(-2, 2, 4), QVector3D(-2, -2, 0), QVector3D(-2, 2, 0)), diffusegreen);
     objects.append(leftwall_top);
-    Object* leftwall_bottom = new Object(new Triangle(QVector3D(-2, -2, 0), QVector3D(-2, -2, 4), QVector3D(-2, 2, 4)), mirror);
+    Object* leftwall_bottom = new Object(new Triangle(QVector3D(-2, 2, 4), QVector3D(-2, -2, 4), QVector3D(-2, -2, 0)), diffusegreen);
     objects.append(leftwall_bottom);
     //right wall
-    Object* rightwall_top = new Object(new Triangle(QVector3D(2, 2, 0), QVector3D(2, -2, 0), QVector3D(2, 2, 4)), mirror);
+    Object* rightwall_top = new Object(new Triangle(QVector3D(2, 2, 0), QVector3D(2, -2, 0), QVector3D(2, 2, 4)), diffusered);
     objects.append(rightwall_top);
-    Object* rightwall_bottom = new Object(new Triangle(QVector3D(2, -2, 0), QVector3D(2, -2, 4), QVector3D(2, 2, 4)), mirror);
+    Object* rightwall_bottom = new Object(new Triangle(QVector3D(2, -2, 0), QVector3D(2, -2, 4), QVector3D(2, 2, 4)), diffusered);
     objects.append(rightwall_bottom);
     //bottom
-    Object* bottom_1 = new Object(new Triangle(QVector3D(-2, -2, 0), QVector3D(2, -2, 0), QVector3D(-2, -2, 4)), mirror);
+    Object* bottom_1 = new Object(new Triangle(QVector3D(-2, -2, 4), QVector3D(2, -2, 0), QVector3D(-2, -2, 0)), diffusewhite);
     objects.append(bottom_1);
-    Object* bottom_2 = new Object(new Triangle(QVector3D(2, -2, 0), QVector3D(2, -2, 4), QVector3D(-2, -2, 4)), mirror);
+    Object* bottom_2 = new Object(new Triangle(QVector3D(-2, -2, 4), QVector3D(2, -2, 4), QVector3D(2, -2, 0)), diffusewhite);
     objects.append(bottom_2);
     //top
-    Object* top_1 = new Object(new Triangle(QVector3D(-2, 2, 0), QVector3D(2, 2, 0), QVector3D(-2, 2, 4)), mirror);
+    Object* top_1 = new Object(new Triangle(QVector3D(-2, 2, 0), QVector3D(2, 2, 0), QVector3D(-2, 2, 4)), diffusewhite);
     objects.append(top_1);
-    Object* top_2 = new Object(new Triangle(QVector3D(2, 2, 0), QVector3D(2, 2, 4), QVector3D(-2, 2, 4)), mirror);
+    Object* top_2 = new Object(new Triangle(QVector3D(2, 2, 0), QVector3D(2, 2, 4), QVector3D(-2, 2, 4)), diffusewhite);
     objects.append(top_2);
     //rear
-    Object* rear_1 = new Object(new Triangle(QVector3D(-2, 2, 4), QVector3D(-2, -2, 4), QVector3D(2, 2, 4)), mirror);
+    Object* rear_1 = new Object(new Triangle(QVector3D(2, 2, 4), QVector3D(-2, -2, 4), QVector3D(-2, 2, 4)), diffusewhite);
     objects.append(rear_1);
-    Object* rear_2 = new Object(new Triangle(QVector3D(-2, -2, 4), QVector3D(2, -2, 4), QVector3D(2, 2, 4)), mirror);
+    Object* rear_2 = new Object(new Triangle(QVector3D(2, 2, 4), QVector3D(2, -2, 4), QVector3D(-2, -2, 4)), diffusewhite);
     objects.append(rear_2);
 
     //objects in the box
     //sphere
     Object* sphere1 = new Object(new Sphere(QVector3D(1, -1.5, 1), 0.5), white_emit);
     objects.append(sphere1);
-    Object* sphere2 = new Object(new Sphere(QVector3D(-0.9, -1, 2.5), 1), white_emit);
+    Object* sphere2 = new Object(new Sphere(QVector3D(-0.9, -1, 2.5), 1), mirror);
     objects.append(sphere2);
 }
 

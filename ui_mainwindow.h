@@ -1,8 +1,8 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Sat May 12 17:14:18 2012
-**      by: Qt User Interface Compiler version 4.8.1
+** Created: Sun 13. May 06:27:36 2012
+**      by: Qt User Interface Compiler version 4.8.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -44,6 +44,7 @@ public:
     QWidget *horizontalLayoutWidget;
     QHBoxLayout *horizontalLayout;
     QPushButton *pushButton;
+    QPushButton *pushButton_2;
     QFrame *line;
     QLabel *label;
     QSpinBox *DepthBox;
@@ -105,6 +106,11 @@ public:
 
         horizontalLayout->addWidget(pushButton);
 
+        pushButton_2 = new QPushButton(horizontalLayoutWidget);
+        pushButton_2->setObjectName(QString::fromUtf8("pushButton_2"));
+
+        horizontalLayout->addWidget(pushButton_2);
+
         line = new QFrame(horizontalLayoutWidget);
         line->setObjectName(QString::fromUtf8("line"));
         line->setFrameShape(QFrame::VLine);
@@ -120,7 +126,7 @@ public:
         DepthBox = new QSpinBox(horizontalLayoutWidget);
         DepthBox->setObjectName(QString::fromUtf8("DepthBox"));
         DepthBox->setMaximum(512);
-        DepthBox->setValue(8);
+        DepthBox->setValue(6);
 
         horizontalLayout->addWidget(DepthBox);
 
@@ -144,7 +150,7 @@ public:
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 860, 25));
+        menuBar->setGeometry(QRect(0, 0, 860, 31));
         menuFile = new QMenu(menuBar);
         menuFile->setObjectName(QString::fromUtf8("menuFile"));
         MainWindow->setMenuBar(menuBar);
@@ -166,7 +172,8 @@ public:
         MainWindow->setWindowTitle(QApplication::translate("MainWindow", "SimpleTracer", 0, QApplication::UnicodeUTF8));
         actionOpen_Scene_File->setText(QApplication::translate("MainWindow", "Open Scene File", 0, QApplication::UnicodeUTF8));
         actionSave_rendered_Image->setText(QApplication::translate("MainWindow", "Save rendered Image", 0, QApplication::UnicodeUTF8));
-        pushButton->setText(QApplication::translate("MainWindow", "Start Render", 0, QApplication::UnicodeUTF8));
+        pushButton->setText(QApplication::translate("MainWindow", "Render", 0, QApplication::UnicodeUTF8));
+        pushButton_2->setText(QApplication::translate("MainWindow", "Start Render", 0, QApplication::UnicodeUTF8));
         label->setText(QApplication::translate("MainWindow", "Depth: ", 0, QApplication::UnicodeUTF8));
         tabWidget->setTabText(tabWidget->indexOf(RenderTab), QApplication::translate("MainWindow", "Render", 0, QApplication::UnicodeUTF8));
         tabWidget->setTabText(tabWidget->indexOf(SceneFileTab), QApplication::translate("MainWindow", "Scene File", 0, QApplication::UnicodeUTF8));

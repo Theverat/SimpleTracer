@@ -7,7 +7,7 @@
 struct renderPixel
 {
     double r,g,b;
-    unsigned long long i;
+    long long i;
 };
 
 class RgbiImage

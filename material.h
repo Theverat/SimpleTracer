@@ -8,7 +8,7 @@ class Material
 public:
     //overloaded constructor
     Material();
-    Material(QVector3D newColor_Diffuse, QVector3D newColor_Specular, float newExponent, float newReflectionAmount, bool newTransparency, double newIoR, double Emit);
+    Material(QVector3D newColor_Diffuse, QVector3D newColor_Specular, float newExponent, float newReflectionAmount, bool clayDiffuse, double newIoR, double Emit);
 
     QVector3D getDiffuseColor();
     QVector3D getSpecularColor();

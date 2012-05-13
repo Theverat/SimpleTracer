@@ -6,7 +6,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow),
     imgwidth(800),
     imgheight(600),
-    depth(8),
+    depth(6),
     tracer(0)
 {
     ui->setupUi(this);
@@ -21,6 +21,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     QGraphicsScene* scene = new QGraphicsScene(this);
     ui->graphicsView->setScene(scene);
+    render = false;
 }
 
 MainWindow::~MainWindow()
@@ -29,13 +30,18 @@ MainWindow::~MainWindow()
 }
 
 void MainWindow::startRender(){
-    ui->graphicsView->scene()->setSceneRect(0, 0, imgwidth, imgheight);
 
-    tracer = new RayTracer(imgwidth, imgheight, depth);
-    QObject::connect(tracer, SIGNAL(returnImage(QImage*)), this, SLOT(updateRender(QImage*)));
-    //QObject::connect(tracer, SIGNAL(returnLine(QImage*)), this, SLOT(updateLine(QImage*)));
+    render = !render;
+    while(render)
+    {
+        ui->graphicsView->scene()->setSceneRect(0, 0, imgwidth, imgheight);
 
-    tracer->render();
+        QObject::connect(tracer, SIGNAL(returnImage(QImage*)), this, SLOT(updateRender(QImage*)));
+        //QObject::connect(tracer, SIGNAL(returnLine(QImage*)), this, SLOT(updateLine(QImage*)));
+
+        tracer->render();
+        QCoreApplication::processEvents();
+    }
 }
 
 //void MainWindow::updateLine(QImage* line){
@@ -92,4 +98,9 @@ void MainWindow::saveImageFile(){
                                           tr("Save LDR Image"),
                                           ".",
                                           tr("All image files")));
+}
+
+void MainWindow::on_pushButton_2_clicked()
+{
+    tracer = new RayTracer(imgwidth, imgheight, depth);
 }
