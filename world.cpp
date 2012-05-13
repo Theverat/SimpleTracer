@@ -116,7 +116,7 @@ World::World(Camera* newCamera)
     lights.append(light2);
 
     //materials
-    Material* white_emit = new Material(QVector3D(200, 200, 200), QVector3D(10, 10, 10), 150, 0, false, 1,0.9);
+    Material* white_emit = new Material(QVector3D(200, 200, 200), QVector3D(10, 10, 10), 150, 0, false, 1,1.9);
 
     Material* green_wall = new Material(QVector3D(0.1, 0.9, 0.1), QVector3D(10, 10, 10), 30, 0, false, 1,0.0);
     Material* red_wall = new Material(QVector3D(0.9, 20, 20), QVector3D(10, 10, 10), 30, 0, false, 1,0.0);
@@ -125,11 +125,11 @@ World::World(Camera* newCamera)
     Material* cube = new Material();
 
 
-    Material* diffusewhite = new Material(QVector3D(0.9, 0.9, 0.9), QVector3D(255, 0, 0), 100, 0.9, false, 1,0.0);
-    Material* diffusegreen = new Material(QVector3D(0.1, 0.9, 0.1), QVector3D(255, 0, 0), 100, 0.9, false, 1,0.0);
-    Material* diffusered = new Material(QVector3D(0.9, 0.1, 0.1), QVector3D(255, 0, 0), 100, 0.9, false, 1,0.0);
+    Material* diffusewhite = new Material(QVector3D(0.9, 0.9, 0.9), QVector3D(255, 0, 0), 100, 0.9, true, 1,0.0);
+    Material* diffusegreen = new Material(QVector3D(0.1, 0.9, 0.1), QVector3D(255, 0, 0), 100, 0.9, true, 1,0.0);
+    Material* diffusered = new Material(QVector3D(0.9, 0.1, 0.1), QVector3D(255, 0, 0), 100, 0.9, true, 1,0.0);
 
-    Material* mirror = new Material(QVector3D(1, 1, 1), QVector3D(1, 1, 1), 100, 0.9, true, 1,0.0);
+    Material* mirror = new Material(QVector3D(1, 1, 1), QVector3D(1, 1, 1), 100, 0.9, false, 1,0.0);
 
     //triangle borders
     //left wall

@@ -207,7 +207,7 @@ QVector3D RayTracer::raytrace(Ray ray, uint current_depth){
 
         /*****************************************************************************************************************/
         //calculate refraction
-        if((current_depth < depth) && (nearestObj->getMat()->getTransparency() == true)){
+/*        if((current_depth < depth) && (nearestObj->getMat()->getTransparency() == true)){
             QVector3D Refracted_Vector;
             QVector3D normal = nearestObj->getMesh()->getNormal(hitpoint);
             double n = world->getIoR()/nearestObj->getMat()->getIoR();
@@ -219,7 +219,7 @@ QVector3D RayTracer::raytrace(Ray ray, uint current_depth){
                 QVector3D Refracted_Color = raytrace(Ray(hitpoint + Refracted_Vector * EPSILON, Refracted_Vector), current_depth + 1);
                 Accumulated_Color = Refracted_Color; //maybe add a blending factor with the diffuse color later
             }
-        }
+        }*/
     }
 
     delete nearestObj;
