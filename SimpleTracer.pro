@@ -21,7 +21,8 @@ SOURCES += main.cpp\
     plane.cpp \
     world.cpp \
     abs.cpp \
-    light.cpp
+    light.cpp \
+    integrator.cpp
 
 HEADERS  += mainwindow.h \
     ray.h \
@@ -35,6 +36,7 @@ HEADERS  += mainwindow.h \
     plane.h \
     world.h \
     light.h \
-    predefs.h
+    predefs.h \
+    integrator.h
 
 FORMS    += mainwindow.ui

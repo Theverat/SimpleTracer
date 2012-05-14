@@ -1,13 +1,13 @@
 #include "raytracer.h"
 
-RayTracer::RayTracer(int x, int y, uint newDepth):
-    renderImage(new QImage(x, y, QImage::Format_ARGB32))
+RayTracer::RayTracer(int x, int y, uint newDepth)
 {
+    renderImage = new QImage(x, y, QImage::Format_ARGB32);
     world = new World(new Camera(QVector3D(0, 0, -5), QVector3D(0, 0, 1), x, y, 60));
     depth = newDepth;
 }
 
-void RayTracer::render(){
+QImage RayTracer::render(){
     std::cout << "rendering process started" << std::endl;
 
     for(int y = 0; y < world->getCamera()->getImgHeigth(); y++){
@@ -17,7 +17,13 @@ void RayTracer::render(){
         //emit returnLine(renderImage.data());
     }
     std::cout << "rendering process finished" << std::endl;
-    emit returnImage(renderImage.data());
+    return *renderImage;
+}
+
+RayTracer::~RayTracer()
+{
+    delete world;
+    delete renderImage;
 }
 
 QColor RayTracer::getColorForPixel(int x, int y){

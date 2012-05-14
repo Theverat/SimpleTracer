@@ -9,7 +9,7 @@
 #include <QFile>
 #include <QTextStream>
 
-#include "raytracer.h"
+#include "integrator.h"
 
 namespace Ui {
 class MainWindow;
@@ -30,7 +30,7 @@ private:
     int imgheight;
     int depth;
 
-    RayTracer* tracer;
+    Integrator* tracer;
 
     bool loadSceneFile(const QString &fileName);
 
