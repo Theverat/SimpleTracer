@@ -3,8 +3,8 @@
 World::World(Camera* newCamera)
 {
     cam = newCamera;
-    //BgColor = QVector3D(93, 156, 220); //blue sky
-    BgColor = QVector3D(0, 0, 0);
+    BgColor = QVector3D(93, 156, 220); //blue sky
+    //BgColor = QVector3D(0, 0, 0);
     IoR = 1;
 
     //future object importer code will live here
@@ -116,7 +116,7 @@ World::World(Camera* newCamera)
     lights.append(light2);
 
     //materials
-    Material* white_emit = new Material(QVector3D(200, 200, 200), QVector3D(10, 10, 10), 150, 0, false, 1,1.9);
+    Material* white_emit = new Material(QVector3D(200, 200, 200), QVector3D(10, 10, 10), 150, 0, false, 1, 1.7);
 
     Material* green_wall = new Material(QVector3D(0.1, 0.9, 0.1), QVector3D(10, 10, 10), 30, 0, false, 1,0.0);
     Material* red_wall = new Material(QVector3D(0.9, 20, 20), QVector3D(10, 10, 10), 30, 0, false, 1,0.0);
