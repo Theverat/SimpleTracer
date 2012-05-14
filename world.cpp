@@ -166,7 +166,7 @@ void World::setCamera(Camera* newCam){
     cam = newCam;
 }
 
-QVector<Object*>& World::getObjects(){
+QVector<Object*> &World::getObjects(){
     return objects;
 }
 
