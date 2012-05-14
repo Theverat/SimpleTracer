@@ -12,7 +12,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
 
     //connect render buttons
-    connect(ui->pushButton, SIGNAL(clicked()), this, SLOT(startRender()));
+    connect(ui->pushButton, SIGNAL(clicked()), this, SLOT(StartStopRender()));
     connect(ui->DepthBox, SIGNAL(valueChanged(int)), this, SLOT(DepthChanged(int)));
 
     //connect load/save actions
@@ -21,6 +21,9 @@ MainWindow::MainWindow(QWidget *parent) :
 
     QGraphicsScene* scene = new QGraphicsScene(this);
     ui->graphicsView->setScene(scene);
+
+    render = false;
+    tracer = new Integrator(imgwidth, imgheight, depth);
 }
 
 MainWindow::~MainWindow()
@@ -28,13 +31,32 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+void MainWindow::StartStopRender(){
+    if(render){
+        render = !render;
+        ui->pushButton->setText("Start Render");
+        ui->DepthBox->setDisabled(false);
+    } else {
+        render = !render;
+        ui->pushButton->setText("Stop Render");
+        ui->DepthBox->setDisabled(true);
+        startRender();
+    }
+}
+
 void MainWindow::startRender(){
+    Render();
+}
+
+void MainWindow::Render(){
     ui->graphicsView->scene()->setSceneRect(0, 0, imgwidth, imgheight);
 
-    tracer = new Integrator(imgwidth,imgheight,depth);
-    ui->graphicsView->scene()->clear();
-    ui->graphicsView->scene()->addPixmap(QPixmap::fromImage(tracer->RayTrace()));
-
+    while(render)
+    {
+        ui->graphicsView->scene()->clear();
+        ui->graphicsView->scene()->addPixmap(QPixmap::fromImage(tracer->PathTrace()));
+        QCoreApplication::processEvents();
+    }
 }
 
 //void MainWindow::updateLine(QImage* line){

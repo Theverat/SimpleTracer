@@ -30,14 +30,19 @@ private:
     int imgheight;
     int depth;
 
+    bool render;
+
     Integrator* tracer;
+    void startRender();
+    void Render();
 
     bool loadSceneFile(const QString &fileName);
 
 private slots:
-    void startRender();
+
     //void updateLine(QImage*); //slows down the render
     void updateRender(QImage*);
+    void StartStopRender();
 
     void DepthChanged(int);
 

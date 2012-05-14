@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'mainwindow.h'
 **
-** Created: Mon 14. May 14:39:14 2012
+** Created: Mon 14. May 22:54:32 2012
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.0)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -32,17 +32,17 @@ static const uint qt_meta_data_MainWindow[] = {
 
  // slots: signature, parameters, type, tag, flags
       12,   11,   11,   11, 0x08,
-      26,   11,   11,   11, 0x08,
-      48,   11,   11,   11, 0x08,
-      66,   11,   11,   11, 0x08,
-      82,   11,   11,   11, 0x08,
+      34,   11,   11,   11, 0x08,
+      52,   11,   11,   11, 0x08,
+      70,   11,   11,   11, 0x08,
+      86,   11,   11,   11, 0x08,
 
        0        // eod
 };
 
 static const char qt_meta_stringdata_MainWindow[] = {
-    "MainWindow\0\0startRender()\0"
-    "updateRender(QImage*)\0DepthChanged(int)\0"
+    "MainWindow\0\0updateRender(QImage*)\0"
+    "StartStopRender()\0DepthChanged(int)\0"
     "openSceneFile()\0saveImageFile()\0"
 };
 
@@ -52,8 +52,8 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         Q_ASSERT(staticMetaObject.cast(_o));
         MainWindow *_t = static_cast<MainWindow *>(_o);
         switch (_id) {
-        case 0: _t->startRender(); break;
-        case 1: _t->updateRender((*reinterpret_cast< QImage*(*)>(_a[1]))); break;
+        case 0: _t->updateRender((*reinterpret_cast< QImage*(*)>(_a[1]))); break;
+        case 1: _t->StartStopRender(); break;
         case 2: _t->DepthChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
         case 3: _t->openSceneFile(); break;
         case 4: _t->saveImageFile(); break;

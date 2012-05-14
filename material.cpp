@@ -10,13 +10,14 @@ Material::Material()
     transparent = false;
 }
 
-Material::Material(QVector3D newColor_Diffuse, QVector3D newColor_Specular, float newExponent, float newReflectionAmount, bool newTransparency, double newIoR){
+Material::Material(QVector3D newColor_Diffuse, QVector3D newColor_Specular, float newExponent, float newReflectionAmount, bool newTransparency, double newIoR, double Emit){
     Color_Diffuse = newColor_Diffuse;
     Color_Specular = newColor_Specular;
     exponent = newExponent;
     reflectionAmount = newReflectionAmount;
     transparent = newTransparency;
     IoR = newIoR;
+    this->Emit = Emit;
 }
 
 QVector3D Material::getDiffuseColor(){
@@ -41,4 +42,9 @@ bool Material::getTransparency(){
 
 double Material::getIoR(){
     return IoR;
+}
+
+double Material::getEmit()
+{
+    return Emit;
 }

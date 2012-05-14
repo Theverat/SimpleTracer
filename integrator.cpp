@@ -5,22 +5,30 @@ Integrator::Integrator(int width,int height, int depth){
     this->height= height;
     this->depth = depth;
 
+    PT = new Pathtracer(this->width,this->height,this->depth);
 
+    RT = new RayTracer(this->width,this->height,this->depth);
 }
 
 
 QImage Integrator::RayTrace(){
     QImage renderOutput;
-    RayTracer *tracer;
 
-    tracer = new RayTracer(this->width,this->height,this->depth);
-    renderOutput = tracer->render();
-    tracer->~RayTracer();
-
+    renderOutput = RT->render();
 
     return renderOutput;
 }
 
 QImage Integrator::PathTrace(){
+    QImage renderOutput;
 
+    renderOutput = PT->render();
+
+    return renderOutput;
+}
+
+Integrator::~Integrator()
+{
+    RT->~RayTracer();
+    PT->~Pathtracer();
 }

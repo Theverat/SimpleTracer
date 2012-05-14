@@ -1,36 +1,44 @@
-#include "raytracer.h"
+#include "pathtracer.h"
 
-RayTracer::RayTracer(int x, int y, uint newDepth)
+
+Pathtracer::Pathtracer(int x, int y, uint newDepth)
 {
     renderImage = new QImage(x, y, QImage::Format_ARGB32);
     world = new World(new Camera(QVector3D(0, 0, -5), QVector3D(0, 0, 1), x, y, 60));
     depth = newDepth;
+    RenderOut = new RgbiImage(x,y);
 }
 
-QImage RayTracer::render(){
+QImage Pathtracer::render(){
     std::cout << "rendering process started" << std::endl;
+
+        #pragma omp parallel for
+        for(int y = 0; y < world->getCamera()->getImgHeigth(); y++){
+            for(int x = 0; x < world->getCamera()->getImgWidth(); x++){
+
+                Ray ray = world->getCamera()->shootRay(x, y);
+                QVector3D ColorAtPixel = tracer(ray, 0);
+                RenderOut->setPixel(x,y,ColorAtPixel);
+
+            }
+            //emit returnLine(renderImage.data());
+        }
 
     for(int y = 0; y < world->getCamera()->getImgHeigth(); y++){
         for(int x = 0; x < world->getCamera()->getImgWidth(); x++){
-            renderImage->setPixel(x, y, getColorForPixel(x, y).rgba());
+            renderImage->setPixel(x, y, clampColor(RenderOut->getPixel(x,y)).rgba());
         }
-        //emit returnLine(renderImage.data());
     }
+
     std::cout << "rendering process finished" << std::endl;
     return *renderImage;
 }
 
-RayTracer::~RayTracer()
-{
-    delete world;
-    delete renderImage;
-}
-
-QColor RayTracer::getColorForPixel(int x, int y){
+QColor Pathtracer::getColorForPixel(int x, int y){
 
     Ray ray = world->getCamera()->shootRay(x, y);
 
-    QVector3D ColorAtPixel = raytrace(ray, 0);
+    QVector3D ColorAtPixel = tracer(ray, 0);
 
     //clamping
     int r = ColorAtPixel.x();
@@ -54,8 +62,33 @@ QColor RayTracer::getColorForPixel(int x, int y){
     return QColor(r, g, b);
 }
 
-QVector3D RayTracer::raytrace(Ray ray, uint current_depth){
 
+QColor Pathtracer::clampColor(QVector3D hdr)
+{
+    //clamping
+    int r = hdr.x();
+    int g = hdr.y();
+    int b = hdr.z();
+
+    if(r > 255)
+        r = 255;
+    if(g > 255)
+        g = 255;
+    if(b > 255)
+        b = 255;
+
+    if(r < 0)
+        r = 0;
+    if(g < 0)
+        g = 0;
+    if(b < 0)
+        b = 0;
+
+    return QColor(r, g, b);
+}
+
+
+QVector3D Pathtracer::tracer(Ray ray, uint current_depth){
     /*****************************************************************************************************************/
     double nearestDist = world->getCamera()->getFarClip(); //far clipping border of the scene
 
@@ -94,40 +127,25 @@ QVector3D RayTracer::raytrace(Ray ray, uint current_depth){
 
     /*****************************************************************************************************************/
     //trace lights
-    for(int l = 0; l < world->getLights().size(); l++){
-        Light* light = world->getLights().at(l);
-        //LOG("l == " << l)
-
-        //vector from hitpoint to light, normalized
-        QVector3D lightray = (light->getPosition() - hitpoint).normalized();
-        double lightrayLength = (light->getPosition() - hitpoint).length();
 
         /*****************************************************************************************************************/
-        //calculate shadows
-        double shade = 1; //amount of shadowing at the hitpoint
-        //check if there's at least one object occluding the lightsource from the hitpoint
-        QVector3D shadowray = light->getPosition() - hitpoint;
-        double tdist = shadowray.length();
+        //calculate emit shading
+        if((current_depth < depth) && (nearestObj.getMat()->getEmit() > 0.0f) ){
 
-        for(int o = 0; o < world->getObjects().size(); o++){
-            obstacle = *world->getObjects().at(o);
-            Geometry::IntersectionInfo ShadowInfo = obstacle.getMesh()->getIntersectionInfo(Ray(hitpoint + shadowray * EPSILON, shadowray));
-
-            if(ShadowInfo.hit == true && ShadowInfo.distance <= tdist){
-                shade = 0;
-                break;
-            }
+            Accumulated_Color = nearestObj.getMat()->getDiffuseColor() * nearestObj.getMat()->getEmit();
         }
+
 
         /*****************************************************************************************************************/
         //calculate diffuse shading
         //dotproduct of lightray and surface normal
-        if(nearestObj.getMat()->getDiffuseColor().length() > 0.0f){
+        /*
+        if(nearestObj->getMat()->getDiffuseColor().length() > 0.0f){
             double dotLN = fabs(QVector3D::dotProduct(lightray, normal));
 
             if(dotLN > 0){
                 //get the color the surface has at the hitpoint and multiply it with the shadowing factor
-                QVector3D diffuseCol = dotLN * nearestObj.getMat()->getDiffuseColor() * shade;
+                QVector3D diffuseCol = dotLN * nearestObj->getMat()->getDiffuseColor() * shade;
                 //add the diffuse color to the ray's color
                 //square light falloff
                 //Accumulated_Color += (diffuseCol * ((light->getColor() * light->getIntensity())/pow((lightrayLength + EPSILON), 2)))/100; //first implementation, only direct lighting
@@ -135,35 +153,50 @@ QVector3D RayTracer::raytrace(Ray ray, uint current_depth){
                 Accumulated_Color += (diffuseCol * ((light->getColor() * light->getIntensity())/(lightrayLength + EPSILON)))/100;
             }
         }
+        */
 
         /*****************************************************************************************************************/
         //calculate specular shading
-        if(nearestObj.getMat()->getSpecularColor().length() > 0.0f){
+        /*
+        if(nearestObj->getMat()->getSpecularColor().length() > 0.0f){
             QVector3D Incoming_Vector = ray.getDirection();
             QVector3D Reflected_Vector = lightray - 2 * QVector3D::dotProduct(lightray, normal) * normal; //normalized by design
             double dotIR = QVector3D::dotProduct(Incoming_Vector, Reflected_Vector);
 
             if(dotIR > 0){
-                double specularAmount = powf(dotIR, nearestObj.getMat()->getExponent()) * nearestObj.getMat()->getSpecularColor().length()/100;
+                double specularAmount = powf(dotIR, nearestObj->getMat()->getExponent()) * nearestObj->getMat()->getSpecularColor().length()/100;
                 //add the specular color to the ray's color
                 Accumulated_Color += (specularAmount * light->getColor() * light->getIntensity());
             }
+        }*/
+
+        /*****************************************************************************************************************/
+        //calculate diffuse Reflection
+        if((current_depth < depth) && (nearestObj.getMat()->getReflectionAmount() > 0.0f) && (nearestObj.getMat()->getTransparency())){
+            QVector3D Reflected_Vector;
+            Reflected_Vector = normal; //Normals have to be calculated  in right direction to work with this
+            Reflected_Vector.setX(Reflected_Vector.x() + (rand()%2000)/1000.0 - 1.0);
+            Reflected_Vector.setY(Reflected_Vector.y() + (rand()%2000)/1000.0 - 1.0);
+            Reflected_Vector.setZ(Reflected_Vector.z() + (rand()%2000)/1000.0 - 1.0);
+            QVector3D Reflected_Color = tracer(Ray(hitpoint + Reflected_Vector * EPSILON, Reflected_Vector), current_depth + 1);
+            Accumulated_Color = Reflected_Color * nearestObj.getMat()->getDiffuseColor() * nearestObj.getMat()->getReflectionAmount();
         }
 
         /*****************************************************************************************************************/
         //calculate reflection
-        if((current_depth < depth) && (nearestObj.getMat()->getReflectionAmount() > 0.0f)){
+      if((current_depth < depth) && (nearestObj.getMat()->getReflectionAmount() > 0.0f) && (!nearestObj.getMat()->getTransparency()) ){
             QVector3D Reflected_Vector = ray.getDirection() - 2 * QVector3D::dotProduct(ray.getDirection(), normal) * normal; //normalized by design
-            QVector3D Reflected_Color = raytrace(Ray(hitpoint + Reflected_Vector * EPSILON, Reflected_Vector), current_depth + 1);
-            Accumulated_Color += Reflected_Color * nearestObj.getMat()->getReflectionAmount();
+            QVector3D Reflected_Color = tracer(Ray(hitpoint + Reflected_Vector * EPSILON, Reflected_Vector), current_depth + 1);
+            Accumulated_Color = Reflected_Color * nearestObj.getMat()->getSpecularColor();
         }
+
 
         /*****************************************************************************************************************/
         //calculate refraction
-        if((current_depth < depth) && (nearestObj.getMat()->getTransparency() == true)){
+/*        if((current_depth < depth) && (nearestObj->getMat()->getTransparency() == true)){
             QVector3D Refracted_Vector;
-            QVector3D normal = nearestObj.getMesh()->getNormal(hitpoint);
-            double n = world->getIoR()/nearestObj.getMat()->getIoR(); //world->getIoR()/nearestObj.getMat()->getIoR();
+            QVector3D normal = nearestObj->getMesh()->getNormal(hitpoint);
+            double n = world->getIoR()/nearestObj->getMat()->getIoR();
             double cosI = QVector3D::dotProduct(normal, ray.getDirection());
             double sinT2 = n*n * (1.0 - cosI*cosI);
             if(sinT2 <= 1.0)
@@ -172,19 +205,17 @@ QVector3D RayTracer::raytrace(Ray ray, uint current_depth){
                 QVector3D Refracted_Color = raytrace(Ray(hitpoint + Refracted_Vector * EPSILON, Refracted_Vector), current_depth + 1);
                 Accumulated_Color = Refracted_Color; //maybe add a blending factor with the diffuse color later
             }
-        }
-    }
+        }*/
 
     return Accumulated_Color;
 }
 
-//obsolete function that was only used for testing purposes
-QVector3D RayTracer::Render_Normal(double distance, Ray ray, Object *obj){
 
-    QVector3D PointOnSphereSurface = QVector3D(ray.getDirection().x(), ray.getDirection().y(), distance);
-    QVector3D normal = obj->getMesh()->getNormal(PointOnSphereSurface);
 
-    QVector3D diff = (QVector3D::dotProduct(ray.getDirection(), normal) * obj->getMat()->getDiffuseColor())/100000000;
 
-    return diff;
+Pathtracer::~Pathtracer()
+{
+    delete world;
+    delete renderImage;
+    delete RenderOut;
 }
