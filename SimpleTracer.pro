@@ -22,7 +22,9 @@ SOURCES += main.cpp\
     world.cpp \
     abs.cpp \
     light.cpp \
-    integrator.cpp
+    integrator.cpp \
+    pathtracer.cpp \
+    rgbiimage.cpp
 
 HEADERS  += mainwindow.h \
     ray.h \
@@ -37,6 +39,8 @@ HEADERS  += mainwindow.h \
     world.h \
     light.h \
     predefs.h \
-    integrator.h
+    integrator.h \
+    pathtracer.h \
+    rgbiimage.h
 
 FORMS    += mainwindow.ui

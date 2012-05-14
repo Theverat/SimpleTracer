@@ -11,6 +11,8 @@ INPUT(
 ./debug\world.o
 ./debug\light.o
 ./debug\integrator.o
+./debug\pathtracer.o
+./debug\rgbiimage.o
 ./debug\moc_mainwindow.o
 ./debug\moc_raytracer.o
 );

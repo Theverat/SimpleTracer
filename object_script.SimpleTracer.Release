@@ -11,6 +11,8 @@ INPUT(
 ./release\world.o
 ./release\light.o
 ./release\integrator.o
+./release\pathtracer.o
+./release\rgbiimage.o
 ./release\moc_mainwindow.o
 ./release\moc_raytracer.o
 );

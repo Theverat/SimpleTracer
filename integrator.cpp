@@ -22,5 +22,13 @@ QImage Integrator::RayTrace(){
 }
 
 QImage Integrator::PathTrace(){
+    QImage renderOutput;
+    Pathtracer *tracer;
 
+    tracer = new Pathtracer(this->width,this->height,this->depth);
+    renderOutput = tracer->render();
+    tracer->~Pathtracer();
+
+
+    return renderOutput;
 }

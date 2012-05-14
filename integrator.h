@@ -3,6 +3,7 @@
 
 #include "QImage"
 #include "raytracer.h"
+#include "pathtracer.h"
 
 class Integrator
 {

@@ -33,7 +33,7 @@ void MainWindow::startRender(){
 
     tracer = new Integrator(imgwidth,imgheight,depth);
     ui->graphicsView->scene()->clear();
-    ui->graphicsView->scene()->addPixmap(QPixmap::fromImage(tracer->RayTrace()));
+    ui->graphicsView->scene()->addPixmap(QPixmap::fromImage(tracer->PathTrace()));
 
 }
 
