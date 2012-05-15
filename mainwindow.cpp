@@ -50,11 +50,30 @@ void MainWindow::startRender(){
 
 void MainWindow::Render(){
     ui->graphicsView->scene()->setSceneRect(0, 0, imgwidth, imgheight);
+    QTime t;
+    t.start();
+    QTime elapsedTime = QTime(0, 0);
+    int spp = 0;
 
     while(render)
     {
         ui->graphicsView->scene()->clear();
         ui->graphicsView->scene()->addPixmap(QPixmap::fromImage(tracer->PathTrace()));
+
+        //calculate the time the render is already running
+        //elapsedTime = QTime((QTime::currentTime().hour() - startTime.hour()), (QTime::currentTime().minute() - startTime.minute()), (QTime::currentTime().second() - startTime.second()));
+        int ms = t.elapsed();
+        int s  = ms / 1000;    ms %= 1000;
+        int m  = s  / 60;      s  %= 60;
+        int h  = m  / 60;      m  %= 60;
+        elapsedTime = QTime(h, m, s);
+
+        //calculate the samples per pixel
+        spp++;
+
+        ui->statusBar->showMessage("elapsed Time: " + elapsedTime.toString() + " | Samples per Pixel: " + QString::number(spp));
+        std::cout << "Elapsed Time in s: " << s << " | Samples per Pixel: " << spp << std::endl;
+
         QCoreApplication::processEvents();
     }
 }

@@ -8,6 +8,7 @@
 #include <QFileDialog>
 #include <QFile>
 #include <QTextStream>
+#include <QDateTime>
 
 #include "integrator.h"
 

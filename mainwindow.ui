@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>860</width>
-    <height>755</height>
+    <height>777</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -201,6 +201,7 @@
    </widget>
    <addaction name="menuFile"/>
   </widget>
+  <widget class="QStatusBar" name="statusBar"/>
   <action name="actionOpen_Scene_File">
    <property name="text">
     <string>Open Scene File</string>

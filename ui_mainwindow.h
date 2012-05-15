@@ -1,8 +1,8 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Mon 14. May 22:54:19 2012
-**      by: Qt User Interface Compiler version 4.8.0
+** Created: Tue May 15 15:50:10 2012
+**      by: Qt User Interface Compiler version 4.8.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -26,6 +26,7 @@
 #include <QtGui/QPushButton>
 #include <QtGui/QSpacerItem>
 #include <QtGui/QSpinBox>
+#include <QtGui/QStatusBar>
 #include <QtGui/QTabWidget>
 #include <QtGui/QTextBrowser>
 #include <QtGui/QWidget>
@@ -54,13 +55,14 @@ public:
     QTextBrowser *LogTextBrowser;
     QMenuBar *menuBar;
     QMenu *menuFile;
+    QStatusBar *statusBar;
 
     void setupUi(QMainWindow *MainWindow)
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
         MainWindow->setWindowModality(Qt::NonModal);
-        MainWindow->resize(860, 755);
+        MainWindow->resize(860, 777);
         QIcon icon;
         icon.addFile(QString::fromUtf8("Icon/SimpleTracer-Icon.png"), QSize(), QIcon::Normal, QIcon::Off);
         MainWindow->setWindowIcon(icon);
@@ -148,6 +150,9 @@ public:
         menuFile = new QMenu(menuBar);
         menuFile->setObjectName(QString::fromUtf8("menuFile"));
         MainWindow->setMenuBar(menuBar);
+        statusBar = new QStatusBar(MainWindow);
+        statusBar->setObjectName(QString::fromUtf8("statusBar"));
+        MainWindow->setStatusBar(statusBar);
 
         menuBar->addAction(menuFile->menuAction());
         menuFile->addAction(actionOpen_Scene_File);
