@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Tue 15. May 21:08:40 2012
+** Created: Tue 15. May 21:28:27 2012
 **      by: Qt User Interface Compiler version 4.8.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -78,7 +78,7 @@ public:
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
         MainWindow->setWindowModality(Qt::NonModal);
-        MainWindow->resize(860, 777);
+        MainWindow->resize(383, 386);
         QIcon icon;
         icon.addFile(QString::fromUtf8("Icon/SimpleTracer-Icon.png"), QSize(), QIcon::Normal, QIcon::Off);
         MainWindow->setWindowIcon(icon);
@@ -112,7 +112,6 @@ public:
         QBrush brush(QColor(0, 0, 50, 255));
         brush.setStyle(Qt::SolidPattern);
         graphicsView->setBackgroundBrush(brush);
-        graphicsView->setSceneRect(QRectF(0, 0, 800, 600));
         graphicsView->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop);
         graphicsView->setDragMode(QGraphicsView::NoDrag);
         graphicsView->setViewportUpdateMode(QGraphicsView::MinimalViewportUpdate);
@@ -227,7 +226,7 @@ public:
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 860, 31));
+        menuBar->setGeometry(QRect(0, 0, 383, 31));
         menuFile = new QMenu(menuBar);
         menuFile->setObjectName(QString::fromUtf8("menuFile"));
         MainWindow->setMenuBar(menuBar);
