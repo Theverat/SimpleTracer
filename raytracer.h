@@ -20,7 +20,7 @@ class RayTracer : public QThread
 {
     Q_OBJECT
 public:
-    RayTracer(int x, int y, uint newDepth);
+    RayTracer(int x, int y, uint newDepth, World *newWorld);
     virtual ~RayTracer();
     QImage render();
 

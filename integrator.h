@@ -8,7 +8,7 @@
 class Integrator
 {
 public:
-    Integrator(int width,int height,int depth);
+    Integrator(int width,int height,int depth, World *newWorld);
     QImage RayTrace();
     QImage PathTrace();
     virtual ~Integrator();
@@ -17,6 +17,7 @@ private:
     int width;
     int height;
     int depth;
+    World* world;
 
     Pathtracer *PT;
     RayTracer *RT;

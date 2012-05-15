@@ -17,6 +17,13 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->actionOpen_Scene_File, SIGNAL(triggered()), this, SLOT(openSceneFile()));
     connect(ui->actionSave_rendered_Image, SIGNAL(triggered()), this, SLOT(saveImageFile()));
 
+    //connect world backgroundcolor change button
+    connect(ui->pushButton_BgColor, SIGNAL(clicked()), this, SLOT(changeWorldBgColor()));
+    QGraphicsScene* BgColorDisplayScene = new QGraphicsScene(this);
+    ui->graphicsView_BgColorDisplay->setScene(BgColorDisplayScene);
+    ui->graphicsView_BgColorDisplay->scene()->setBackgroundBrush(QBrush(QColor(Qt::black)));
+
+    //the scene that holds the rendered image
     QGraphicsScene* scene = new QGraphicsScene(this);
     ui->graphicsView->setScene(scene);
 
@@ -24,6 +31,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     imgwidth = ui->spinBox_imgres_x->value();
     imgheight = ui->spinBox_imgres_y->value();
+    focalLength = ui->doubleSpinBox_focal_length->value();
 }
 
 MainWindow::~MainWindow()
@@ -50,16 +58,27 @@ void MainWindow::startRender(){
 
 void MainWindow::Render(){
 
+    //read values from the gui settings
     imgwidth = ui->spinBox_imgres_x->value();
     imgheight = ui->spinBox_imgres_y->value();
-    tracer = new Integrator(imgwidth, imgheight, depth);
+    focalLength = ui->doubleSpinBox_focal_length->value();
+
+    worldloader.setWorld(new World(new Camera(QVector3D(0, 0, -5), QVector3D(0, 0, 0), imgwidth, imgheight, focalLength), BgColor, 1.0));
+
+    //create the Integrator instance
+    tracer = new Integrator(imgwidth, imgheight, depth, worldloader.getWorld());
 
     ui->graphicsView->scene()->setSceneRect(0, 0, imgwidth, imgheight);
+
+    //values for the status bar messages
     QTime t;
     t.start();
     QTime elapsedTime = QTime(0, 0);
     int spp = 0;
 
+    //start the render with the chosen Integrator
+
+    //Integrator: Raytracer
     if(ui->radioButton_Raytracer->isChecked()){
         LOG("Integrator: Raytracer")
 
@@ -73,6 +92,7 @@ void MainWindow::Render(){
         int h  = m  / 60;      m  %= 60;
         elapsedTime = QTime(h, m, s);
 
+        //statusbar update after the render is finished
         ui->statusBar->showMessage("elapsed Time: " + elapsedTime.toString());
         std::cout << "Elapsed Time in s: " << s << std::endl;
 
@@ -80,6 +100,7 @@ void MainWindow::Render(){
         StartStopRender();
     }
 
+    //Integrator: Pathtracer
     if(ui->radioButton_Pathtracer->isChecked()){
         LOG("Integrator: Pathtracer")
 
@@ -98,6 +119,7 @@ void MainWindow::Render(){
             //calculate the samples per pixel
             spp++;
 
+            //statusbar update after each pass
             ui->statusBar->showMessage("elapsed Time: " + elapsedTime.toString() + " | Samples per Pixel: " + QString::number(spp));
             std::cout << "Elapsed Time in s: " << s << " | Samples per Pixel: " << spp << std::endl;
 
@@ -161,4 +183,15 @@ void MainWindow::saveImageFile(){
                                           tr("Save LDR Image"),
                                           ".",
                                           tr("All image files")));
+}
+
+void MainWindow::changeWorldBgColor(){
+    QColor BgColor_as_QColor;
+    QColorDialog mycolordialog;
+    BgColor_as_QColor = mycolordialog.getColor();
+
+    BgColor = QVector3D(BgColor_as_QColor.red(), BgColor_as_QColor.green(), BgColor_as_QColor.blue());
+    LOG("world's background color set to " << BgColor_as_QColor.red() << " " << BgColor_as_QColor.green() << " " << BgColor_as_QColor.blue());
+
+    ui->graphicsView_BgColorDisplay->scene()->setBackgroundBrush(QBrush(BgColor_as_QColor));
 }

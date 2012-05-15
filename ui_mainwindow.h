@@ -1,8 +1,8 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Tue 15. May 21:28:27 2012
-**      by: Qt User Interface Compiler version 4.8.0
+** Created: Tue May 15 23:39:26 2012
+**      by: Qt User Interface Compiler version 4.8.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -15,6 +15,8 @@
 #include <QtGui/QAction>
 #include <QtGui/QApplication>
 #include <QtGui/QButtonGroup>
+#include <QtGui/QDoubleSpinBox>
+#include <QtGui/QFrame>
 #include <QtGui/QGraphicsView>
 #include <QtGui/QGridLayout>
 #include <QtGui/QHBoxLayout>
@@ -51,20 +53,31 @@ public:
     QPushButton *pushButton;
     QSpacerItem *horizontalSpacer;
     QWidget *RenderSettingsTab;
+    QVBoxLayout *verticalLayout_4;
     QScrollArea *scrollArea;
     QWidget *scrollAreaWidgetContents;
-    QWidget *gridLayoutWidget;
+    QVBoxLayout *verticalLayout_3;
     QGridLayout *gridLayout;
-    QSpinBox *spinBox_imgres_x;
+    QLabel *label_Camera;
+    QFrame *line;
+    QPushButton *pushButton_BgColor;
     QSpacerItem *verticalSpacer;
+    QSpinBox *spinBox_imgres_x;
     QRadioButton *radioButton_Pathtracer;
     QLabel *label_Integrator;
     QRadioButton *radioButton_Raytracer;
     QLabel *label_Depth;
     QSpacerItem *verticalSpacer_2;
     QSpinBox *DepthBox;
-    QLabel *label;
+    QLabel *label_ImgRes;
     QSpinBox *spinBox_imgres_y;
+    QLabel *label_world;
+    QSpacerItem *horizontalSpacer_2;
+    QLabel *label_Focal_Length;
+    QFrame *line_2;
+    QDoubleSpinBox *doubleSpinBox_focal_length;
+    QLabel *label_BgColor;
+    QGraphicsView *graphicsView_BgColorDisplay;
     QWidget *SceneFileTab;
     QTextBrowser *SceneFileTextBrowser;
     QWidget *LogTab;
@@ -78,7 +91,7 @@ public:
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
         MainWindow->setWindowModality(Qt::NonModal);
-        MainWindow->resize(383, 386);
+        MainWindow->resize(797, 708);
         QIcon icon;
         icon.addFile(QString::fromUtf8("Icon/SimpleTracer-Icon.png"), QSize(), QIcon::Normal, QIcon::Off);
         MainWindow->setWindowIcon(icon);
@@ -136,77 +149,153 @@ public:
         tabWidget->addTab(RenderTab, QString());
         RenderSettingsTab = new QWidget();
         RenderSettingsTab->setObjectName(QString::fromUtf8("RenderSettingsTab"));
+        verticalLayout_4 = new QVBoxLayout(RenderSettingsTab);
+        verticalLayout_4->setSpacing(6);
+        verticalLayout_4->setContentsMargins(11, 11, 11, 11);
+        verticalLayout_4->setObjectName(QString::fromUtf8("verticalLayout_4"));
         scrollArea = new QScrollArea(RenderSettingsTab);
         scrollArea->setObjectName(QString::fromUtf8("scrollArea"));
-        scrollArea->setGeometry(QRect(10, 10, 821, 661));
         scrollArea->setWidgetResizable(true);
         scrollAreaWidgetContents = new QWidget();
         scrollAreaWidgetContents->setObjectName(QString::fromUtf8("scrollAreaWidgetContents"));
-        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 819, 659));
-        gridLayoutWidget = new QWidget(scrollAreaWidgetContents);
-        gridLayoutWidget->setObjectName(QString::fromUtf8("gridLayoutWidget"));
-        gridLayoutWidget->setGeometry(QRect(10, 10, 281, 641));
-        gridLayout = new QGridLayout(gridLayoutWidget);
+        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 755, 590));
+        verticalLayout_3 = new QVBoxLayout(scrollAreaWidgetContents);
+        verticalLayout_3->setSpacing(6);
+        verticalLayout_3->setContentsMargins(11, 11, 11, 11);
+        verticalLayout_3->setObjectName(QString::fromUtf8("verticalLayout_3"));
+        gridLayout = new QGridLayout();
         gridLayout->setSpacing(6);
-        gridLayout->setContentsMargins(11, 11, 11, 11);
         gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
-        gridLayout->setContentsMargins(0, 0, 0, 0);
-        spinBox_imgres_x = new QSpinBox(gridLayoutWidget);
+        label_Camera = new QLabel(scrollAreaWidgetContents);
+        label_Camera->setObjectName(QString::fromUtf8("label_Camera"));
+
+        gridLayout->addWidget(label_Camera, 4, 0, 1, 1);
+
+        line = new QFrame(scrollAreaWidgetContents);
+        line->setObjectName(QString::fromUtf8("line"));
+        line->setFrameShape(QFrame::HLine);
+        line->setFrameShadow(QFrame::Sunken);
+
+        gridLayout->addWidget(line, 8, 0, 1, 4);
+
+        pushButton_BgColor = new QPushButton(scrollAreaWidgetContents);
+        pushButton_BgColor->setObjectName(QString::fromUtf8("pushButton_BgColor"));
+        pushButton_BgColor->setEnabled(true);
+        pushButton_BgColor->setAutoFillBackground(false);
+        pushButton_BgColor->setFlat(false);
+
+        gridLayout->addWidget(pushButton_BgColor, 10, 1, 1, 1);
+
+        verticalSpacer = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
+
+        gridLayout->addItem(verticalSpacer, 11, 0, 1, 1);
+
+        spinBox_imgres_x = new QSpinBox(scrollAreaWidgetContents);
         spinBox_imgres_x->setObjectName(QString::fromUtf8("spinBox_imgres_x"));
         spinBox_imgres_x->setMaximum(100000);
         spinBox_imgres_x->setValue(800);
 
-        gridLayout->addWidget(spinBox_imgres_x, 3, 1, 1, 1);
+        gridLayout->addWidget(spinBox_imgres_x, 5, 1, 1, 1);
 
-        verticalSpacer = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
-
-        gridLayout->addItem(verticalSpacer, 5, 0, 1, 1);
-
-        radioButton_Pathtracer = new QRadioButton(gridLayoutWidget);
+        radioButton_Pathtracer = new QRadioButton(scrollAreaWidgetContents);
         radioButton_Pathtracer->setObjectName(QString::fromUtf8("radioButton_Pathtracer"));
         radioButton_Pathtracer->setChecked(true);
 
         gridLayout->addWidget(radioButton_Pathtracer, 1, 1, 1, 1);
 
-        label_Integrator = new QLabel(gridLayoutWidget);
+        label_Integrator = new QLabel(scrollAreaWidgetContents);
         label_Integrator->setObjectName(QString::fromUtf8("label_Integrator"));
 
         gridLayout->addWidget(label_Integrator, 0, 0, 1, 1);
 
-        radioButton_Raytracer = new QRadioButton(gridLayoutWidget);
+        radioButton_Raytracer = new QRadioButton(scrollAreaWidgetContents);
         radioButton_Raytracer->setObjectName(QString::fromUtf8("radioButton_Raytracer"));
 
         gridLayout->addWidget(radioButton_Raytracer, 0, 1, 1, 1);
 
-        label_Depth = new QLabel(gridLayoutWidget);
+        label_Depth = new QLabel(scrollAreaWidgetContents);
         label_Depth->setObjectName(QString::fromUtf8("label_Depth"));
 
         gridLayout->addWidget(label_Depth, 2, 0, 1, 1);
 
         verticalSpacer_2 = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
 
-        gridLayout->addItem(verticalSpacer_2, 5, 1, 1, 1);
+        gridLayout->addItem(verticalSpacer_2, 11, 1, 1, 1);
 
-        DepthBox = new QSpinBox(gridLayoutWidget);
+        DepthBox = new QSpinBox(scrollAreaWidgetContents);
         DepthBox->setObjectName(QString::fromUtf8("DepthBox"));
         DepthBox->setMaximum(512);
         DepthBox->setValue(8);
 
         gridLayout->addWidget(DepthBox, 2, 1, 1, 1);
 
-        label = new QLabel(gridLayoutWidget);
-        label->setObjectName(QString::fromUtf8("label"));
+        label_ImgRes = new QLabel(scrollAreaWidgetContents);
+        label_ImgRes->setObjectName(QString::fromUtf8("label_ImgRes"));
 
-        gridLayout->addWidget(label, 3, 0, 1, 1);
+        gridLayout->addWidget(label_ImgRes, 5, 0, 1, 1);
 
-        spinBox_imgres_y = new QSpinBox(gridLayoutWidget);
+        spinBox_imgres_y = new QSpinBox(scrollAreaWidgetContents);
         spinBox_imgres_y->setObjectName(QString::fromUtf8("spinBox_imgres_y"));
         spinBox_imgres_y->setMaximum(100000);
         spinBox_imgres_y->setValue(600);
 
-        gridLayout->addWidget(spinBox_imgres_y, 4, 1, 1, 1);
+        gridLayout->addWidget(spinBox_imgres_y, 6, 1, 1, 1);
+
+        label_world = new QLabel(scrollAreaWidgetContents);
+        label_world->setObjectName(QString::fromUtf8("label_world"));
+
+        gridLayout->addWidget(label_world, 9, 0, 1, 1);
+
+        horizontalSpacer_2 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+        gridLayout->addItem(horizontalSpacer_2, 11, 3, 1, 1);
+
+        label_Focal_Length = new QLabel(scrollAreaWidgetContents);
+        label_Focal_Length->setObjectName(QString::fromUtf8("label_Focal_Length"));
+
+        gridLayout->addWidget(label_Focal_Length, 7, 0, 1, 1);
+
+        line_2 = new QFrame(scrollAreaWidgetContents);
+        line_2->setObjectName(QString::fromUtf8("line_2"));
+        line_2->setFrameShape(QFrame::HLine);
+        line_2->setFrameShadow(QFrame::Sunken);
+
+        gridLayout->addWidget(line_2, 3, 0, 1, 4);
+
+        doubleSpinBox_focal_length = new QDoubleSpinBox(scrollAreaWidgetContents);
+        doubleSpinBox_focal_length->setObjectName(QString::fromUtf8("doubleSpinBox_focal_length"));
+        doubleSpinBox_focal_length->setDecimals(1);
+        doubleSpinBox_focal_length->setMinimum(1);
+        doubleSpinBox_focal_length->setMaximum(10000);
+        doubleSpinBox_focal_length->setValue(60);
+
+        gridLayout->addWidget(doubleSpinBox_focal_length, 7, 1, 1, 1);
+
+        label_BgColor = new QLabel(scrollAreaWidgetContents);
+        label_BgColor->setObjectName(QString::fromUtf8("label_BgColor"));
+
+        gridLayout->addWidget(label_BgColor, 10, 0, 1, 1);
+
+        graphicsView_BgColorDisplay = new QGraphicsView(scrollAreaWidgetContents);
+        graphicsView_BgColorDisplay->setObjectName(QString::fromUtf8("graphicsView_BgColorDisplay"));
+        graphicsView_BgColorDisplay->setEnabled(true);
+        QSizePolicy sizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
+        sizePolicy.setHorizontalStretch(0);
+        sizePolicy.setVerticalStretch(0);
+        sizePolicy.setHeightForWidth(graphicsView_BgColorDisplay->sizePolicy().hasHeightForWidth());
+        graphicsView_BgColorDisplay->setSizePolicy(sizePolicy);
+        graphicsView_BgColorDisplay->setMinimumSize(QSize(50, 30));
+        graphicsView_BgColorDisplay->setMaximumSize(QSize(50, 30));
+
+        gridLayout->addWidget(graphicsView_BgColorDisplay, 10, 2, 1, 1);
+
+
+        verticalLayout_3->addLayout(gridLayout);
 
         scrollArea->setWidget(scrollAreaWidgetContents);
+
+        verticalLayout_4->addWidget(scrollArea);
+
         tabWidget->addTab(RenderSettingsTab, QString());
         SceneFileTab = new QWidget();
         SceneFileTab->setObjectName(QString::fromUtf8("SceneFileTab"));
@@ -226,7 +315,7 @@ public:
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 383, 31));
+        menuBar->setGeometry(QRect(0, 0, 797, 25));
         menuFile = new QMenu(menuBar);
         menuFile->setObjectName(QString::fromUtf8("menuFile"));
         MainWindow->setMenuBar(menuBar);
@@ -253,11 +342,16 @@ public:
         actionSave_rendered_Image->setText(QApplication::translate("MainWindow", "Save rendered Image", 0, QApplication::UnicodeUTF8));
         pushButton->setText(QApplication::translate("MainWindow", "Start Render", 0, QApplication::UnicodeUTF8));
         tabWidget->setTabText(tabWidget->indexOf(RenderTab), QApplication::translate("MainWindow", "Render", 0, QApplication::UnicodeUTF8));
+        label_Camera->setText(QApplication::translate("MainWindow", "Camera:", 0, QApplication::UnicodeUTF8));
+        pushButton_BgColor->setText(QApplication::translate("MainWindow", "Choose Color", 0, QApplication::UnicodeUTF8));
         radioButton_Pathtracer->setText(QApplication::translate("MainWindow", "Pathtracer", 0, QApplication::UnicodeUTF8));
         label_Integrator->setText(QApplication::translate("MainWindow", "Integrator:", 0, QApplication::UnicodeUTF8));
         radioButton_Raytracer->setText(QApplication::translate("MainWindow", "Raytracer", 0, QApplication::UnicodeUTF8));
         label_Depth->setText(QApplication::translate("MainWindow", "Depth: ", 0, QApplication::UnicodeUTF8));
-        label->setText(QApplication::translate("MainWindow", "Image Resolution", 0, QApplication::UnicodeUTF8));
+        label_ImgRes->setText(QApplication::translate("MainWindow", "Image Resolution:", 0, QApplication::UnicodeUTF8));
+        label_world->setText(QApplication::translate("MainWindow", "World:", 0, QApplication::UnicodeUTF8));
+        label_Focal_Length->setText(QApplication::translate("MainWindow", "Focal Length:", 0, QApplication::UnicodeUTF8));
+        label_BgColor->setText(QApplication::translate("MainWindow", "Background Color:", 0, QApplication::UnicodeUTF8));
         tabWidget->setTabText(tabWidget->indexOf(RenderSettingsTab), QApplication::translate("MainWindow", "Render Settings", 0, QApplication::UnicodeUTF8));
         tabWidget->setTabText(tabWidget->indexOf(SceneFileTab), QApplication::translate("MainWindow", "Scene File", 0, QApplication::UnicodeUTF8));
         tabWidget->setTabText(tabWidget->indexOf(LogTab), QApplication::translate("MainWindow", "Log", 0, QApplication::UnicodeUTF8));

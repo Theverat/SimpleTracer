@@ -9,8 +9,10 @@
 #include <QFile>
 #include <QTextStream>
 #include <QDateTime>
+#include <QColorDialog>
 
 #include "integrator.h"
+#include "worldloader.h"
 
 namespace Ui {
 class MainWindow;
@@ -29,11 +31,15 @@ private:
 
     int imgwidth;
     int imgheight;
+    float focalLength;
     int depth;
+    QVector3D BgColor;
 
     bool render;
 
     Integrator* tracer;
+    Worldloader worldloader;
+
     void startRender();
     void Render();
 
@@ -49,6 +55,8 @@ private slots:
 
     void openSceneFile();
     void saveImageFile();
+
+    void changeWorldBgColor();
 };
 
 #endif // MAINWINDOW_H

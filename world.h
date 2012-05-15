@@ -14,7 +14,7 @@ class Light;
 class World
 {
 public:
-    World(Camera *newCamera);
+    World(Camera *newCamera, QVector3D newBgColor, double newIoR);
 
     Camera* getCamera();
     void setCamera(Camera* newCam);

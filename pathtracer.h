@@ -20,7 +20,7 @@
 class Pathtracer
 {
 public:
-    Pathtracer(int x, int y, uint newDepth);
+    Pathtracer(int x, int y, uint newDepth, World* newWorld);
     QImage render();
     virtual ~Pathtracer();
 

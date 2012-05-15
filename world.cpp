@@ -1,11 +1,10 @@
 #include "world.h"
 
-World::World(Camera* newCamera)
+World::World(Camera *newCamera, QVector3D newBgColor, double newIoR)
 {
     cam = newCamera;
-    BgColor = QVector3D(0, 0, 0); //blue sky
-    //BgColor = QVector3D(0, 0, 0);
-    IoR = 1;
+    BgColor = newBgColor;
+    IoR = newIoR;
 
     //future object importer code will live here
 

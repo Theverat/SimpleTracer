@@ -1,13 +1,14 @@
 #include "integrator.h"
 
-Integrator::Integrator(int width,int height, int depth){
+Integrator::Integrator(int width,int height, int depth, World* newWorld){
     this->width = width;
     this->height= height;
     this->depth = depth;
+    this->world = newWorld;
 
-    PT = new Pathtracer(this->width,this->height,this->depth);
+    PT = new Pathtracer(this->width,this->height,this->depth, this->world);
 
-    RT = new RayTracer(this->width,this->height,this->depth);
+    RT = new RayTracer(this->width,this->height,this->depth, this->world);
 }
 
 

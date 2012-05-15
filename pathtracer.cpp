@@ -1,10 +1,10 @@
 #include "pathtracer.h"
 
 
-Pathtracer::Pathtracer(int x, int y, uint newDepth)
+Pathtracer::Pathtracer(int x, int y, uint newDepth, World *newWorld)
 {
     renderImage = new QImage(x, y, QImage::Format_ARGB32);
-    world = new World(new Camera(QVector3D(0, 0, -5), QVector3D(0, 0, 1), x, y, 60));
+    world = newWorld;
     depth = newDepth;
     RenderOut = new RgbiImage(x,y);
 }
