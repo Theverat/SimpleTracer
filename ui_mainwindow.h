@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Tue May 15 20:18:48 2012
+** Created: Tue May 15 20:54:45 2012
 **      by: Qt User Interface Compiler version 4.8.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -53,13 +53,16 @@ public:
     QWidget *scrollAreaWidgetContents;
     QWidget *gridLayoutWidget;
     QGridLayout *gridLayout;
+    QSpinBox *spinBox_imgres_x;
     QSpacerItem *verticalSpacer;
     QRadioButton *radioButton_Pathtracer;
     QLabel *label_Integrator;
     QRadioButton *radioButton_Raytracer;
     QLabel *label_Depth;
-    QSpinBox *DepthBox;
     QSpacerItem *verticalSpacer_2;
+    QSpinBox *DepthBox;
+    QLabel *label;
+    QSpinBox *spinBox_imgres_y;
     QWidget *SceneFileTab;
     QTextBrowser *SceneFileTextBrowser;
     QWidget *LogTab;
@@ -140,9 +143,16 @@ public:
         gridLayout->setContentsMargins(11, 11, 11, 11);
         gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
         gridLayout->setContentsMargins(0, 0, 0, 0);
+        spinBox_imgres_x = new QSpinBox(gridLayoutWidget);
+        spinBox_imgres_x->setObjectName(QString::fromUtf8("spinBox_imgres_x"));
+        spinBox_imgres_x->setMaximum(100000);
+        spinBox_imgres_x->setValue(800);
+
+        gridLayout->addWidget(spinBox_imgres_x, 3, 1, 1, 1);
+
         verticalSpacer = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
 
-        gridLayout->addItem(verticalSpacer, 3, 0, 1, 1);
+        gridLayout->addItem(verticalSpacer, 5, 0, 1, 1);
 
         radioButton_Pathtracer = new QRadioButton(gridLayoutWidget);
         radioButton_Pathtracer->setObjectName(QString::fromUtf8("radioButton_Pathtracer"));
@@ -165,6 +175,10 @@ public:
 
         gridLayout->addWidget(label_Depth, 2, 0, 1, 1);
 
+        verticalSpacer_2 = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
+
+        gridLayout->addItem(verticalSpacer_2, 5, 1, 1, 1);
+
         DepthBox = new QSpinBox(gridLayoutWidget);
         DepthBox->setObjectName(QString::fromUtf8("DepthBox"));
         DepthBox->setMaximum(512);
@@ -172,9 +186,17 @@ public:
 
         gridLayout->addWidget(DepthBox, 2, 1, 1, 1);
 
-        verticalSpacer_2 = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
+        label = new QLabel(gridLayoutWidget);
+        label->setObjectName(QString::fromUtf8("label"));
 
-        gridLayout->addItem(verticalSpacer_2, 3, 1, 1, 1);
+        gridLayout->addWidget(label, 3, 0, 1, 1);
+
+        spinBox_imgres_y = new QSpinBox(gridLayoutWidget);
+        spinBox_imgres_y->setObjectName(QString::fromUtf8("spinBox_imgres_y"));
+        spinBox_imgres_y->setMaximum(100000);
+        spinBox_imgres_y->setValue(600);
+
+        gridLayout->addWidget(spinBox_imgres_y, 4, 1, 1, 1);
 
         scrollArea->setWidget(scrollAreaWidgetContents);
         tabWidget->addTab(RenderSettingsTab, QString());
@@ -224,6 +246,7 @@ public:
         label_Integrator->setText(QApplication::translate("MainWindow", "Integrator:", 0, QApplication::UnicodeUTF8));
         radioButton_Raytracer->setText(QApplication::translate("MainWindow", "Raytracer", 0, QApplication::UnicodeUTF8));
         label_Depth->setText(QApplication::translate("MainWindow", "Depth: ", 0, QApplication::UnicodeUTF8));
+        label->setText(QApplication::translate("MainWindow", "Image Resolution", 0, QApplication::UnicodeUTF8));
         tabWidget->setTabText(tabWidget->indexOf(RenderSettingsTab), QApplication::translate("MainWindow", "Render Settings", 0, QApplication::UnicodeUTF8));
         tabWidget->setTabText(tabWidget->indexOf(SceneFileTab), QApplication::translate("MainWindow", "Scene File", 0, QApplication::UnicodeUTF8));
         tabWidget->setTabText(tabWidget->indexOf(LogTab), QApplication::translate("MainWindow", "Log", 0, QApplication::UnicodeUTF8));

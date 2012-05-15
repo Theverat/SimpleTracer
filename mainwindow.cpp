@@ -4,8 +4,6 @@
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
-    imgwidth(800),
-    imgheight(600),
     depth(8),
     tracer(0)
 {
@@ -23,7 +21,9 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->graphicsView->setScene(scene);
 
     render = false;
-    tracer = new Integrator(imgwidth, imgheight, depth);
+
+    imgwidth = ui->spinBox_imgres_x->value();
+    imgheight = ui->spinBox_imgres_y->value();
 }
 
 MainWindow::~MainWindow()
@@ -49,6 +49,11 @@ void MainWindow::startRender(){
 }
 
 void MainWindow::Render(){
+
+    imgwidth = ui->spinBox_imgres_x->value();
+    imgheight = ui->spinBox_imgres_y->value();
+    tracer = new Integrator(imgwidth, imgheight, depth);
+
     ui->graphicsView->scene()->setSceneRect(0, 0, imgwidth, imgheight);
     QTime t;
     t.start();

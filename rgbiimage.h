@@ -19,6 +19,7 @@ public:
 
 private:
     QVector< QVector<renderPixel> > RgbiImg;
+    float SamplesPerPixel;
 };
 
 #endif // RGBIIMAGE_H
