@@ -94,7 +94,6 @@ void MainWindow::Render(){
 
         //statusbar update after the render is finished
         ui->statusBar->showMessage("elapsed Time: " + elapsedTime.toString());
-        std::cout << "Elapsed Time in s: " << s << std::endl;
 
         render = true;
         StartStopRender();
@@ -121,7 +120,7 @@ void MainWindow::Render(){
 
             //statusbar update after each pass
             ui->statusBar->showMessage("elapsed Time: " + elapsedTime.toString() + " | Samples per Pixel: " + QString::number(spp));
-            std::cout << "Elapsed Time in s: " << s << " | Samples per Pixel: " << spp << std::endl;
+            std::cout << "Samples per Pixel: " << spp << std::endl;
 
             QCoreApplication::processEvents();
         }
