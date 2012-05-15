@@ -164,6 +164,9 @@ World::World(Camera* newCamera)
     objects.append(sphere1);
     Object* sphere2 = new Object(new Sphere(QVector3D(-0.9, -1, 2.5), 1), mirror);
     objects.append(sphere2);
+
+    Object* sphere3 = new Object(new Sphere(QVector3D(1, 1, 1), 0.3), white_emit);
+    objects.append(sphere3);
 }
 
 Camera* World::getCamera(){

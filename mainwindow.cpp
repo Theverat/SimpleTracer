@@ -55,27 +55,51 @@ void MainWindow::Render(){
     QTime elapsedTime = QTime(0, 0);
     int spp = 0;
 
-    while(render)
-    {
+    if(ui->radioButton_Raytracer->isChecked()){
+        LOG("Integrator: Raytracer")
+
         ui->graphicsView->scene()->clear();
-        ui->graphicsView->scene()->addPixmap(QPixmap::fromImage(tracer->PathTrace()));
+        ui->graphicsView->scene()->addPixmap(QPixmap::fromImage(tracer->RayTrace()));
 
         //calculate the time the render is already running
-        //elapsedTime = QTime((QTime::currentTime().hour() - startTime.hour()), (QTime::currentTime().minute() - startTime.minute()), (QTime::currentTime().second() - startTime.second()));
         int ms = t.elapsed();
         int s  = ms / 1000;    ms %= 1000;
         int m  = s  / 60;      s  %= 60;
         int h  = m  / 60;      m  %= 60;
         elapsedTime = QTime(h, m, s);
 
-        //calculate the samples per pixel
-        spp++;
+        ui->statusBar->showMessage("elapsed Time: " + elapsedTime.toString());
+        std::cout << "Elapsed Time in s: " << s << std::endl;
 
-        ui->statusBar->showMessage("elapsed Time: " + elapsedTime.toString() + " | Samples per Pixel: " + QString::number(spp));
-        std::cout << "Elapsed Time in s: " << s << " | Samples per Pixel: " << spp << std::endl;
-
-        QCoreApplication::processEvents();
+        render = true;
+        StartStopRender();
     }
+
+    if(ui->radioButton_Pathtracer->isChecked()){
+        LOG("Integrator: Pathtracer")
+
+        while(render)
+        {
+            ui->graphicsView->scene()->clear();
+            ui->graphicsView->scene()->addPixmap(QPixmap::fromImage(tracer->PathTrace()));
+
+            //calculate the time the render is already running
+            int ms = t.elapsed();
+            int s  = ms / 1000;    ms %= 1000;
+            int m  = s  / 60;      s  %= 60;
+            int h  = m  / 60;      m  %= 60;
+            elapsedTime = QTime(h, m, s);
+
+            //calculate the samples per pixel
+            spp++;
+
+            ui->statusBar->showMessage("elapsed Time: " + elapsedTime.toString() + " | Samples per Pixel: " + QString::number(spp));
+            std::cout << "Elapsed Time in s: " << s << " | Samples per Pixel: " << spp << std::endl;
+
+            QCoreApplication::processEvents();
+        }
+    }
+
 }
 
 //void MainWindow::updateLine(QImage* line){
