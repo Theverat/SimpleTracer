@@ -1,8 +1,8 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Tue May 15 20:54:45 2012
-**      by: Qt User Interface Compiler version 4.8.1
+** Created: Tue 15. May 21:08:40 2012
+**      by: Qt User Interface Compiler version 4.8.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -31,6 +31,7 @@
 #include <QtGui/QStatusBar>
 #include <QtGui/QTabWidget>
 #include <QtGui/QTextBrowser>
+#include <QtGui/QVBoxLayout>
 #include <QtGui/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -41,10 +42,11 @@ public:
     QAction *actionOpen_Scene_File;
     QAction *actionSave_rendered_Image;
     QWidget *centralWidget;
+    QVBoxLayout *verticalLayout;
     QTabWidget *tabWidget;
     QWidget *RenderTab;
+    QVBoxLayout *verticalLayout_2;
     QGraphicsView *graphicsView;
-    QWidget *horizontalLayoutWidget;
     QHBoxLayout *horizontalLayout;
     QPushButton *pushButton;
     QSpacerItem *horizontalSpacer;
@@ -87,18 +89,24 @@ public:
         actionSave_rendered_Image->setObjectName(QString::fromUtf8("actionSave_rendered_Image"));
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
+        verticalLayout = new QVBoxLayout(centralWidget);
+        verticalLayout->setSpacing(6);
+        verticalLayout->setContentsMargins(11, 11, 11, 11);
+        verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
         tabWidget = new QTabWidget(centralWidget);
         tabWidget->setObjectName(QString::fromUtf8("tabWidget"));
-        tabWidget->setGeometry(QRect(10, 10, 841, 711));
         tabWidget->setElideMode(Qt::ElideNone);
         tabWidget->setUsesScrollButtons(false);
         tabWidget->setTabsClosable(false);
         tabWidget->setMovable(false);
         RenderTab = new QWidget();
         RenderTab->setObjectName(QString::fromUtf8("RenderTab"));
+        verticalLayout_2 = new QVBoxLayout(RenderTab);
+        verticalLayout_2->setSpacing(6);
+        verticalLayout_2->setContentsMargins(11, 11, 11, 11);
+        verticalLayout_2->setObjectName(QString::fromUtf8("verticalLayout_2"));
         graphicsView = new QGraphicsView(RenderTab);
         graphicsView->setObjectName(QString::fromUtf8("graphicsView"));
-        graphicsView->setGeometry(QRect(10, 10, 811, 611));
         graphicsView->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
         graphicsView->setHorizontalScrollBarPolicy(Qt::ScrollBarAsNeeded);
         QBrush brush(QColor(0, 0, 50, 255));
@@ -108,15 +116,13 @@ public:
         graphicsView->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop);
         graphicsView->setDragMode(QGraphicsView::NoDrag);
         graphicsView->setViewportUpdateMode(QGraphicsView::MinimalViewportUpdate);
-        horizontalLayoutWidget = new QWidget(RenderTab);
-        horizontalLayoutWidget->setObjectName(QString::fromUtf8("horizontalLayoutWidget"));
-        horizontalLayoutWidget->setGeometry(QRect(10, 630, 811, 41));
-        horizontalLayout = new QHBoxLayout(horizontalLayoutWidget);
+
+        verticalLayout_2->addWidget(graphicsView);
+
+        horizontalLayout = new QHBoxLayout();
         horizontalLayout->setSpacing(6);
-        horizontalLayout->setContentsMargins(11, 11, 11, 11);
         horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
-        horizontalLayout->setContentsMargins(0, 0, 0, 0);
-        pushButton = new QPushButton(horizontalLayoutWidget);
+        pushButton = new QPushButton(RenderTab);
         pushButton->setObjectName(QString::fromUtf8("pushButton"));
 
         horizontalLayout->addWidget(pushButton);
@@ -124,6 +130,9 @@ public:
         horizontalSpacer = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
         horizontalLayout->addItem(horizontalSpacer);
+
+
+        verticalLayout_2->addLayout(horizontalLayout);
 
         tabWidget->addTab(RenderTab, QString());
         RenderSettingsTab = new QWidget();
@@ -212,10 +221,13 @@ public:
         LogTextBrowser->setObjectName(QString::fromUtf8("LogTextBrowser"));
         LogTextBrowser->setGeometry(QRect(10, 10, 821, 661));
         tabWidget->addTab(LogTab, QString());
+
+        verticalLayout->addWidget(tabWidget);
+
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 860, 25));
+        menuBar->setGeometry(QRect(0, 0, 860, 31));
         menuFile = new QMenu(menuBar);
         menuFile->setObjectName(QString::fromUtf8("menuFile"));
         MainWindow->setMenuBar(menuBar);
