@@ -8,6 +8,7 @@
 #include <iostream>
 #include <QObject>
 #include <QThread>
+#include <QTime>
 
 #include "predefs.h"
 
