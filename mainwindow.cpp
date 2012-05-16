@@ -64,7 +64,10 @@ void MainWindow::Render(){
     imgheight = ui->spinBox_imgres_y->value();
     focalLength = ui->doubleSpinBox_focal_length->value();
 
-    worldloader.setWorld(new World(new Camera(QVector3D(0, 0, -5), QVector3D(0, 0, 0), imgwidth, imgheight, focalLength), BgColor, 1.0));
+    //"old" camera position and roation
+    //worldloader.setWorld(new World(new Camera(QVector3D(0, 0, -5), QVector3D(0, 0, 1), imgwidth, imgheight, focalLength), BgColor, 1.0));
+    //"new" camera position and roation
+    worldloader.setWorld(new World(new Camera(QVector3D(-3, 0, -5), QVector3D(5, 0, 10), imgwidth, imgheight, focalLength), BgColor, 1.0));
 
     //create the Integrator instance
     tracer = new Integrator(imgwidth, imgheight, depth, worldloader.getWorld());
