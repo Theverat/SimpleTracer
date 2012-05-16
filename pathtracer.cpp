@@ -11,9 +11,6 @@ Pathtracer::Pathtracer(int x, int y, uint newDepth, World *newWorld)
 
 QImage Pathtracer::render(){
     std::cout << "rendering process started" << std::endl;
-    QTime t;
-    srand(t.currentTime().msec());
-    LOG("seed: " << t.currentTime().msec())
 
         #pragma omp parallel for
         for(int y = 0; y < world->getCamera()->getImgHeigth(); y++){
@@ -35,34 +32,6 @@ QImage Pathtracer::render(){
 
     std::cout << "rendering process finished" << std::endl;
     return *renderImage;
-}
-
-QColor Pathtracer::getColorForPixel(int x, int y){
-
-    Ray ray = world->getCamera()->shootRay(x, y);
-
-    QVector3D ColorAtPixel = tracer(ray, 0);
-
-    //clamping
-    int r = ColorAtPixel.x();
-    int g = ColorAtPixel.y();
-    int b = ColorAtPixel.z();
-
-    if(r > 255)
-        r = 255;
-    if(g > 255)
-        g = 255;
-    if(b > 255)
-        b = 255;
-
-    if(r < 0)
-        r = 0;
-    if(g < 0)
-        g = 0;
-    if(b < 0)
-        b = 0;
-
-    return QColor(r, g, b);
 }
 
 
