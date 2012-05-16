@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>797</width>
-    <height>708</height>
+    <width>591</width>
+    <height>636</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,13 +18,13 @@
   </property>
   <property name="windowIcon">
    <iconset>
-    <normaloff>Icon/SimpleTracer-Icon.png</normaloff>Icon/SimpleTracer-Icon.png</iconset>
+    <normaloff>Icon/ST-Icon.png</normaloff>Icon/ST-Icon.png</iconset>
   </property>
   <property name="locale">
    <locale language="English" country="UnitedStates"/>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <layout class="QVBoxLayout" name="verticalLayout">
+   <layout class="QHBoxLayout" name="horizontalLayout_2">
     <item>
      <widget class="QTabWidget" name="tabWidget">
       <property name="currentIndex">
@@ -58,9 +58,9 @@
           <property name="backgroundBrush">
            <brush brushstyle="SolidPattern">
             <color alpha="255">
-             <red>0</red>
-             <green>0</green>
-             <blue>50</blue>
+             <red>159</red>
+             <green>159</green>
+             <blue>159</blue>
             </color>
            </brush>
           </property>
@@ -68,7 +68,7 @@
            <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
           </property>
           <property name="dragMode">
-           <enum>QGraphicsView::NoDrag</enum>
+           <enum>QGraphicsView::ScrollHandDrag</enum>
           </property>
           <property name="viewportUpdateMode">
            <enum>QGraphicsView::MinimalViewportUpdate</enum>
@@ -116,8 +116,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>755</width>
-             <height>590</height>
+             <width>583</width>
+             <height>518</height>
             </rect>
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -376,7 +376,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>797</width>
+     <width>591</width>
      <height>25</height>
     </rect>
    </property>

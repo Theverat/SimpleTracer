@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Wed May 16 07:56:04 2012
+** Created: Wed May 16 09:45:51 2012
 **      by: Qt User Interface Compiler version 4.8.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -44,7 +44,7 @@ public:
     QAction *actionOpen_Scene_File;
     QAction *actionSave_rendered_Image;
     QWidget *centralWidget;
-    QVBoxLayout *verticalLayout;
+    QHBoxLayout *horizontalLayout_2;
     QTabWidget *tabWidget;
     QWidget *RenderTab;
     QVBoxLayout *verticalLayout_2;
@@ -91,9 +91,9 @@ public:
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
         MainWindow->setWindowModality(Qt::NonModal);
-        MainWindow->resize(797, 708);
+        MainWindow->resize(591, 636);
         QIcon icon;
-        icon.addFile(QString::fromUtf8("Icon/SimpleTracer-Icon.png"), QSize(), QIcon::Normal, QIcon::Off);
+        icon.addFile(QString::fromUtf8("Icon/ST-Icon.png"), QSize(), QIcon::Normal, QIcon::Off);
         MainWindow->setWindowIcon(icon);
         MainWindow->setLocale(QLocale(QLocale::English, QLocale::UnitedStates));
         actionOpen_Scene_File = new QAction(MainWindow);
@@ -102,10 +102,10 @@ public:
         actionSave_rendered_Image->setObjectName(QString::fromUtf8("actionSave_rendered_Image"));
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
-        verticalLayout = new QVBoxLayout(centralWidget);
-        verticalLayout->setSpacing(6);
-        verticalLayout->setContentsMargins(11, 11, 11, 11);
-        verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
+        horizontalLayout_2 = new QHBoxLayout(centralWidget);
+        horizontalLayout_2->setSpacing(6);
+        horizontalLayout_2->setContentsMargins(11, 11, 11, 11);
+        horizontalLayout_2->setObjectName(QString::fromUtf8("horizontalLayout_2"));
         tabWidget = new QTabWidget(centralWidget);
         tabWidget->setObjectName(QString::fromUtf8("tabWidget"));
         tabWidget->setElideMode(Qt::ElideNone);
@@ -122,11 +122,11 @@ public:
         graphicsView->setObjectName(QString::fromUtf8("graphicsView"));
         graphicsView->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
         graphicsView->setHorizontalScrollBarPolicy(Qt::ScrollBarAsNeeded);
-        QBrush brush(QColor(0, 0, 50, 255));
+        QBrush brush(QColor(159, 159, 159, 255));
         brush.setStyle(Qt::SolidPattern);
         graphicsView->setBackgroundBrush(brush);
         graphicsView->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop);
-        graphicsView->setDragMode(QGraphicsView::NoDrag);
+        graphicsView->setDragMode(QGraphicsView::ScrollHandDrag);
         graphicsView->setViewportUpdateMode(QGraphicsView::MinimalViewportUpdate);
 
         verticalLayout_2->addWidget(graphicsView);
@@ -158,7 +158,7 @@ public:
         scrollArea->setWidgetResizable(true);
         scrollAreaWidgetContents = new QWidget();
         scrollAreaWidgetContents->setObjectName(QString::fromUtf8("scrollAreaWidgetContents"));
-        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 755, 590));
+        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 583, 518));
         verticalLayout_3 = new QVBoxLayout(scrollAreaWidgetContents);
         verticalLayout_3->setSpacing(6);
         verticalLayout_3->setContentsMargins(11, 11, 11, 11);
@@ -310,12 +310,12 @@ public:
         LogTextBrowser->setGeometry(QRect(10, 10, 821, 661));
         tabWidget->addTab(LogTab, QString());
 
-        verticalLayout->addWidget(tabWidget);
+        horizontalLayout_2->addWidget(tabWidget);
 
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 797, 25));
+        menuBar->setGeometry(QRect(0, 0, 591, 25));
         menuFile = new QMenu(menuBar);
         menuFile->setObjectName(QString::fromUtf8("menuFile"));
         MainWindow->setMenuBar(menuBar);

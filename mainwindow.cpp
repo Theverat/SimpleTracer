@@ -26,6 +26,7 @@ MainWindow::MainWindow(QWidget *parent) :
     //the scene that holds the rendered image
     QGraphicsScene* scene = new QGraphicsScene(this);
     ui->graphicsView->setScene(scene);
+    ui->graphicsView->scene()->addPixmap(QPixmap::fromImage(QImage("Icon/ST-Background.png")));
 
     render = false;
 
