@@ -13,6 +13,7 @@ INPUT(
 ./release\integrator.o
 ./release\pathtracer.o
 ./release\rgbiimage.o
+./release\worldloader.o
 ./release\moc_mainwindow.o
 ./release\moc_raytracer.o
 );

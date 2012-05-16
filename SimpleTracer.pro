@@ -52,3 +52,4 @@ LIBS += -fopenmp
 
 QMAKE_CXXFLAGS += -fopenmp
 
+CONFIG += gui

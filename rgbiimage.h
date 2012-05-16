@@ -4,6 +4,8 @@
 #include <QVector>
 #include <QVector3D>
 
+#include <math.h>
+
 struct renderPixel
 {
     double r,g,b;

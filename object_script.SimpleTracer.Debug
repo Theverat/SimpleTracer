@@ -13,6 +13,7 @@ INPUT(
 ./debug\integrator.o
 ./debug\pathtracer.o
 ./debug\rgbiimage.o
+./debug\worldloader.o
 ./debug\moc_mainwindow.o
 ./debug\moc_raytracer.o
 );
