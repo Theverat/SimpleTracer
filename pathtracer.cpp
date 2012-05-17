@@ -24,37 +24,17 @@ QImage Pathtracer::render(){
             //emit returnLine(renderImage.data());
         }
 
-    for(int y = 0; y < world->getCamera()->getImgHeigth(); y++){
-        for(int x = 0; x < world->getCamera()->getImgWidth(); x++){
-            renderImage->setPixel(x, y, clampColor(RenderOut->getPixel(x,y)).rgba());
-        }
-    }
-
     //std::cout << "rendering process finished" << std::endl;
-    return *renderImage;
+    return RenderOut->tonemap();
 }
 
 
 QColor Pathtracer::clampColor(QVector3D hdr)
 {
     //clamping
-    int r = hdr.x();
-    int g = hdr.y();
-    int b = hdr.z();
-
-    if(r > 255)
-        r = 255;
-    if(g > 255)
-        g = 255;
-    if(b > 255)
-        b = 255;
-
-    if(r < 0)
-        r = 0;
-    if(g < 0)
-        g = 0;
-    if(b < 0)
-        b = 0;
+    int r = hdr.x() * 255;
+    int g = hdr.y() * 255;
+    int b = hdr.z() * 255;
 
     return QColor(r, g, b);
 }

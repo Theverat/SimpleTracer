@@ -47,6 +47,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
 MainWindow::~MainWindow()
 {
+    render = false;
     delete ui;
 }
 
@@ -77,7 +78,7 @@ void MainWindow::Render(){
     //"old" camera position and roation
     //worldloader.setWorld(new World(new Camera(QVector3D(0, 0, -5), QVector3D(0, 0, 1), imgwidth, imgheight, focalLength), BgColor, 1.0));
     //"new" camera position and roation
-    worldloader.setWorld(new World(new Camera(QVector3D(-3, 0, -5), QVector3D(5, 0, 10), imgwidth, imgheight, focalLength), BgColor, 1.0));
+    worldloader.setWorld(new World(new Camera(QVector3D(0, 0, -5), QVector3D(0, 0, 10), imgwidth, imgheight, focalLength), BgColor, 1.0));
 
     //create the Integrator instance
     tracer = new Integrator(imgwidth, imgheight, depth, worldloader.getWorld());

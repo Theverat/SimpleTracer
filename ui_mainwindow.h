@@ -1,8 +1,8 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Thu 17. May 12:07:50 2012
-**      by: Qt User Interface Compiler version 4.8.1
+** Created: Thu 17. May 16:11:06 2012
+**      by: Qt User Interface Compiler version 4.8.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -172,7 +172,7 @@ public:
         scrollArea->setWidgetResizable(true);
         scrollAreaWidgetContents = new QWidget();
         scrollAreaWidgetContents->setObjectName(QString::fromUtf8("scrollAreaWidgetContents"));
-        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 664, 619));
+        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 653, 588));
         verticalLayout_3 = new QVBoxLayout(scrollAreaWidgetContents);
         verticalLayout_3->setSpacing(6);
         verticalLayout_3->setContentsMargins(11, 11, 11, 11);
@@ -207,7 +207,7 @@ public:
         spinBox_imgres_x = new QSpinBox(scrollAreaWidgetContents);
         spinBox_imgres_x->setObjectName(QString::fromUtf8("spinBox_imgres_x"));
         spinBox_imgres_x->setMaximum(100000);
-        spinBox_imgres_x->setValue(800);
+        spinBox_imgres_x->setValue(200);
 
         gridLayout->addWidget(spinBox_imgres_x, 5, 1, 1, 1);
 
@@ -251,7 +251,7 @@ public:
         spinBox_imgres_y = new QSpinBox(scrollAreaWidgetContents);
         spinBox_imgres_y->setObjectName(QString::fromUtf8("spinBox_imgres_y"));
         spinBox_imgres_y->setMaximum(100000);
-        spinBox_imgres_y->setValue(600);
+        spinBox_imgres_y->setValue(200);
 
         gridLayout->addWidget(spinBox_imgres_y, 6, 1, 1, 1);
 
@@ -404,7 +404,7 @@ public:
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 848, 21));
+        menuBar->setGeometry(QRect(0, 0, 848, 31));
         menuFile = new QMenu(menuBar);
         menuFile->setObjectName(QString::fromUtf8("menuFile"));
         MainWindow->setMenuBar(menuBar);
