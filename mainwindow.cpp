@@ -17,6 +17,15 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->actionOpen_Scene_File, SIGNAL(triggered()), this, SLOT(openSceneFile()));
     connect(ui->actionSave_rendered_Image, SIGNAL(triggered()), this, SLOT(saveImageFile()));
 
+    //connect camera move buttons
+    connect(ui->up, SIGNAL(clicked()), this, SLOT(moveCamUp()));
+    connect(ui->right, SIGNAL(clicked()), this, SLOT(moveCamRight()));
+    connect(ui->down, SIGNAL(clicked()), this, SLOT(moveCamDown()));
+    connect(ui->left, SIGNAL(clicked()), this, SLOT(moveCamLeft()));
+    connect(ui->backwards, SIGNAL(clicked()), this, SLOT(moveCamBack()));
+    connect(ui->forwards, SIGNAL(clicked()), this, SLOT(moveCamForw()));
+    connect(ui->focalLengthSlider, SIGNAL(valueChanged(int)), this, SLOT(changeFocalLength(int)));
+
     //connect world backgroundcolor change button
     connect(ui->pushButton_BgColor, SIGNAL(clicked()), this, SLOT(changeWorldBgColor()));
     QGraphicsScene* BgColorDisplayScene = new QGraphicsScene(this);
@@ -29,6 +38,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->graphicsView->scene()->addPixmap(QPixmap::fromImage(QImage("Icon/ST-Background.png")));
 
     render = false;
+    cameraChanged = false;
 
     imgwidth = ui->spinBox_imgres_x->value();
     imgheight = ui->spinBox_imgres_y->value();
@@ -107,6 +117,7 @@ void MainWindow::Render(){
     if(ui->radioButton_Pathtracer->isChecked()){
         LOG("Integrator: Pathtracer")
 
+        int i = 1;
         while(render)
         {
             ui->graphicsView->scene()->clear();
@@ -127,6 +138,14 @@ void MainWindow::Render(){
             std::cout << "Samples per Pixel: " << spp << std::endl;
 
             QCoreApplication::processEvents();
+
+            if(cameraChanged){
+                worldloader.getWorld()->setCamera(cam);
+                cameraChanged = false;
+                tracer = new Integrator(imgwidth, imgheight, depth, worldloader.getWorld());
+                spp = 0;
+                t.start();
+            }
         }
     }
 
@@ -197,4 +216,60 @@ void MainWindow::changeWorldBgColor(){
     LOG("world's background color set to " << BgColor_as_QColor.red() << " " << BgColor_as_QColor.green() << " " << BgColor_as_QColor.blue());
 
     ui->graphicsView_BgColorDisplay->scene()->setBackgroundBrush(QBrush(BgColor_as_QColor));
+}
+
+void MainWindow::moveCamUp(){
+    QVector3D newPos = worldloader.getWorld()->getCamera()->getOrigin();
+    newPos.setY(newPos.y() + 0.2);
+    delete cam;
+    cam = new Camera(newPos, worldloader.getWorld()->getCamera()->getDirection(), imgwidth, imgheight, focalLength);
+    cameraChanged = true;
+}
+
+void MainWindow::moveCamRight(){
+    QVector3D newPos = worldloader.getWorld()->getCamera()->getOrigin();
+   newPos.setX(newPos.x() - 0.2);
+    delete cam;
+    cam = new Camera(newPos, worldloader.getWorld()->getCamera()->getDirection(), imgwidth, imgheight, focalLength);
+    cameraChanged = true;
+}
+
+void MainWindow::moveCamDown(){
+    QVector3D newPos = worldloader.getWorld()->getCamera()->getOrigin();
+    newPos.setY(newPos.y() - 0.2);
+    delete cam;
+    cam = new Camera(newPos, worldloader.getWorld()->getCamera()->getDirection(), imgwidth, imgheight, focalLength);
+    cameraChanged = true;
+}
+
+void MainWindow::moveCamLeft(){
+    QVector3D newPos = worldloader.getWorld()->getCamera()->getOrigin();
+    newPos.setX(newPos.x() + 0.2);
+    delete cam;
+    cam = new Camera(newPos, worldloader.getWorld()->getCamera()->getDirection(), imgwidth, imgheight, focalLength);
+    cameraChanged = true;
+}
+
+void MainWindow::moveCamBack(){
+    QVector3D newPos = worldloader.getWorld()->getCamera()->getOrigin();
+    newPos.setZ(newPos.z() - 0.2);
+    delete cam;
+    cam = new Camera(newPos, worldloader.getWorld()->getCamera()->getDirection(), imgwidth, imgheight, focalLength);
+    cameraChanged = true;
+}
+
+void MainWindow::moveCamForw(){
+    QVector3D newPos = worldloader.getWorld()->getCamera()->getOrigin();
+    newPos.setZ(newPos.z() + 0.2);
+    delete cam;
+    cam = new Camera(newPos, worldloader.getWorld()->getCamera()->getDirection(), imgwidth, imgheight, focalLength);
+    cameraChanged = true;
+}
+
+void MainWindow::changeFocalLength(int newFL){
+    this->focalLength = newFL;
+    ui->focalLengthDisplay->setText(QString::number(this->focalLength));
+    delete cam;
+    cam = new Camera(worldloader.getWorld()->getCamera()->getOrigin(), worldloader.getWorld()->getCamera()->getDirection(), imgwidth, imgheight, focalLength);
+    cameraChanged = true;
 }

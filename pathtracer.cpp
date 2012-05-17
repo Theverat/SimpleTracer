@@ -10,7 +10,7 @@ Pathtracer::Pathtracer(int x, int y, uint newDepth, World *newWorld)
 }
 
 QImage Pathtracer::render(){
-    std::cout << "rendering process started" << std::endl;
+    //std::cout << "rendering process started" << std::endl;
 
         #pragma omp parallel for
         for(int y = 0; y < world->getCamera()->getImgHeigth(); y++){
@@ -30,7 +30,7 @@ QImage Pathtracer::render(){
         }
     }
 
-    std::cout << "rendering process finished" << std::endl;
+    //std::cout << "rendering process finished" << std::endl;
     return *renderImage;
 }
 

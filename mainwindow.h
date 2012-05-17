@@ -36,9 +36,11 @@ private:
     QVector3D BgColor;
 
     bool render;
+    bool cameraChanged;
 
     Integrator* tracer;
     Worldloader worldloader;
+    Camera* cam;
 
     void startRender();
     void Render();
@@ -57,6 +59,15 @@ private slots:
     void saveImageFile();
 
     void changeWorldBgColor();
+
+    //camera change functions
+    void moveCamUp();
+    void moveCamRight();
+    void moveCamDown();
+    void moveCamLeft();
+    void moveCamBack();
+    void moveCamForw();
+    void changeFocalLength(int);
 };
 
 #endif // MAINWINDOW_H

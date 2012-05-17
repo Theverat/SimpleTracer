@@ -17,6 +17,8 @@ public:
     int getImgWidth();
     int getImgHeigth();
     float getFarClip();
+    QVector3D getOrigin(){return CamOrigin;}
+    QVector3D getDirection(){return CamDirection;}
 
 private:
     QMatrix4x4 viewmatrix;
