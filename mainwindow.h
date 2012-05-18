@@ -10,6 +10,7 @@
 #include <QTextStream>
 #include <QDateTime>
 #include <QColorDialog>
+#include <QTimer>
 
 #include "integrator.h"
 #include "worldloader.h"
@@ -37,16 +38,20 @@ private:
 
     bool render;
     bool cameraChanged;
+    float spp;
 
     Integrator* tracer;
     Worldloader worldloader;
     Camera* cam;
+    QTimer *timer;
+    QTime t;
 
     void Render();
 
     bool loadSceneFile(const QString &fileName);
 
 private slots:
+    void updateStatusBar();
     void updateRender(QImage, float spp);
     void updateRender(QImage);
     void StartStopRender();

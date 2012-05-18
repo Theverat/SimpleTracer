@@ -11,14 +11,13 @@ Pathtracer::Pathtracer(int x, int y, uint newDepth, World *newWorld)
 
 QImage Pathtracer::render(){
 
-        #pragma omp parallel for //has no influence on render speed
+        #pragma omp parallel for //has no influence on render speed?!
         for(int y = 0; y < world->getCamera()->getImgHeigth(); y++){
             for(int x = 0; x < world->getCamera()->getImgWidth(); x++){
 
                 Ray ray = world->getCamera()->shootRay(x+(rand()%1000)/500.0-1.0, y+(rand()%1000)/500.0-1.0);
                 QVector3D ColorAtPixel = tracer(ray, 0);
                 RenderOut->setPixel(x,y,ColorAtPixel);
-
             }
         }
 

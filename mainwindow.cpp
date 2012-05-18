@@ -30,6 +30,12 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->down_2, SIGNAL(clicked()), this, SLOT(rotCamDown()));
     connect(ui->left_2, SIGNAL(clicked()), this, SLOT(rotCamLeft()));
 
+    //get start time
+    t.start();
+
+    //connect timer
+    timer = new QTimer(this);
+    connect(timer, SIGNAL(timeout()), this, SLOT(updateStatusBar()));
 
     //connect world backgroundcolor change button
     connect(ui->pushButton_BgColor, SIGNAL(clicked()), this, SLOT(changeWorldBgColor()));
@@ -44,6 +50,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
     render = false;
     cameraChanged = false;
+    spp = 0;
+    cam = new Camera(QVector3D(0, 0, -5), QVector3D(0, 0, 1), imgwidth, imgheight, focalLength);
 
     imgwidth = ui->spinBox_imgres_x->value();
     imgheight = ui->spinBox_imgres_y->value();
@@ -61,6 +69,7 @@ void MainWindow::StartStopRender(){
         render = !render;
         ui->pushButton->setText("Start Render");
         tracer->stop();
+        timer->stop();
     } else {
         render = !render;
         ui->pushButton->setText("Stop Render");
@@ -186,6 +195,7 @@ void MainWindow::Render(){
         //create the Integrator instance
         tracer = new Integrator(imgwidth, imgheight, depth, worldloader.getWorld(), "raytracer");
         QObject::connect(tracer, SIGNAL(passFinished(QImage, float)), this, SLOT(updateRender(QImage, float)));
+        timer->start(1000);
         tracer->start();
     }
 
@@ -195,8 +205,21 @@ void MainWindow::Render(){
 
         tracer = new Integrator(imgwidth, imgheight, depth, worldloader.getWorld(), "pathtracer");
         QObject::connect(tracer, SIGNAL(passFinished(QImage, float)), this, SLOT(updateRender(QImage, float)));
+        timer->start(1000);
         tracer->start();
     }
+}
+
+void MainWindow::updateStatusBar(){
+    //calculate the time the render is already running
+    int ms = t.elapsed();
+    int s  = ms / 1000;    ms %= 1000;
+    int m  = s  / 60;      s  %= 60;
+    int h  = m  / 60;      m  %= 60;
+    QTime elapsedTime = QTime(h, m, s);
+
+    ui->statusBar->showMessage("elapsed Time: " + elapsedTime.toString() + " | Samples per Pixel: " + QString::number(spp));
+    std::cout << "Samples per Pixel: " << spp << std::endl;
 }
 
 void MainWindow::updateRender(QImage render){
@@ -205,12 +228,12 @@ void MainWindow::updateRender(QImage render){
 }
 
 void MainWindow::updateRender(QImage render, float spp){
+    this->spp = spp;
     ui->graphicsView->scene()->clear();
     ui->graphicsView->scene()->addPixmap(QPixmap::fromImage(render));
 
     //statusbar update after each pass
-    ui->statusBar->showMessage("Samples per Pixel: " + QString::number(spp));
-    std::cout << "Samples per Pixel: " << spp << std::endl;
+    updateStatusBar();
 }
 
 void MainWindow::DepthChanged(int newDepth){
