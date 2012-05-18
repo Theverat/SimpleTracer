@@ -25,6 +25,11 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->backwards, SIGNAL(clicked()), this, SLOT(moveCamBack()));
     connect(ui->forwards, SIGNAL(clicked()), this, SLOT(moveCamForw()));
     connect(ui->focalLengthSlider, SIGNAL(valueChanged(int)), this, SLOT(changeFocalLength(int)));
+    connect(ui->up_2, SIGNAL(clicked()), this, SLOT(rotCamUp()));
+    connect(ui->right_2, SIGNAL(clicked()), this, SLOT(rotCamRight()));
+    connect(ui->down_2, SIGNAL(clicked()), this, SLOT(rotCamDown()));
+    connect(ui->left_2, SIGNAL(clicked()), this, SLOT(rotCamLeft()));
+
 
     //connect world backgroundcolor change button
     connect(ui->pushButton_BgColor, SIGNAL(clicked()), this, SLOT(changeWorldBgColor()));
@@ -47,7 +52,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
 MainWindow::~MainWindow()
 {
-    render = false;
+    StartStopRender();
     delete ui;
 }
 
@@ -55,19 +60,15 @@ void MainWindow::StartStopRender(){
     if(render){
         render = !render;
         ui->pushButton->setText("Start Render");
-        ui->DepthBox->setDisabled(false);
+        tracer->stop();
     } else {
         render = !render;
         ui->pushButton->setText("Stop Render");
-        ui->DepthBox->setDisabled(true);
-        startRender();
+        Render();
     }
 }
 
-void MainWindow::startRender(){
-    Render();
-}
-
+/*
 void MainWindow::Render(){
 
     //read values from the gui settings
@@ -151,15 +152,65 @@ void MainWindow::Render(){
     }
 
 }
+*/
 
-//void MainWindow::updateLine(QImage* line){
-//    ui->graphicsView->scene()->clear();
-//    ui->graphicsView->scene()->addPixmap(QPixmap::fromImage(*line));
-//}
+void MainWindow::Render(){
 
-void MainWindow::updateRender(QImage *render){
+    if(tracer)
+        tracer->stop();
+
+    //read values from the gui settings
+    imgwidth = ui->spinBox_imgres_x->value();
+    imgheight = ui->spinBox_imgres_y->value();
+    if(!cameraChanged)
+        focalLength = ui->doubleSpinBox_focal_length->value();
+
+    //"old" camera position and roation
+    //worldloader.setWorld(new World(new Camera(QVector3D(0, 0, -5), QVector3D(0, 0, 1), imgwidth, imgheight, focalLength), BgColor, 1.0));
+    //"new" camera position and roation
+    worldloader.setWorld(new World(new Camera(QVector3D(0, 0, -5), QVector3D(0, 0, 1), imgwidth, imgheight, focalLength), BgColor, 1.0));
+    if(cameraChanged){
+        worldloader.getWorld()->setCamera(cam);
+        cameraChanged = false;
+        LOG("new camera set, render restarted")
+    }
+
+    ui->graphicsView->scene()->setSceneRect(0, 0, imgwidth, imgheight);
+
+    //start the render with the chosen Integrator
+
+    //Integrator: Raytracer
+    if(ui->radioButton_Raytracer->isChecked()){
+        LOG("Integrator: Raytracer")
+
+        //create the Integrator instance
+        tracer = new Integrator(imgwidth, imgheight, depth, worldloader.getWorld(), "raytracer");
+        QObject::connect(tracer, SIGNAL(passFinished(QImage, float)), this, SLOT(updateRender(QImage, float)));
+        tracer->start();
+    }
+
+    //Integrator: Pathtracer
+    if(ui->radioButton_Pathtracer->isChecked()){
+        LOG("Integrator: Pathtracer")
+
+        tracer = new Integrator(imgwidth, imgheight, depth, worldloader.getWorld(), "pathtracer");
+        QObject::connect(tracer, SIGNAL(passFinished(QImage, float)), this, SLOT(updateRender(QImage, float)));
+        tracer->start();
+    }
+}
+
+void MainWindow::updateRender(QImage render){
     ui->graphicsView->scene()->clear();
-    ui->graphicsView->scene()->addPixmap(QPixmap::fromImage(*render));
+    ui->graphicsView->scene()->addPixmap(QPixmap::fromImage(render));
+}
+
+void MainWindow::updateRender(QImage render, float spp){
+    ui->graphicsView->scene()->clear();
+    ui->graphicsView->scene()->addPixmap(QPixmap::fromImage(render));
+
+    //statusbar update after each pass
+    ui->statusBar->showMessage("Samples per Pixel: " + QString::number(spp));
+    std::cout << "Samples per Pixel: " << spp << std::endl;
 }
 
 void MainWindow::DepthChanged(int newDepth){
@@ -219,20 +270,24 @@ void MainWindow::changeWorldBgColor(){
     ui->graphicsView_BgColorDisplay->scene()->setBackgroundBrush(QBrush(BgColor_as_QColor));
 }
 
+//move camera
 void MainWindow::moveCamUp(){
     QVector3D newPos = worldloader.getWorld()->getCamera()->getOrigin();
     newPos.setY(newPos.y() + 0.2);
     delete cam;
     cam = new Camera(newPos, worldloader.getWorld()->getCamera()->getDirection(), imgwidth, imgheight, focalLength);
     cameraChanged = true;
+    worldloader.getWorld()->setCamera(cam);
+    Render();
 }
 
 void MainWindow::moveCamRight(){
     QVector3D newPos = worldloader.getWorld()->getCamera()->getOrigin();
-   newPos.setX(newPos.x() - 0.2);
+    newPos.setX(newPos.x() - 0.2);
     delete cam;
     cam = new Camera(newPos, worldloader.getWorld()->getCamera()->getDirection(), imgwidth, imgheight, focalLength);
     cameraChanged = true;
+    Render();
 }
 
 void MainWindow::moveCamDown(){
@@ -241,6 +296,7 @@ void MainWindow::moveCamDown(){
     delete cam;
     cam = new Camera(newPos, worldloader.getWorld()->getCamera()->getDirection(), imgwidth, imgheight, focalLength);
     cameraChanged = true;
+    Render();
 }
 
 void MainWindow::moveCamLeft(){
@@ -249,6 +305,7 @@ void MainWindow::moveCamLeft(){
     delete cam;
     cam = new Camera(newPos, worldloader.getWorld()->getCamera()->getDirection(), imgwidth, imgheight, focalLength);
     cameraChanged = true;
+    Render();
 }
 
 void MainWindow::moveCamBack(){
@@ -257,6 +314,7 @@ void MainWindow::moveCamBack(){
     delete cam;
     cam = new Camera(newPos, worldloader.getWorld()->getCamera()->getDirection(), imgwidth, imgheight, focalLength);
     cameraChanged = true;
+    Render();
 }
 
 void MainWindow::moveCamForw(){
@@ -265,12 +323,56 @@ void MainWindow::moveCamForw(){
     delete cam;
     cam = new Camera(newPos, worldloader.getWorld()->getCamera()->getDirection(), imgwidth, imgheight, focalLength);
     cameraChanged = true;
+    Render();
 }
 
+//change the camera's focal length
 void MainWindow::changeFocalLength(int newFL){
     this->focalLength = newFL;
     ui->focalLengthDisplay->setText(QString::number(this->focalLength));
     delete cam;
     cam = new Camera(worldloader.getWorld()->getCamera()->getOrigin(), worldloader.getWorld()->getCamera()->getDirection(), imgwidth, imgheight, focalLength);
     cameraChanged = true;
+    Render();
+}
+
+//rotate camera
+void MainWindow::rotCamUp(){
+    QVector3D newDir = worldloader.getWorld()->getCamera()->getDirection();
+    newDir.setY(newDir.y() + 0.05);
+    delete cam;
+    cam = new Camera(worldloader.getWorld()->getCamera()->getOrigin(), newDir, imgwidth, imgheight, focalLength);
+    cameraChanged = true;
+    worldloader.getWorld()->setCamera(cam);
+    Render();
+}
+
+void MainWindow::rotCamRight(){
+    QVector3D newDir = worldloader.getWorld()->getCamera()->getDirection();
+    newDir.setX(newDir.x() - 0.05);
+    delete cam;
+    cam = new Camera(worldloader.getWorld()->getCamera()->getOrigin(), newDir, imgwidth, imgheight, focalLength);
+    cameraChanged = true;
+    worldloader.getWorld()->setCamera(cam);
+    Render();
+}
+
+void MainWindow::rotCamDown(){
+    QVector3D newDir = worldloader.getWorld()->getCamera()->getDirection();
+    newDir.setY(newDir.y() - 0.05);
+    delete cam;
+    cam = new Camera(worldloader.getWorld()->getCamera()->getOrigin(), newDir, imgwidth, imgheight, focalLength);
+    cameraChanged = true;
+    worldloader.getWorld()->setCamera(cam);
+    Render();
+}
+
+void MainWindow::rotCamLeft(){
+    QVector3D newDir = worldloader.getWorld()->getCamera()->getDirection();
+    newDir.setX(newDir.x() + 0.05);
+    delete cam;
+    cam = new Camera(worldloader.getWorld()->getCamera()->getOrigin(), newDir, imgwidth, imgheight, focalLength);
+    cameraChanged = true;
+    worldloader.getWorld()->setCamera(cam);
+    Render();
 }

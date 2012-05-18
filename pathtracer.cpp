@@ -10,9 +10,8 @@ Pathtracer::Pathtracer(int x, int y, uint newDepth, World *newWorld)
 }
 
 QImage Pathtracer::render(){
-    //std::cout << "rendering process started" << std::endl;
 
-        #pragma omp parallel for
+        #pragma omp parallel for //has no influence on render speed
         for(int y = 0; y < world->getCamera()->getImgHeigth(); y++){
             for(int x = 0; x < world->getCamera()->getImgWidth(); x++){
 
@@ -21,10 +20,8 @@ QImage Pathtracer::render(){
                 RenderOut->setPixel(x,y,ColorAtPixel);
 
             }
-            //emit returnLine(renderImage.data());
         }
 
-    //std::cout << "rendering process finished" << std::endl;
     return RenderOut->tonemap();
 }
 

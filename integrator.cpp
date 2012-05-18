@@ -1,31 +1,52 @@
 #include "integrator.h"
 
-Integrator::Integrator(int width,int height, int depth, World* newWorld){
+Integrator::Integrator(int width, int height, int depth, World* newWorld, QString integrator){
     this->width = width;
     this->height= height;
     this->depth = depth;
     this->world = newWorld;
+    this->integrator = integrator;
+
+    this->isRendering = false;
+    this->spp = 0;
 
     PT = new Pathtracer(this->width,this->height,this->depth, this->world);
 
     RT = new RayTracer(this->width,this->height,this->depth, this->world);
 }
 
+void Integrator::run(){
+    if(integrator == "pathtracer")
+        PathTrace();
+    else if(integrator == "raytracer")
+        RayTrace();
+    else
+        std::cerr << "Integrator::run(): no known integrator" << std::endl;
+}
 
-QImage Integrator::RayTrace(){
-    QImage renderOutput;
+void Integrator::stop(){
+    isRendering = false;
+    wait();
+}
+
+void Integrator::RayTrace(){
+    isRendering = true;
 
     renderOutput = RT->render();
 
-    return renderOutput;
+    emit passFinished(renderOutput);
+    isRendering = false;
 }
 
-QImage Integrator::PathTrace(){
-    QImage renderOutput;
+void Integrator::PathTrace(){
+    isRendering = true;
 
-    renderOutput = PT->render();
-
-    return renderOutput;
+    while(isRendering == true){
+        renderOutput = PT->render();
+        spp += 1;
+        emit passFinished(renderOutput, spp);
+    }
+    isRendering = false;
 }
 
 Integrator::~Integrator()
@@ -33,3 +54,4 @@ Integrator::~Integrator()
     RT->~RayTracer();
     PT->~Pathtracer();
 }
+

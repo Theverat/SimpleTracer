@@ -42,15 +42,13 @@ private:
     Worldloader worldloader;
     Camera* cam;
 
-    void startRender();
     void Render();
 
     bool loadSceneFile(const QString &fileName);
 
 private slots:
-
-    //void updateLine(QImage*); //slows down the render
-    void updateRender(QImage*);
+    void updateRender(QImage, float spp);
+    void updateRender(QImage);
     void StartStopRender();
 
     void DepthChanged(int);
@@ -68,6 +66,10 @@ private slots:
     void moveCamBack();
     void moveCamForw();
     void changeFocalLength(int);
+    void rotCamUp();
+    void rotCamRight();
+    void rotCamDown();
+    void rotCamLeft();
 };
 
 #endif // MAINWINDOW_H

@@ -1,8 +1,8 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Thu 17. May 16:11:06 2012
-**      by: Qt User Interface Compiler version 4.8.0
+** Created: Fri May 18 19:05:59 2012
+**      by: Qt User Interface Compiler version 4.8.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -46,13 +46,33 @@ public:
     QAction *actionSave_rendered_Image;
     QWidget *centralWidget;
     QHBoxLayout *horizontalLayout_2;
-    QTabWidget *tabWidget;
-    QWidget *RenderTab;
-    QVBoxLayout *verticalLayout_2;
-    QGraphicsView *graphicsView;
+    QGridLayout *gridLayout_3;
     QHBoxLayout *horizontalLayout;
     QPushButton *pushButton;
     QSpacerItem *horizontalSpacer;
+    QGraphicsView *graphicsView;
+    QTabWidget *tabWidget;
+    QWidget *RenderTab;
+    QVBoxLayout *verticalLayout_2;
+    QGridLayout *gridLayout_2;
+    QPushButton *left_2;
+    QPushButton *down_2;
+    QLabel *label_4;
+    QSlider *focalLengthSlider;
+    QLabel *label;
+    QPushButton *up;
+    QPushButton *left;
+    QPushButton *right;
+    QPushButton *down;
+    QLabel *label_2;
+    QPushButton *backwards;
+    QPushButton *forwards;
+    QLabel *label_3;
+    QSpacerItem *horizontalSpacer_3;
+    QLabel *focalLengthDisplay;
+    QPushButton *up_2;
+    QPushButton *right_2;
+    QSpacerItem *verticalSpacer_3;
     QWidget *RenderSettingsTab;
     QVBoxLayout *verticalLayout_4;
     QScrollArea *scrollArea;
@@ -73,29 +93,15 @@ public:
     QLabel *label_ImgRes;
     QSpinBox *spinBox_imgres_y;
     QLabel *label_world;
-    QSpacerItem *horizontalSpacer_2;
     QLabel *label_Focal_Length;
-    QFrame *line_2;
     QDoubleSpinBox *doubleSpinBox_focal_length;
     QLabel *label_BgColor;
     QGraphicsView *graphicsView_BgColorDisplay;
+    QFrame *line_2;
     QWidget *SceneFileTab;
     QTextBrowser *SceneFileTextBrowser;
     QWidget *LogTab;
     QTextBrowser *LogTextBrowser;
-    QGridLayout *gridLayout_2;
-    QLabel *label;
-    QPushButton *up;
-    QPushButton *left;
-    QPushButton *right;
-    QPushButton *down;
-    QLabel *label_2;
-    QPushButton *backwards;
-    QSpacerItem *verticalSpacer_3;
-    QPushButton *forwards;
-    QSlider *focalLengthSlider;
-    QLabel *label_3;
-    QLabel *focalLengthDisplay;
     QMenuBar *menuBar;
     QMenu *menuFile;
     QStatusBar *statusBar;
@@ -105,7 +111,7 @@ public:
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
         MainWindow->setWindowModality(Qt::NonModal);
-        MainWindow->resize(848, 724);
+        MainWindow->resize(937, 665);
         QIcon icon;
         icon.addFile(QString::fromUtf8("Icon/ST-Icon.png"), QSize(), QIcon::Normal, QIcon::Off);
         MainWindow->setWindowIcon(icon);
@@ -120,19 +126,25 @@ public:
         horizontalLayout_2->setSpacing(6);
         horizontalLayout_2->setContentsMargins(11, 11, 11, 11);
         horizontalLayout_2->setObjectName(QString::fromUtf8("horizontalLayout_2"));
-        tabWidget = new QTabWidget(centralWidget);
-        tabWidget->setObjectName(QString::fromUtf8("tabWidget"));
-        tabWidget->setElideMode(Qt::ElideNone);
-        tabWidget->setUsesScrollButtons(false);
-        tabWidget->setTabsClosable(false);
-        tabWidget->setMovable(false);
-        RenderTab = new QWidget();
-        RenderTab->setObjectName(QString::fromUtf8("RenderTab"));
-        verticalLayout_2 = new QVBoxLayout(RenderTab);
-        verticalLayout_2->setSpacing(6);
-        verticalLayout_2->setContentsMargins(11, 11, 11, 11);
-        verticalLayout_2->setObjectName(QString::fromUtf8("verticalLayout_2"));
-        graphicsView = new QGraphicsView(RenderTab);
+        gridLayout_3 = new QGridLayout();
+        gridLayout_3->setSpacing(6);
+        gridLayout_3->setObjectName(QString::fromUtf8("gridLayout_3"));
+        horizontalLayout = new QHBoxLayout();
+        horizontalLayout->setSpacing(6);
+        horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
+        pushButton = new QPushButton(centralWidget);
+        pushButton->setObjectName(QString::fromUtf8("pushButton"));
+
+        horizontalLayout->addWidget(pushButton);
+
+        horizontalSpacer = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+        horizontalLayout->addItem(horizontalSpacer);
+
+
+        gridLayout_3->addLayout(horizontalLayout, 1, 0, 1, 1);
+
+        graphicsView = new QGraphicsView(centralWidget);
         graphicsView->setObjectName(QString::fromUtf8("graphicsView"));
         graphicsView->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
         graphicsView->setHorizontalScrollBarPolicy(Qt::ScrollBarAsNeeded);
@@ -143,22 +155,131 @@ public:
         graphicsView->setDragMode(QGraphicsView::ScrollHandDrag);
         graphicsView->setViewportUpdateMode(QGraphicsView::MinimalViewportUpdate);
 
-        verticalLayout_2->addWidget(graphicsView);
-
-        horizontalLayout = new QHBoxLayout();
-        horizontalLayout->setSpacing(6);
-        horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
-        pushButton = new QPushButton(RenderTab);
-        pushButton->setObjectName(QString::fromUtf8("pushButton"));
-
-        horizontalLayout->addWidget(pushButton);
-
-        horizontalSpacer = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
-
-        horizontalLayout->addItem(horizontalSpacer);
+        gridLayout_3->addWidget(graphicsView, 0, 0, 1, 1);
 
 
-        verticalLayout_2->addLayout(horizontalLayout);
+        horizontalLayout_2->addLayout(gridLayout_3);
+
+        tabWidget = new QTabWidget(centralWidget);
+        tabWidget->setObjectName(QString::fromUtf8("tabWidget"));
+        tabWidget->setMaximumSize(QSize(345, 16777215));
+        tabWidget->setElideMode(Qt::ElideNone);
+        tabWidget->setUsesScrollButtons(false);
+        tabWidget->setTabsClosable(false);
+        tabWidget->setMovable(false);
+        RenderTab = new QWidget();
+        RenderTab->setObjectName(QString::fromUtf8("RenderTab"));
+        verticalLayout_2 = new QVBoxLayout(RenderTab);
+        verticalLayout_2->setSpacing(6);
+        verticalLayout_2->setContentsMargins(11, 11, 11, 11);
+        verticalLayout_2->setObjectName(QString::fromUtf8("verticalLayout_2"));
+        gridLayout_2 = new QGridLayout();
+        gridLayout_2->setSpacing(6);
+        gridLayout_2->setObjectName(QString::fromUtf8("gridLayout_2"));
+        left_2 = new QPushButton(RenderTab);
+        left_2->setObjectName(QString::fromUtf8("left_2"));
+        left_2->setMaximumSize(QSize(40, 40));
+
+        gridLayout_2->addWidget(left_2, 11, 0, 1, 1);
+
+        down_2 = new QPushButton(RenderTab);
+        down_2->setObjectName(QString::fromUtf8("down_2"));
+        down_2->setMaximumSize(QSize(40, 40));
+
+        gridLayout_2->addWidget(down_2, 12, 1, 1, 1);
+
+        label_4 = new QLabel(RenderTab);
+        label_4->setObjectName(QString::fromUtf8("label_4"));
+
+        gridLayout_2->addWidget(label_4, 9, 0, 1, 3);
+
+        focalLengthSlider = new QSlider(RenderTab);
+        focalLengthSlider->setObjectName(QString::fromUtf8("focalLengthSlider"));
+        focalLengthSlider->setMinimum(1);
+        focalLengthSlider->setMaximum(200);
+        focalLengthSlider->setValue(23);
+        focalLengthSlider->setOrientation(Qt::Horizontal);
+
+        gridLayout_2->addWidget(focalLengthSlider, 8, 0, 1, 3);
+
+        label = new QLabel(RenderTab);
+        label->setObjectName(QString::fromUtf8("label"));
+
+        gridLayout_2->addWidget(label, 0, 0, 1, 3);
+
+        up = new QPushButton(RenderTab);
+        up->setObjectName(QString::fromUtf8("up"));
+        up->setMaximumSize(QSize(40, 40));
+
+        gridLayout_2->addWidget(up, 1, 1, 1, 1);
+
+        left = new QPushButton(RenderTab);
+        left->setObjectName(QString::fromUtf8("left"));
+        left->setMaximumSize(QSize(40, 40));
+
+        gridLayout_2->addWidget(left, 2, 0, 1, 1);
+
+        right = new QPushButton(RenderTab);
+        right->setObjectName(QString::fromUtf8("right"));
+        right->setMaximumSize(QSize(40, 40));
+
+        gridLayout_2->addWidget(right, 2, 2, 1, 1);
+
+        down = new QPushButton(RenderTab);
+        down->setObjectName(QString::fromUtf8("down"));
+        down->setMaximumSize(QSize(40, 40));
+
+        gridLayout_2->addWidget(down, 3, 1, 1, 1);
+
+        label_2 = new QLabel(RenderTab);
+        label_2->setObjectName(QString::fromUtf8("label_2"));
+
+        gridLayout_2->addWidget(label_2, 4, 1, 1, 1);
+
+        backwards = new QPushButton(RenderTab);
+        backwards->setObjectName(QString::fromUtf8("backwards"));
+        backwards->setMaximumSize(QSize(80, 40));
+
+        gridLayout_2->addWidget(backwards, 5, 0, 1, 2);
+
+        forwards = new QPushButton(RenderTab);
+        forwards->setObjectName(QString::fromUtf8("forwards"));
+        forwards->setMaximumSize(QSize(80, 40));
+
+        gridLayout_2->addWidget(forwards, 6, 0, 1, 2);
+
+        label_3 = new QLabel(RenderTab);
+        label_3->setObjectName(QString::fromUtf8("label_3"));
+
+        gridLayout_2->addWidget(label_3, 7, 0, 1, 2);
+
+        horizontalSpacer_3 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+        gridLayout_2->addItem(horizontalSpacer_3, 0, 3, 1, 1);
+
+        focalLengthDisplay = new QLabel(RenderTab);
+        focalLengthDisplay->setObjectName(QString::fromUtf8("focalLengthDisplay"));
+
+        gridLayout_2->addWidget(focalLengthDisplay, 7, 2, 1, 1);
+
+        up_2 = new QPushButton(RenderTab);
+        up_2->setObjectName(QString::fromUtf8("up_2"));
+        up_2->setMaximumSize(QSize(40, 40));
+
+        gridLayout_2->addWidget(up_2, 10, 1, 1, 1);
+
+        right_2 = new QPushButton(RenderTab);
+        right_2->setObjectName(QString::fromUtf8("right_2"));
+        right_2->setMaximumSize(QSize(40, 40));
+
+        gridLayout_2->addWidget(right_2, 11, 2, 1, 1);
+
+        verticalSpacer_3 = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
+
+        gridLayout_2->addItem(verticalSpacer_3, 13, 1, 1, 1);
+
+
+        verticalLayout_2->addLayout(gridLayout_2);
 
         tabWidget->addTab(RenderTab, QString());
         RenderSettingsTab = new QWidget();
@@ -172,7 +293,7 @@ public:
         scrollArea->setWidgetResizable(true);
         scrollAreaWidgetContents = new QWidget();
         scrollAreaWidgetContents->setObjectName(QString::fromUtf8("scrollAreaWidgetContents"));
-        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 653, 588));
+        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 321, 547));
         verticalLayout_3 = new QVBoxLayout(scrollAreaWidgetContents);
         verticalLayout_3->setSpacing(6);
         verticalLayout_3->setContentsMargins(11, 11, 11, 11);
@@ -207,7 +328,7 @@ public:
         spinBox_imgres_x = new QSpinBox(scrollAreaWidgetContents);
         spinBox_imgres_x->setObjectName(QString::fromUtf8("spinBox_imgres_x"));
         spinBox_imgres_x->setMaximum(100000);
-        spinBox_imgres_x->setValue(200);
+        spinBox_imgres_x->setValue(512);
 
         gridLayout->addWidget(spinBox_imgres_x, 5, 1, 1, 1);
 
@@ -251,7 +372,7 @@ public:
         spinBox_imgres_y = new QSpinBox(scrollAreaWidgetContents);
         spinBox_imgres_y->setObjectName(QString::fromUtf8("spinBox_imgres_y"));
         spinBox_imgres_y->setMaximum(100000);
-        spinBox_imgres_y->setValue(200);
+        spinBox_imgres_y->setValue(512);
 
         gridLayout->addWidget(spinBox_imgres_y, 6, 1, 1, 1);
 
@@ -260,21 +381,10 @@ public:
 
         gridLayout->addWidget(label_world, 9, 0, 1, 1);
 
-        horizontalSpacer_2 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
-
-        gridLayout->addItem(horizontalSpacer_2, 11, 3, 1, 1);
-
         label_Focal_Length = new QLabel(scrollAreaWidgetContents);
         label_Focal_Length->setObjectName(QString::fromUtf8("label_Focal_Length"));
 
         gridLayout->addWidget(label_Focal_Length, 7, 0, 1, 1);
-
-        line_2 = new QFrame(scrollAreaWidgetContents);
-        line_2->setObjectName(QString::fromUtf8("line_2"));
-        line_2->setFrameShape(QFrame::HLine);
-        line_2->setFrameShadow(QFrame::Sunken);
-
-        gridLayout->addWidget(line_2, 3, 0, 1, 4);
 
         doubleSpinBox_focal_length = new QDoubleSpinBox(scrollAreaWidgetContents);
         doubleSpinBox_focal_length->setObjectName(QString::fromUtf8("doubleSpinBox_focal_length"));
@@ -303,6 +413,13 @@ public:
 
         gridLayout->addWidget(graphicsView_BgColorDisplay, 10, 2, 1, 1);
 
+        line_2 = new QFrame(scrollAreaWidgetContents);
+        line_2->setObjectName(QString::fromUtf8("line_2"));
+        line_2->setFrameShape(QFrame::HLine);
+        line_2->setFrameShadow(QFrame::Sunken);
+
+        gridLayout->addWidget(line_2, 3, 0, 1, 3);
+
 
         verticalLayout_3->addLayout(gridLayout);
 
@@ -315,96 +432,21 @@ public:
         SceneFileTab->setObjectName(QString::fromUtf8("SceneFileTab"));
         SceneFileTextBrowser = new QTextBrowser(SceneFileTab);
         SceneFileTextBrowser->setObjectName(QString::fromUtf8("SceneFileTextBrowser"));
-        SceneFileTextBrowser->setGeometry(QRect(10, 10, 821, 661));
+        SceneFileTextBrowser->setGeometry(QRect(10, 10, 321, 661));
         tabWidget->addTab(SceneFileTab, QString());
         LogTab = new QWidget();
         LogTab->setObjectName(QString::fromUtf8("LogTab"));
         LogTextBrowser = new QTextBrowser(LogTab);
         LogTextBrowser->setObjectName(QString::fromUtf8("LogTextBrowser"));
-        LogTextBrowser->setGeometry(QRect(10, 10, 821, 661));
+        LogTextBrowser->setGeometry(QRect(10, 10, 321, 661));
         tabWidget->addTab(LogTab, QString());
 
         horizontalLayout_2->addWidget(tabWidget);
 
-        gridLayout_2 = new QGridLayout();
-        gridLayout_2->setSpacing(6);
-        gridLayout_2->setObjectName(QString::fromUtf8("gridLayout_2"));
-        label = new QLabel(centralWidget);
-        label->setObjectName(QString::fromUtf8("label"));
-
-        gridLayout_2->addWidget(label, 0, 0, 1, 3);
-
-        up = new QPushButton(centralWidget);
-        up->setObjectName(QString::fromUtf8("up"));
-        up->setMaximumSize(QSize(40, 40));
-
-        gridLayout_2->addWidget(up, 1, 1, 1, 1);
-
-        left = new QPushButton(centralWidget);
-        left->setObjectName(QString::fromUtf8("left"));
-        left->setMaximumSize(QSize(40, 40));
-
-        gridLayout_2->addWidget(left, 2, 0, 1, 1);
-
-        right = new QPushButton(centralWidget);
-        right->setObjectName(QString::fromUtf8("right"));
-        right->setMaximumSize(QSize(40, 40));
-
-        gridLayout_2->addWidget(right, 2, 2, 1, 1);
-
-        down = new QPushButton(centralWidget);
-        down->setObjectName(QString::fromUtf8("down"));
-        down->setMaximumSize(QSize(40, 40));
-
-        gridLayout_2->addWidget(down, 3, 1, 1, 1);
-
-        label_2 = new QLabel(centralWidget);
-        label_2->setObjectName(QString::fromUtf8("label_2"));
-
-        gridLayout_2->addWidget(label_2, 4, 1, 1, 1);
-
-        backwards = new QPushButton(centralWidget);
-        backwards->setObjectName(QString::fromUtf8("backwards"));
-        backwards->setMaximumSize(QSize(80, 40));
-
-        gridLayout_2->addWidget(backwards, 5, 0, 1, 2);
-
-        verticalSpacer_3 = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
-
-        gridLayout_2->addItem(verticalSpacer_3, 10, 0, 1, 1);
-
-        forwards = new QPushButton(centralWidget);
-        forwards->setObjectName(QString::fromUtf8("forwards"));
-        forwards->setMaximumSize(QSize(80, 40));
-
-        gridLayout_2->addWidget(forwards, 6, 0, 1, 2);
-
-        focalLengthSlider = new QSlider(centralWidget);
-        focalLengthSlider->setObjectName(QString::fromUtf8("focalLengthSlider"));
-        focalLengthSlider->setMinimum(1);
-        focalLengthSlider->setMaximum(200);
-        focalLengthSlider->setValue(23);
-        focalLengthSlider->setOrientation(Qt::Horizontal);
-
-        gridLayout_2->addWidget(focalLengthSlider, 8, 0, 1, 3);
-
-        label_3 = new QLabel(centralWidget);
-        label_3->setObjectName(QString::fromUtf8("label_3"));
-
-        gridLayout_2->addWidget(label_3, 7, 0, 1, 2);
-
-        focalLengthDisplay = new QLabel(centralWidget);
-        focalLengthDisplay->setObjectName(QString::fromUtf8("focalLengthDisplay"));
-
-        gridLayout_2->addWidget(focalLengthDisplay, 7, 2, 1, 1);
-
-
-        horizontalLayout_2->addLayout(gridLayout_2);
-
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 848, 31));
+        menuBar->setGeometry(QRect(0, 0, 937, 25));
         menuFile = new QMenu(menuBar);
         menuFile->setObjectName(QString::fromUtf8("menuFile"));
         MainWindow->setMenuBar(menuBar);
@@ -430,6 +472,21 @@ public:
         actionOpen_Scene_File->setText(QApplication::translate("MainWindow", "Open Scene File", 0, QApplication::UnicodeUTF8));
         actionSave_rendered_Image->setText(QApplication::translate("MainWindow", "Save rendered Image", 0, QApplication::UnicodeUTF8));
         pushButton->setText(QApplication::translate("MainWindow", "Start Render", 0, QApplication::UnicodeUTF8));
+        left_2->setText(QApplication::translate("MainWindow", "left", 0, QApplication::UnicodeUTF8));
+        down_2->setText(QApplication::translate("MainWindow", "down", 0, QApplication::UnicodeUTF8));
+        label_4->setText(QApplication::translate("MainWindow", "Rotate Camera:", 0, QApplication::UnicodeUTF8));
+        label->setText(QApplication::translate("MainWindow", "Move Camera:", 0, QApplication::UnicodeUTF8));
+        up->setText(QApplication::translate("MainWindow", "up", 0, QApplication::UnicodeUTF8));
+        left->setText(QApplication::translate("MainWindow", "left", 0, QApplication::UnicodeUTF8));
+        right->setText(QApplication::translate("MainWindow", "right", 0, QApplication::UnicodeUTF8));
+        down->setText(QApplication::translate("MainWindow", "down", 0, QApplication::UnicodeUTF8));
+        label_2->setText(QString());
+        backwards->setText(QApplication::translate("MainWindow", "backwards", 0, QApplication::UnicodeUTF8));
+        forwards->setText(QApplication::translate("MainWindow", "forwards", 0, QApplication::UnicodeUTF8));
+        label_3->setText(QApplication::translate("MainWindow", "Focal Length:", 0, QApplication::UnicodeUTF8));
+        focalLengthDisplay->setText(QApplication::translate("MainWindow", "23", 0, QApplication::UnicodeUTF8));
+        up_2->setText(QApplication::translate("MainWindow", "up", 0, QApplication::UnicodeUTF8));
+        right_2->setText(QApplication::translate("MainWindow", "right", 0, QApplication::UnicodeUTF8));
         tabWidget->setTabText(tabWidget->indexOf(RenderTab), QApplication::translate("MainWindow", "Render", 0, QApplication::UnicodeUTF8));
         label_Camera->setText(QApplication::translate("MainWindow", "Camera:", 0, QApplication::UnicodeUTF8));
         pushButton_BgColor->setText(QApplication::translate("MainWindow", "Choose Color", 0, QApplication::UnicodeUTF8));
@@ -444,16 +501,6 @@ public:
         tabWidget->setTabText(tabWidget->indexOf(RenderSettingsTab), QApplication::translate("MainWindow", "Render Settings", 0, QApplication::UnicodeUTF8));
         tabWidget->setTabText(tabWidget->indexOf(SceneFileTab), QApplication::translate("MainWindow", "Scene File", 0, QApplication::UnicodeUTF8));
         tabWidget->setTabText(tabWidget->indexOf(LogTab), QApplication::translate("MainWindow", "Log", 0, QApplication::UnicodeUTF8));
-        label->setText(QApplication::translate("MainWindow", "Move Camera:", 0, QApplication::UnicodeUTF8));
-        up->setText(QApplication::translate("MainWindow", "up", 0, QApplication::UnicodeUTF8));
-        left->setText(QApplication::translate("MainWindow", "left", 0, QApplication::UnicodeUTF8));
-        right->setText(QApplication::translate("MainWindow", "right", 0, QApplication::UnicodeUTF8));
-        down->setText(QApplication::translate("MainWindow", "down", 0, QApplication::UnicodeUTF8));
-        label_2->setText(QString());
-        backwards->setText(QApplication::translate("MainWindow", "backwards", 0, QApplication::UnicodeUTF8));
-        forwards->setText(QApplication::translate("MainWindow", "forwards", 0, QApplication::UnicodeUTF8));
-        label_3->setText(QApplication::translate("MainWindow", "Focal Length:", 0, QApplication::UnicodeUTF8));
-        focalLengthDisplay->setText(QApplication::translate("MainWindow", "23", 0, QApplication::UnicodeUTF8));
         menuFile->setTitle(QApplication::translate("MainWindow", "File", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 

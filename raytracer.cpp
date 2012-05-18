@@ -15,7 +15,6 @@ QImage RayTracer::render(){
         for(int x = 0; x < world->getCamera()->getImgWidth(); x++){
             renderImage->setPixel(x, y, getColorForPixel(x, y).rgba());
         }
-        //emit returnLine(renderImage.data());
     }
     std::cout << "rendering process finished" << std::endl;
     return *renderImage;
