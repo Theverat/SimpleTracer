@@ -6,7 +6,6 @@ Pathtracer::Pathtracer(int x, int y, uint newDepth, World *newWorld)
     renderImage = new QImage(x, y, QImage::Format_ARGB32);
     world = newWorld;
     depth = newDepth;
-    //RenderOut = new RgbiImage(x,y);
 
     for(int yPix = 0; yPix < y; yPix++)
     {
@@ -26,20 +25,20 @@ Pathtracer::Pathtracer(int x, int y, uint newDepth, World *newWorld)
 
 QVector<QVector<renderPixel> > Pathtracer::render(){
 
-        //#pragma omp parallel for //has no influence on render speed?!
+    srand(seed);
+    std::cout << "seed: " << seed << std::endl;
+
         for(int y = 0; y < world->getCamera()->getImgHeigth(); y++){
             for(int x = 0; x < world->getCamera()->getImgWidth(); x++){
 
                 Ray ray = world->getCamera()->shootRay(x+(rand()%1000)/500.0-1.0, y+(rand()%1000)/500.0-1.0);
                 QVector3D ColorAtPixel = tracer(ray, 0);
-                //RenderOut->setPixel(x,y,ColorAtPixel);
                 RenderedSamples[x][y].r = ColorAtPixel.x();
                 RenderedSamples[x][y].g = ColorAtPixel.y();
                 RenderedSamples[x][y].b = ColorAtPixel.z();
             }
         }
 
-    //return RenderOut->tonemap();
     return RenderedSamples;
 }
 

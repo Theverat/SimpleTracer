@@ -186,6 +186,7 @@ void MainWindow::Render(){
 
         //start the render threads
         for(int i = 0; i < cpuCoreCount; i++){
+            threadList.at(i)->setSeed(i+1);
             threadList.at(i)->start();
         }
     }

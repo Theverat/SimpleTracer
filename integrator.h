@@ -18,6 +18,8 @@ public:
 
     void run();
 
+    void setSeed(long);
+
 public slots:
     void stop();
 
