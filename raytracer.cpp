@@ -10,7 +10,7 @@ RayTracer::RayTracer(int x, int y, uint newDepth, World* newWorld)
 QImage RayTracer::render(){
     std::cout << "rendering process started" << std::endl;
 
-    #pragma omp parallel for
+    //#pragma omp parallel for
     for(int y = 0; y < world->getCamera()->getImgHeigth(); y++){
         for(int x = 0; x < world->getCamera()->getImgWidth(); x++){
             renderImage->setPixel(x, y, getColorForPixel(x, y).rgba());

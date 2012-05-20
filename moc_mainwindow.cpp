@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'mainwindow.h'
 **
-** Created: Fri May 18 23:58:07 2012
+** Created: Sun May 20 19:07:05 2012
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.1)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,7 +23,7 @@ static const uint qt_meta_data_MainWindow[] = {
        6,       // revision
        0,       // classname
        0,    0, // classinfo
-      19,   14, // methods
+      21,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -32,36 +32,39 @@ static const uint qt_meta_data_MainWindow[] = {
 
  // slots: signature, parameters, type, tag, flags
       12,   11,   11,   11, 0x08,
-      35,   30,   11,   11, 0x08,
-      62,   11,   11,   11, 0x08,
-      83,   11,   11,   11, 0x08,
-     101,   11,   11,   11, 0x08,
-     119,   11,   11,   11, 0x08,
-     135,   11,   11,   11, 0x08,
-     151,   11,   11,   11, 0x08,
-     172,   11,   11,   11, 0x08,
-     184,   11,   11,   11, 0x08,
-     199,   11,   11,   11, 0x08,
-     213,   11,   11,   11, 0x08,
-     227,   11,   11,   11, 0x08,
-     241,   11,   11,   11, 0x08,
-     255,   11,   11,   11, 0x08,
-     278,   11,   11,   11, 0x08,
-     289,   11,   11,   11, 0x08,
-     303,   11,   11,   11, 0x08,
-     316,   11,   11,   11, 0x08,
+      30,   11,   11,   11, 0x08,
+      48,   11,   11,   11, 0x08,
+      63,   11,   11,   11, 0x08,
+      81,   11,   11,   11, 0x08,
+     107,   11,   11,   11, 0x08,
+     130,   11,   11,   11, 0x08,
+     154,   11,   11,   11, 0x08,
+     170,   11,   11,   11, 0x08,
+     186,   11,   11,   11, 0x08,
+     207,   11,   11,   11, 0x08,
+     219,   11,   11,   11, 0x08,
+     234,   11,   11,   11, 0x08,
+     248,   11,   11,   11, 0x08,
+     262,   11,   11,   11, 0x08,
+     276,   11,   11,   11, 0x08,
+     290,   11,   11,   11, 0x08,
+     313,   11,   11,   11, 0x08,
+     324,   11,   11,   11, 0x08,
+     338,   11,   11,   11, 0x08,
+     351,   11,   11,   11, 0x08,
 
        0        // eod
 };
 
 static const char qt_meta_stringdata_MainWindow[] = {
-    "MainWindow\0\0updateStatusBar()\0,spp\0"
-    "updateRender(QImage,float)\0"
-    "updateRender(QImage)\0StartStopRender()\0"
-    "DepthChanged(int)\0openSceneFile()\0"
-    "saveImageFile()\0changeWorldBgColor()\0"
-    "moveCamUp()\0moveCamRight()\0moveCamDown()\0"
-    "moveCamLeft()\0moveCamBack()\0moveCamForw()\0"
+    "MainWindow\0\0updateStatusBar()\0"
+    "StartStopRender()\0updateRender()\0"
+    "DepthChanged(int)\0changeUpdateInterval(int)\0"
+    "changeThreadCount(int)\0changeThreadCount(bool)\0"
+    "openSceneFile()\0saveImageFile()\0"
+    "changeWorldBgColor()\0moveCamUp()\0"
+    "moveCamRight()\0moveCamDown()\0moveCamLeft()\0"
+    "moveCamBack()\0moveCamForw()\0"
     "changeFocalLength(int)\0rotCamUp()\0"
     "rotCamRight()\0rotCamDown()\0rotCamLeft()\0"
 };
@@ -73,24 +76,26 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         MainWindow *_t = static_cast<MainWindow *>(_o);
         switch (_id) {
         case 0: _t->updateStatusBar(); break;
-        case 1: _t->updateRender((*reinterpret_cast< QImage(*)>(_a[1])),(*reinterpret_cast< float(*)>(_a[2]))); break;
-        case 2: _t->updateRender((*reinterpret_cast< QImage(*)>(_a[1]))); break;
-        case 3: _t->StartStopRender(); break;
-        case 4: _t->DepthChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 5: _t->openSceneFile(); break;
-        case 6: _t->saveImageFile(); break;
-        case 7: _t->changeWorldBgColor(); break;
-        case 8: _t->moveCamUp(); break;
-        case 9: _t->moveCamRight(); break;
-        case 10: _t->moveCamDown(); break;
-        case 11: _t->moveCamLeft(); break;
-        case 12: _t->moveCamBack(); break;
-        case 13: _t->moveCamForw(); break;
-        case 14: _t->changeFocalLength((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 15: _t->rotCamUp(); break;
-        case 16: _t->rotCamRight(); break;
-        case 17: _t->rotCamDown(); break;
-        case 18: _t->rotCamLeft(); break;
+        case 1: _t->StartStopRender(); break;
+        case 2: _t->updateRender(); break;
+        case 3: _t->DepthChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 4: _t->changeUpdateInterval((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 5: _t->changeThreadCount((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 6: _t->changeThreadCount((*reinterpret_cast< bool(*)>(_a[1]))); break;
+        case 7: _t->openSceneFile(); break;
+        case 8: _t->saveImageFile(); break;
+        case 9: _t->changeWorldBgColor(); break;
+        case 10: _t->moveCamUp(); break;
+        case 11: _t->moveCamRight(); break;
+        case 12: _t->moveCamDown(); break;
+        case 13: _t->moveCamLeft(); break;
+        case 14: _t->moveCamBack(); break;
+        case 15: _t->moveCamForw(); break;
+        case 16: _t->changeFocalLength((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 17: _t->rotCamUp(); break;
+        case 18: _t->rotCamRight(); break;
+        case 19: _t->rotCamDown(); break;
+        case 20: _t->rotCamLeft(); break;
         default: ;
         }
     }
@@ -128,9 +133,9 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 19)
+        if (_id < 21)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 19;
+        _id -= 21;
     }
     return _id;
 }

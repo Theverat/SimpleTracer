@@ -22,18 +22,16 @@ public slots:
     void stop();
 
 signals:
-    void passFinished(QImage);
-    void passFinished(QImage, float);
+    void passFinished(QVector<QVector <renderPixel> >);
 
 private:
     int width;
     int height;
     int depth;
     bool isRendering;
-    float spp;
     World* world;
     QString integrator;
-    QImage renderOutput;
+    QVector< QVector<renderPixel> > RenderOutput;
 
     Pathtracer *PT;
     RayTracer *RT;

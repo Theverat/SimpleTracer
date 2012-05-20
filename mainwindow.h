@@ -14,6 +14,7 @@
 
 #include "integrator.h"
 #include "worldloader.h"
+#include "film.h"
 
 namespace Ui {
 class MainWindow;
@@ -39,11 +40,16 @@ private:
     bool render;
     bool cameraChanged;
     float spp;
+    int cpuCoreCount;
+    int updateInterval;
 
-    Integrator* tracer;
+    //Integrator* tracer;
+    QVector<Integrator*> threadList;
     Worldloader worldloader;
+    Film* film;
     Camera* cam;
     QTimer *timer;
+    QTimer *imageUpdateTimer;
     QTime t;
 
     void Render();
@@ -52,11 +58,13 @@ private:
 
 private slots:
     void updateStatusBar();
-    void updateRender(QImage, float spp);
-    void updateRender(QImage);
     void StartStopRender();
+    void updateRender();
 
     void DepthChanged(int);
+    void changeUpdateInterval(int);
+    void changeThreadCount(int);
+    void changeThreadCount(bool);
 
     void openSceneFile();
     void saveImageFile();

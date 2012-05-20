@@ -25,7 +25,8 @@ SOURCES += main.cpp\
     integrator.cpp \
     pathtracer.cpp \
     rgbiimage.cpp \
-    worldloader.cpp
+    worldloader.cpp \
+    film.cpp
 
 HEADERS  += mainwindow.h \
     ray.h \
@@ -43,7 +44,8 @@ HEADERS  += mainwindow.h \
     integrator.h \
     pathtracer.h \
     rgbiimage.h \
-    worldloader.h
+    worldloader.h \
+    film.h
 
 FORMS    += mainwindow.ui
 

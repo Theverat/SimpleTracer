@@ -40,6 +40,15 @@ QColor RgbiImage::getPixel(long x, long y,double factor)
     return Color;
 }
 
+QVector3D RgbiImage::getSample(long x, long y)
+{
+    QVector3D Sample;
+    Sample.setX(RgbiImg[y][x].r);
+    Sample.setX(RgbiImg[y][x].g);
+    Sample.setX(RgbiImg[y][x].b);
+    return Sample;
+}
+
 QImage RgbiImage::tonemap()
 {
     double greatestValue;
@@ -74,4 +83,14 @@ QImage RgbiImage::tonemap()
 
     return *renderImage;
 
+}
+
+long RgbiImage::getWidth()
+{
+    return width;
+}
+
+long RgbiImage::getHeight()
+{
+    return height;
 }

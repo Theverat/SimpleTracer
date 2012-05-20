@@ -20,7 +20,9 @@ public:
     void setPixel(long x, long y, QVector3D color);
     QImage tonemap();
     QColor getPixel(long x, long y, double factor);
-
+    QVector3D getSample(long x, long y);
+    long getWidth();
+    long getHeight();
 
 private:
     QVector< QVector<renderPixel> > RgbiImg;

@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'integrator.h'
 **
-** Created: Fri May 18 23:40:25 2012
+** Created: Sun May 20 19:07:06 2012
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.1)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,26 +23,25 @@ static const uint qt_meta_data_Integrator[] = {
        6,       // revision
        0,       // classname
        0,    0, // classinfo
-       3,   14, // methods
+       2,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
-       2,       // signalCount
+       1,       // signalCount
 
  // signals: signature, parameters, type, tag, flags
       12,   11,   11,   11, 0x05,
-      35,   33,   11,   11, 0x05,
 
  // slots: signature, parameters, type, tag, flags
-      62,   11,   11,   11, 0x0a,
+      57,   11,   11,   11, 0x0a,
 
        0        // eod
 };
 
 static const char qt_meta_stringdata_Integrator[] = {
-    "Integrator\0\0passFinished(QImage)\0,\0"
-    "passFinished(QImage,float)\0stop()\0"
+    "Integrator\0\0passFinished(QVector<QVector<renderPixel> >)\0"
+    "stop()\0"
 };
 
 void Integrator::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
@@ -51,9 +50,8 @@ void Integrator::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         Q_ASSERT(staticMetaObject.cast(_o));
         Integrator *_t = static_cast<Integrator *>(_o);
         switch (_id) {
-        case 0: _t->passFinished((*reinterpret_cast< QImage(*)>(_a[1]))); break;
-        case 1: _t->passFinished((*reinterpret_cast< QImage(*)>(_a[1])),(*reinterpret_cast< float(*)>(_a[2]))); break;
-        case 2: _t->stop(); break;
+        case 0: _t->passFinished((*reinterpret_cast< QVector<QVector<renderPixel> >(*)>(_a[1]))); break;
+        case 1: _t->stop(); break;
         default: ;
         }
     }
@@ -91,24 +89,17 @@ int Integrator::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 3)
+        if (_id < 2)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 3;
+        _id -= 2;
     }
     return _id;
 }
 
 // SIGNAL 0
-void Integrator::passFinished(QImage _t1)
+void Integrator::passFinished(QVector<QVector<renderPixel> > _t1)
 {
     void *_a[] = { 0, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
     QMetaObject::activate(this, &staticMetaObject, 0, _a);
-}
-
-// SIGNAL 1
-void Integrator::passFinished(QImage _t1, float _t2)
-{
-    void *_a[] = { 0, const_cast<void*>(reinterpret_cast<const void*>(&_t1)), const_cast<void*>(reinterpret_cast<const void*>(&_t2)) };
-    QMetaObject::activate(this, &staticMetaObject, 1, _a);
 }
 QT_END_MOC_NAMESPACE

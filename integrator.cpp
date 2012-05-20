@@ -8,11 +8,12 @@ Integrator::Integrator(int width, int height, int depth, World* newWorld, QStrin
     this->integrator = integrator;
 
     this->isRendering = false;
-    this->spp = 0;
 
     PT = new Pathtracer(this->width,this->height,this->depth, this->world);
 
     RT = new RayTracer(this->width,this->height,this->depth, this->world);
+
+    std::cout << "Integrator: Thread with ID " << currentThreadId() << " created" << std::endl;
 }
 
 void Integrator::run(){
@@ -30,21 +31,22 @@ void Integrator::stop(){
 }
 
 void Integrator::RayTrace(){
-    isRendering = true;
+    std::cout << "Raytracing is currently disabled" << std::endl;
+    //isRendering = true;
 
-    renderOutput = RT->render();
+    //RenderOutput = RT->render();
 
-    emit passFinished(renderOutput);
-    isRendering = false;
+    //emit passFinished(RT->render());
+    //isRendering = false;
 }
 
 void Integrator::PathTrace(){
     isRendering = true;
+    std::cout << "Integrator: Thread with ID " << currentThreadId() << " started" << std::endl;
 
     while(isRendering == true){
-        renderOutput = PT->render();
-        spp += 1;
-        emit passFinished(renderOutput, spp);
+        //RenderOutput = PT->render();
+        emit passFinished(PT->render());
     }
     isRendering = false;
 }

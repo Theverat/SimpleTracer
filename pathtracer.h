@@ -22,7 +22,7 @@ class Pathtracer
 {
 public:
     Pathtracer(int x, int y, uint newDepth, World* newWorld);
-    QImage render();
+    QVector< QVector<renderPixel> > render();
     virtual ~Pathtracer();
 
     long seed;
@@ -31,7 +31,8 @@ private:
     QImage *renderImage;
     World *world;
     uint depth;
-    RgbiImage *RenderOut;
+    //RgbiImage *RenderOut;
+    QVector< QVector<renderPixel> > RenderedSamples;
 
     QColor getColorForPixel(int x, int y);
     QVector3D tracer(Ray ray, uint current_depth);

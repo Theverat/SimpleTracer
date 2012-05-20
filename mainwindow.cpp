@@ -4,14 +4,21 @@
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
-    depth(8),
-    tracer(0)
+    depth(8)
 {
+    qRegisterMetaType<QVector<QVector<renderPixel> > >("QVector<QVector<renderPixel> >");
+
     ui->setupUi(this);
 
     //connect render buttons
     connect(ui->pushButton, SIGNAL(clicked()), this, SLOT(StartStopRender()));
     connect(ui->DepthBox, SIGNAL(valueChanged(int)), this, SLOT(DepthChanged(int)));
+    connect(ui->updateInteval_SpinBox, SIGNAL(valueChanged(int)), this, SLOT(changeUpdateInterval(int)));
+
+    //connect thread settings buttons
+    connect(ui->radioButton_autoDetect, SIGNAL(toggled(bool)), ui->spinBox_threadCount, SLOT(setDisabled(bool)));
+    connect(ui->radioButton_manual, SIGNAL(toggled(bool)), this, SLOT(changeThreadCount(bool)));
+    connect(ui->spinBox_threadCount, SIGNAL(valueChanged(int)), this, SLOT(changeThreadCount(int)));
 
     //connect load/save actions
     connect(ui->actionOpen_Scene_File, SIGNAL(triggered()), this, SLOT(openSceneFile()));
@@ -33,9 +40,12 @@ MainWindow::MainWindow(QWidget *parent) :
     //get start time
     t.start();
 
-    //connect timer
+    //connect timers
     timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(updateStatusBar()));
+
+    imageUpdateTimer = new QTimer(this);
+    connect(imageUpdateTimer, SIGNAL(timeout()), this, SLOT(updateRender()));
 
     //connect world backgroundcolor change button
     connect(ui->pushButton_BgColor, SIGNAL(clicked()), this, SLOT(changeWorldBgColor()));
@@ -56,121 +66,75 @@ MainWindow::MainWindow(QWidget *parent) :
     imgwidth = ui->spinBox_imgres_x->value();
     imgheight = ui->spinBox_imgres_y->value();
     focalLength = ui->doubleSpinBox_focal_length->value();
+
+    film = new Film(imgwidth, imgheight);
+
+    //set up the threads
+    if(ui->radioButton_autoDetect->isChecked()){
+        cpuCoreCount = QThread::idealThreadCount();
+        std::cout << "detected number of cpu cores: " << cpuCoreCount << std::endl;
+        ui->displayThreadCount_label->setText(QString::number(cpuCoreCount));
+    }
+    else if(ui->radioButton_manual->isChecked()){
+        cpuCoreCount = ui->spinBox_threadCount->value();
+        std::cout << "number of threads set to " << cpuCoreCount << std::endl;
+    }
+    else{
+        std::cerr << std::endl << "no thread count chosen! Setting it to 1 thread." << std::endl;
+        cpuCoreCount = 1;
+    }
+
+    //set update interval
+    updateInterval = ui->updateInteval_SpinBox->value();
 }
 
 MainWindow::~MainWindow()
 {
-    StartStopRender();
+    if(render){
+        //stop the rendering process
+        render = !render;
+
+        for(int i = 0; i < cpuCoreCount; i++){
+            threadList.at(i)->stop();
+            wait();
+        }
+        timer->stop();
+        imageUpdateTimer->stop();
+        wait();
+    }
+
     delete ui;
 }
 
 void MainWindow::StartStopRender(){
     if(render){
+        //stop the rendering process
         render = !render;
         ui->pushButton->setText("Start Render");
-        tracer->stop();
+
+        for(int i = 0; i < cpuCoreCount; i++){
+            threadList.at(i)->stop();
+            wait();
+        }
         timer->stop();
+        imageUpdateTimer->stop();
+        wait();
+
     } else {
+        //start the rendering process
         render = !render;
         ui->pushButton->setText("Stop Render");
         Render();
     }
 }
 
-/*
 void MainWindow::Render(){
 
     //read values from the gui settings
     imgwidth = ui->spinBox_imgres_x->value();
     imgheight = ui->spinBox_imgres_y->value();
-    focalLength = ui->doubleSpinBox_focal_length->value();
-
-    //"old" camera position and roation
-    //worldloader.setWorld(new World(new Camera(QVector3D(0, 0, -5), QVector3D(0, 0, 1), imgwidth, imgheight, focalLength), BgColor, 1.0));
-    //"new" camera position and roation
-    worldloader.setWorld(new World(new Camera(QVector3D(0, 0, -5), QVector3D(0, 0, 10), imgwidth, imgheight, focalLength), BgColor, 1.0));
-
-    //create the Integrator instance
-    tracer = new Integrator(imgwidth, imgheight, depth, worldloader.getWorld());
-
-    ui->graphicsView->scene()->setSceneRect(0, 0, imgwidth, imgheight);
-
-    //values for the status bar messages
-    QTime t;
-    t.start();
-    QTime elapsedTime = QTime(0, 0);
-    int spp = 0;
-
-    //start the render with the chosen Integrator
-
-    //Integrator: Raytracer
-    if(ui->radioButton_Raytracer->isChecked()){
-        LOG("Integrator: Raytracer")
-
-        ui->graphicsView->scene()->clear();
-        ui->graphicsView->scene()->addPixmap(QPixmap::fromImage(tracer->RayTrace()));
-
-        //calculate the time the render is already running
-        int ms = t.elapsed();
-        int s  = ms / 1000;    ms %= 1000;
-        int m  = s  / 60;      s  %= 60;
-        int h  = m  / 60;      m  %= 60;
-        elapsedTime = QTime(h, m, s);
-
-        //statusbar update after the render is finished
-        ui->statusBar->showMessage("elapsed Time: " + elapsedTime.toString());
-
-        render = true;
-        StartStopRender();
-    }
-
-    //Integrator: Pathtracer
-    if(ui->radioButton_Pathtracer->isChecked()){
-        LOG("Integrator: Pathtracer")
-
-        int i = 1;
-        while(render)
-        {
-            ui->graphicsView->scene()->clear();
-            ui->graphicsView->scene()->addPixmap(QPixmap::fromImage(tracer->PathTrace()));
-
-            //calculate the time the render is already running
-            int ms = t.elapsed();
-            int s  = ms / 1000;    ms %= 1000;
-            int m  = s  / 60;      s  %= 60;
-            int h  = m  / 60;      m  %= 60;
-            elapsedTime = QTime(h, m, s);
-
-            //calculate the samples per pixel
-            spp++;
-
-            //statusbar update after each pass
-            ui->statusBar->showMessage("elapsed Time: " + elapsedTime.toString() + " | Samples per Pixel: " + QString::number(spp));
-            std::cout << "Samples per Pixel: " << spp << std::endl;
-
-            QCoreApplication::processEvents();
-
-            if(cameraChanged){
-                worldloader.getWorld()->setCamera(cam);
-                cameraChanged = false;
-                tracer = new Integrator(imgwidth, imgheight, depth, worldloader.getWorld());
-                spp = 0;
-                t.start();
-            }
-        }
-    }
-
-}
-*/
-
-void MainWindow::Render(){
-
-    if(tracer)
-        tracer->stop();
-
-    //read values from the gui settings
-    imgwidth = ui->spinBox_imgres_x->value();
-    imgheight = ui->spinBox_imgres_y->value();
+    delete film;
+    film = new Film(imgwidth, imgheight);
     if(!cameraChanged)
         focalLength = ui->doubleSpinBox_focal_length->value();
 
@@ -191,22 +155,39 @@ void MainWindow::Render(){
     //Integrator: Raytracer
     if(ui->radioButton_Raytracer->isChecked()){
         LOG("Integrator: Raytracer")
+        std::cerr << "the raytracing integrator is not yet ported to the new QThreads multithreading system!" << std::endl;
 
-        //create the Integrator instance
-        tracer = new Integrator(imgwidth, imgheight, depth, worldloader.getWorld(), "raytracer");
-        QObject::connect(tracer, SIGNAL(passFinished(QImage, float)), this, SLOT(updateRender(QImage, float)));
+        //create the Integrator instances
+        for(int i = 0; i < cpuCoreCount; i++){
+            threadList.append(new Integrator(imgwidth, imgheight, depth, worldloader.getWorld(), "raytracer"));
+        }
+
+        //QObject::connect(tracer, SIGNAL(passFinished(QImage, float)), this, SLOT(updateRender(QImage, float)));
+
         timer->start(1000);
-        tracer->start();
+        //tracer->start();
     }
 
     //Integrator: Pathtracer
     if(ui->radioButton_Pathtracer->isChecked()){
         LOG("Integrator: Pathtracer")
 
-        tracer = new Integrator(imgwidth, imgheight, depth, worldloader.getWorld(), "pathtracer");
-        QObject::connect(tracer, SIGNAL(passFinished(QImage, float)), this, SLOT(updateRender(QImage, float)));
+        //create the Integrator instances
+        for(int i = 0; i < cpuCoreCount; i++){
+            threadList.append(new Integrator(imgwidth, imgheight, depth, worldloader.getWorld(), "pathtracer"));
+        }
+
+        for(int i = 0; i < cpuCoreCount; i++){
+            QObject::connect(threadList.at(i), SIGNAL(passFinished(QVector<QVector <renderPixel> >)), film, SLOT(addSamples(QVector<QVector <renderPixel> >)));
+        }
+
         timer->start(1000);
-        tracer->start();
+        imageUpdateTimer->start(updateInterval * 1000);
+
+        //start the render threads
+        for(int i = 0; i < cpuCoreCount; i++){
+            threadList.at(i)->start();
+        }
     }
 }
 
@@ -218,26 +199,32 @@ void MainWindow::updateStatusBar(){
     int h  = m  / 60;      m  %= 60;
     QTime elapsedTime = QTime(h, m, s);
 
+    spp = film->getSamplesPerPixel();
     ui->statusBar->showMessage("elapsed Time: " + elapsedTime.toString() + " | Samples per Pixel: " + QString::number(spp));
-    std::cout << "Samples per Pixel: " << spp << std::endl;
 }
 
-void MainWindow::updateRender(QImage render){
+void MainWindow::updateRender(){
     ui->graphicsView->scene()->clear();
-    ui->graphicsView->scene()->addPixmap(QPixmap::fromImage(render));
+    ui->graphicsView->scene()->addPixmap(QPixmap::fromImage(film->getImage()));
 }
 
-void MainWindow::updateRender(QImage render, float spp){
-    this->spp = spp;
-    ui->graphicsView->scene()->clear();
-    ui->graphicsView->scene()->addPixmap(QPixmap::fromImage(render));
-
-    //statusbar update after each pass
-    updateStatusBar();
+void MainWindow::changeUpdateInterval(int value){
+    updateInterval = value;
+    imageUpdateTimer->stop();
+    imageUpdateTimer->start(value * 1000);
 }
 
 void MainWindow::DepthChanged(int newDepth){
     depth = newDepth;
+}
+
+void MainWindow::changeThreadCount(int value){
+    cpuCoreCount = value;
+}
+
+void MainWindow::changeThreadCount(bool toggled){
+    if(toggled)
+        cpuCoreCount = ui->spinBox_threadCount->value();
 }
 
 void MainWindow::openSceneFile(){
