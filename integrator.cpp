@@ -15,6 +15,9 @@ Integrator::Integrator(int width, int height, int depth, World* newWorld, QStrin
 }
 
 void Integrator::run(){
+    qsrand(seed);
+    LOG("Thread " << currentThreadId() << " is using seed " << seed)
+
     if(integrator == "pathtracer")
         PathTrace();
     else if(integrator == "raytracer")
@@ -55,5 +58,5 @@ Integrator::~Integrator()
 }
 
 void Integrator::setSeed(long value){
-    PT->seed = value;
+    seed = value;
 }

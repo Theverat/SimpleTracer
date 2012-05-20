@@ -30,6 +30,7 @@ private:
     int width;
     int height;
     int depth;
+    long seed;
     bool isRendering;
     World* world;
     QString integrator;

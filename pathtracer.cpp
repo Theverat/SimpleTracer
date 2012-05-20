@@ -25,13 +25,10 @@ Pathtracer::Pathtracer(int x, int y, uint newDepth, World *newWorld)
 
 QVector<QVector<renderPixel> > Pathtracer::render(){
 
-    srand(seed);
-    std::cout << "seed: " << seed << std::endl;
-
         for(int y = 0; y < world->getCamera()->getImgHeigth(); y++){
             for(int x = 0; x < world->getCamera()->getImgWidth(); x++){
 
-                Ray ray = world->getCamera()->shootRay(x+(rand()%1000)/500.0-1.0, y+(rand()%1000)/500.0-1.0);
+                Ray ray = world->getCamera()->shootRay(x+(qrand()%1000)/500.0-1.0, y+(qrand()%1000)/500.0-1.0);
                 QVector3D ColorAtPixel = tracer(ray, 0);
                 RenderedSamples[x][y].r = ColorAtPixel.x();
                 RenderedSamples[x][y].g = ColorAtPixel.y();
@@ -141,9 +138,9 @@ QVector3D Pathtracer::tracer(Ray ray, uint current_depth){
         if((current_depth < depth) && (nearestObj.getMat()->getReflectionAmount() > 0.0f) && (nearestObj.getMat()->getTransparency())){
             QVector3D Reflected_Vector;
             Reflected_Vector = normal; //Normals have to be calculated  in right direction to work with this
-            Reflected_Vector.setX(Reflected_Vector.x() + (rand()%2000)/1000.0 - 1.0);
-            Reflected_Vector.setY(Reflected_Vector.y() + (rand()%2000)/1000.0 - 1.0);
-            Reflected_Vector.setZ(Reflected_Vector.z() + (rand()%2000)/1000.0 - 1.0);
+            Reflected_Vector.setX(Reflected_Vector.x() + (qrand()%2000)/1000.0 - 1.0);
+            Reflected_Vector.setY(Reflected_Vector.y() + (qrand()%2000)/1000.0 - 1.0);
+            Reflected_Vector.setZ(Reflected_Vector.z() + (qrand()%2000)/1000.0 - 1.0);
             QVector3D Reflected_Color = tracer(Ray(hitpoint + Reflected_Vector * EPSILON, Reflected_Vector), current_depth + 1);
             Accumulated_Color = Reflected_Color * nearestObj.getMat()->getDiffuseColor() * nearestObj.getMat()->getReflectionAmount();
         }
