@@ -14,6 +14,7 @@ class Film : public QThread
 
 public:
     Film(int width, int height);
+    ~Film();
 
     QImage getImage();
     float getSamplesPerPixel();

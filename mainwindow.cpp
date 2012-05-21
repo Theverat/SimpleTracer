@@ -37,9 +37,6 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->down_2, SIGNAL(clicked()), this, SLOT(rotCamDown()));
     connect(ui->left_2, SIGNAL(clicked()), this, SLOT(rotCamLeft()));
 
-    //get start time
-    t.start();
-
     //connect timers
     timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(updateStatusBar()));
@@ -121,6 +118,8 @@ void MainWindow::StartStopRender(){
         wait();
 
     } else {
+        //get start time
+        t.start();
         //start the rendering process
         render = !render;
         ui->pushButton->setText("Stop Render");
@@ -132,7 +131,9 @@ void MainWindow::Render(){
 
     //read values from the gui settings
     imgwidth = ui->spinBox_imgres_x->value();
+    LOG("imgwith == " << imgwidth)
     imgheight = ui->spinBox_imgres_y->value();
+    LOG("imgheight == " << imgheight)
     delete film;
     film = new Film(imgwidth, imgheight);
     if(!cameraChanged)

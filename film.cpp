@@ -26,3 +26,7 @@ void Film::addSamples(QVector<QVector <renderPixel> > inputImage){
 float Film::getSamplesPerPixel(){
     return spp;
 }
+
+Film::~Film(){
+    delete RenderedImage;
+}

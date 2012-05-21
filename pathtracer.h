@@ -25,8 +25,6 @@ public:
     QVector< QVector<renderPixel> > render();
     virtual ~Pathtracer();
 
-    long seed;
-
 private:
     QImage *renderImage;
     World *world;
