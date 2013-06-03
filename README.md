@@ -15,5 +15,3 @@ Screenshots:
 ![scrn-SimpleTracer-Screenshot](https://github.com/Theverat/SimpleTracer/raw/master/Screenshots/scrn-SimpleTracer-Screenshot.png)
 
 ![scrn-mirror](https://github.com/Theverat/SimpleTracer/raw/master/Screenshots/scrn-mirror.png)
-
-![Logo](https://github.com/Theverat/SimpleTracer/raw/master/Icon/ST-Background.png)
